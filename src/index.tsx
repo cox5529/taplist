@@ -1,14 +1,37 @@
 import React from 'react';
 
 import ReactDOM from 'react-dom/client';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import App from './App';
+import BaseLayout from './views/BaseLayout';
+import AuthenticationLayout from './views/auth/AuthenticationLayout';
+import LoginView from './views/auth/LoginView';
 
 import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <BaseLayout />,
+    children: [
+      {
+        path: 'auth',
+        element: <AuthenticationLayout />,
+        children: [
+          {
+            path: 'login',
+            element: <LoginView />,
+          },
+        ],
+      },
+    ],
+  },
+]);
+
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 );
