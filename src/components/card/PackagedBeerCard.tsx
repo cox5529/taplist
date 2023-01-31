@@ -23,7 +23,7 @@ const PackagedBeerCard: React.FC<Props> = ({ beer }: Props) => {
     <Card onClick={click} className='cursor-pointer hover:bg-slate-200'>
       <SubsectionHeader>{beer.name}</SubsectionHeader>
       <div className='flex'>
-        <div>
+        <div className='w-32'>
           {beer.type === 'fermenting' && <Fermenter color={beer.srm} />}
           {beer.type === 'packaged' && beer.capColor && !beer.keg && (
             <BottledNoKeg capColor={beer.capColor} srm={beer.srm} />
