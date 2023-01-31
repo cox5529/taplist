@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import cx from 'classnames';
 import { Field, FormikErrors, FormikTouched } from 'formik';
@@ -7,41 +7,36 @@ import { uniqueId } from 'lodash';
 import ErrorMessage from '../typography/ErrorMessage';
 import Label from '../typography/Label';
 
-export type TextFieldProps<T> = {
+export type DropdownProps<T> = {
   className?: string;
-  type: 'textfield';
+  type: 'dropdown';
 
   name: keyof T;
   label?: string;
-  autoComplete?: boolean;
-  as?: string;
-  fieldType?: string;
+  keys: { value: string; text: string }[];
 
   touched?: FormikTouched<T>;
   errors?: FormikErrors<T>;
 };
 
-function TextField<T>(props: TextFieldProps<T>): ReactElement {
+function Dropdown<T>(props: DropdownProps<T>): React.ReactElement {
   const id = useMemo(() => uniqueId('form-field-'), []);
   const isTouched = props.touched ? props.touched[props.name] : false;
   const error = props.errors ? props.errors[props.name] : false;
 
-  const fieldType = props.fieldType ?? 'text';
-
   return (
     <div className={cx(props.className, '')}>
       {props.label && <Label for={id}>{props.label}</Label>}
-      <Field
-        id={id}
-        name={props.name}
-        as={props.as}
-        autoComplete={props.autoComplete ? 'on' : 'off'}
-        className='block border rounded px-2 py-1 outline-none w-full'
-        type={fieldType}
-      />
+      <Field id={id} name={props.name} as={'select'} className='block border rounded px-2 py-1 outline-none w-full'>
+        {props.keys.map((x) => (
+          <option key={x.value} value={x.value}>
+            {x.text}
+          </option>
+        ))}
+      </Field>
       {isTouched && error && <ErrorMessage>{error.toString()}</ErrorMessage>}
     </div>
   );
 }
 
-export default TextField;
+export default Dropdown;

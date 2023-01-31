@@ -4,8 +4,10 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import BaseLayout from './views/BaseLayout';
+import AddView from './views/admin/AddView';
 import AdminLayout from './views/admin/AdminLayout';
 import BeerListView from './views/admin/BeerListView';
+import EditView from './views/admin/EditView';
 import AuthenticationLayout from './views/auth/AuthenticationLayout';
 import LoginView from './views/auth/LoginView';
 
@@ -31,7 +33,11 @@ const router = createBrowserRouter([
       {
         path: 'admin',
         element: <AdminLayout />,
-        children: [{ index: true, element: <BeerListView /> }],
+        children: [
+          { index: true, element: <BeerListView /> },
+          { path: 'add', element: <AddView /> },
+          { path: ':id', element: <EditView /> },
+        ],
       },
     ],
   },

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Outlet, useNavigate } from 'react-router-dom';
 
+import Navbar from '../../components/navbar/Navbar';
 import { auth } from '../../firebase';
 
 const AdminLayout: React.FC = () => {
@@ -16,8 +17,11 @@ const AdminLayout: React.FC = () => {
   }, [loading, navigate, user]);
 
   return (
-    <div className=''>
-      <Outlet />
+    <div>
+      <Navbar />
+      <div className='p-8'>
+        <Outlet />
+      </div>
     </div>
   );
 };

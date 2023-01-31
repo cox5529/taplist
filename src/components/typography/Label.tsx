@@ -3,7 +3,7 @@ import React from 'react';
 import cx from 'classnames';
 
 type Props = React.PropsWithChildren & {
-  for: string;
+  for?: string;
   className?: string;
 };
 
