@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Beer } from '../../models/beer';
 import { toDateString } from '../../utils/date-utils';
+import BottleAndKeg from '../beer/BottleAndKeg';
 import BottledNoKeg from '../beer/BottledNoKeg';
 import Fermenter from '../beer/Fermenter';
 import SubsectionHeader from '../typography/SubsectionHeader';
@@ -28,20 +29,20 @@ const PackagedBeerCard: React.FC<Props> = ({ beer }: Props) => {
           {beer.type === 'packaged' && beer.capColor && !beer.keg && (
             <BottledNoKeg capColor={beer.capColor} srm={beer.srm} />
           )}
+          {beer.type === 'packaged' && beer.capColor && beer.keg && (
+            <BottleAndKeg capColor={beer.capColor} srm={beer.srm} keg={beer.keg} />
+          )}
         </div>
-        <div className='w-full grid grid-cols-3 grid-flow-row-dense gap-x-4 gap-y-2'>
+        <div className='w-full grid grid-cols-4 grid-flow-row-dense gap-x-4 gap-y-2'>
           <PackagedBeerCardField title='ABV'>{beer.abv}%</PackagedBeerCardField>
           <PackagedBeerCardField title='IBU'>{beer.ibu}</PackagedBeerCardField>
           <PackagedBeerCardField title='Color'>{beer.srm}</PackagedBeerCardField>
+          <PackagedBeerCardField title='Calories'>{beer.calories}</PackagedBeerCardField>
+          <PackagedBeerCardField title='Brew Date'>{toDateString(beer.brewDate)}</PackagedBeerCardField>
+          <PackagedBeerCardField title='Package Date'>{toDateString(beer.packageDate)}</PackagedBeerCardField>
           <PackagedBeerCardField title='OG'>{beer.originalGravity}</PackagedBeerCardField>
-          <PackagedBeerCardField title='Brew Date' className='col-span-2'>
-            {toDateString(beer.brewDate)}
-          </PackagedBeerCardField>
           <PackagedBeerCardField title='FG'>{beer.finalGravity}</PackagedBeerCardField>
-          <PackagedBeerCardField title='Package Date' className='col-span-2'>
-            {toDateString(beer.packageDate)}
-          </PackagedBeerCardField>
-          <PackagedBeerCardField title='Description' className='col-span-3'>
+          <PackagedBeerCardField title='Description' className='col-span-4'>
             {beer.description}
           </PackagedBeerCardField>
         </div>

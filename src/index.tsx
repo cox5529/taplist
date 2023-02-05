@@ -10,6 +10,7 @@ import BeerListView from './views/admin/BeerListView';
 import EditView from './views/admin/EditView';
 import AuthenticationLayout from './views/auth/AuthenticationLayout';
 import LoginView from './views/auth/LoginView';
+import KioskView from './views/kiosk/KioskView';
 
 import './index.css';
 
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
           { path: 'add', element: <AddView /> },
           { path: ':id', element: <EditView /> },
         ],
+      },
+      {
+        index: true,
+        element: <KioskView />,
       },
     ],
   },

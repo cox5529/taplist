@@ -15,6 +15,7 @@ export type Beer = {
   packageDate: string | Date;
   capColor?: string;
   keg?: number;
+  calories?: number;
   type: 'fermenting' | 'packaged';
 };
 
@@ -30,6 +31,7 @@ export const beerValidators = object({
   packageDate: date().required(),
   capColor: string().matches(/#[0-9A-Fa-f]{6}/g, 'Must be a hex color'),
   keg: number().min(0),
+  calories: number().min(0),
 });
 
 export const beerFields: FieldProps<Beer>[] = [
@@ -108,6 +110,12 @@ export const beerFields: FieldProps<Beer>[] = [
   {
     name: 'keg',
     label: 'Keg Number',
+    type: 'textfield',
+    fieldType: 'number',
+  },
+  {
+    name: 'calories',
+    label: 'Calories',
     type: 'textfield',
     fieldType: 'number',
   },
