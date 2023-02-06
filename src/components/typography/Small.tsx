@@ -7,7 +7,7 @@ type Props = React.PropsWithChildren & {
 };
 
 const Small: React.FC<Props> = (props: Props) => {
-  return <p className={cx('text-xs', props.className)}>{props.children}</p>;
+  return <p className={cx('text-[0.75em]', props.className)}>{props.children}</p>;
 };
 
 export default Small;

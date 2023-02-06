@@ -15,7 +15,7 @@ const KioskView: React.FC = () => {
   const data = response?.docs.map((x) => ({ id: x.id, ...x.data() }));
 
   return (
-    <div className='grid lg:grid-cols-2 xl:grid-cols-3 gap-8 p-8'>
+    <div className='grid lg:grid-cols-2 text-xl gap-8 p-8'>
       {data ? data.map((x, i) => <PackagedBeerCard beer={x} key={i} />) : <Spinner className='w-20 h-20' />}
     </div>
   );
