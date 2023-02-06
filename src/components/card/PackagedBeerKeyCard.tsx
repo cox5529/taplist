@@ -1,0 +1,26 @@
+import React from 'react';
+
+import BottleAndKeg from '../beer/BottleAndKeg';
+import BottledNoKeg from '../beer/BottledNoKeg';
+import Fermenter from '../beer/Fermenter';
+import Paragraph from '../typography/Paragraph';
+import SubsectionHeader from '../typography/SubsectionHeader';
+import Card from './Card';
+
+const PackagedBeerKeyCard: React.FC = () => {
+  return (
+    <Card>
+      <SubsectionHeader>Key</SubsectionHeader>
+      <div className='grid grid-cols-3 gap-x-4 gap-y-2 items-center'>
+        <Paragraph>Fermenting</Paragraph>
+        <Paragraph>Packaged in bottle only</Paragraph>
+        <Paragraph>Packaged in bottle and keg #</Paragraph>
+        <Fermenter color={6} />
+        <BottledNoKeg capColor={'#333333'} srm={5} />
+        <BottleAndKeg capColor={'#333333'} srm={5} keg={1} />
+      </div>
+    </Card>
+  );
+};
+
+export default PackagedBeerKeyCard;

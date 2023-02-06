@@ -19,7 +19,7 @@ const Keg: React.FC<Props> = (props: Props) => {
         'text-white': props.srm > 20,
       })}
     >
-      <div className='w-full h-full border-4 rounded-lg border-black p-1 flex items-end'>
+      <div className='w-16 h-full border-4 rounded-lg border-black p-1 flex items-end'>
         <div
           className='w-full h-2/3 flex items-center justify-center text-3xl'
           style={{

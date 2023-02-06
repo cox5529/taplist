@@ -11,7 +11,7 @@ type Props = {
 const Fermenter: React.FC<Props> = (props: Props) => {
   const color = SrmTable[Math.floor(props.color)];
 
-  return <Flask className='w-full h-full' style={{ color }} />;
+  return <Flask className='w-full h-32' style={{ color }} />;
 };
 
 export default Fermenter;
