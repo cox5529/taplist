@@ -2,14 +2,6 @@ import { applicationDefault, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import net from 'net';
 
-type KegState = {
-  lastPour: number;
-  isPouring: boolean;
-  ouncesRemaining: number;
-  percentFull: number;
-  totalVolume: number;
-};
-
 enum MessageTypes {
   Ping = 6,
   Hardware = 20,
@@ -28,16 +20,6 @@ const app = initializeApp({
 });
 
 const db = getFirestore(app);
-
-const state: { [key: string]: KegState } = {};
-
-db.collection('scales')
-  .listDocuments()
-  .then((documents) => {
-    for (const doc of documents) {
-      doc.get().then((x) => (state[doc.id] = x.data() as KegState));
-    }
-  });
 
 const parseToStringArray = (body: Buffer): string[] => {
   let s = '';
@@ -59,18 +41,19 @@ const parseToStringArray = (body: Buffer): string[] => {
   return output;
 };
 
-const handleHardwareData = (ip: string, pin: string, value: string): void => {
-  let keg = state[ip];
+const handleHardwareData = async (ip: string, pin: string, value: string): Promise<void> => {
+  let keg = await db
+    .doc(`scales/${ip}`)
+    .get()
+    .then((x) => x.data());
   if (!keg) {
-    state[ip] = {
+    keg = {
       isPouring: false,
       lastPour: 0,
       ouncesRemaining: 0,
       percentFull: 0,
-      totalVolume: 18.975 * 33.814,
+      totalVolume: 640,
     };
-
-    keg = state[ip];
   }
 
   if (pin === '47') {
