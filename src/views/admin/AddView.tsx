@@ -5,10 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 import GenericFormCard from '../../components/form-controls/GenericFormCard';
 import { firestore } from '../../firebase';
-import { Beer, beerFields, beerValidators } from '../../models/beer';
+import { Beer, beerValidators } from '../../models/beer';
+import { useBeerFields } from '../../hooks/useBeerFields';
 
 const AddView: React.FC = () => {
   const navigate = useNavigate();
+  const fields = useBeerFields();
 
   const initialValues: Beer = {
     name: '',
@@ -36,7 +38,7 @@ const AddView: React.FC = () => {
       initialValues={initialValues}
       validators={beerValidators}
       onSubmit={onSubmit}
-      fields={beerFields}
+      fields={fields}
     />
   );
 };

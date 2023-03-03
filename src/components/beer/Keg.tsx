@@ -8,6 +8,7 @@ type Props = {
   className?: string;
   srm: number;
   keg: number;
+  percentFull?: number;
 };
 
 const Keg: React.FC<Props> = (props: Props) => {
@@ -30,6 +31,7 @@ const Keg: React.FC<Props> = (props: Props) => {
           {props.keg}
         </div>
       </div>
+      {props.percentFull !== undefined && <span>{props.percentFull?.toFixed(1)}% remaining</span>}
     </div>
   );
 };

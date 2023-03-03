@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Beer } from '../../models/beer';
+import { Scale } from '../../models/scale';
 import { toDateString } from '../../utils/date-utils';
 import BottleAndKeg from '../beer/BottleAndKeg';
 import BottledNoKeg from '../beer/BottledNoKeg';
@@ -13,9 +14,10 @@ import PackagedBeerCardField from './PackagedBeerCardField';
 
 type Props = {
   beer: Beer;
+  scale?: Scale;
 };
 
-const PackagedBeerCard: React.FC<Props> = ({ beer }: Props) => {
+const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
   const navigate = useNavigate();
 
   const click = (): void => navigate(`/admin/${beer.id}`);
@@ -30,7 +32,7 @@ const PackagedBeerCard: React.FC<Props> = ({ beer }: Props) => {
             <BottledNoKeg capColor={beer.capColor} srm={beer.srm} />
           )}
           {beer.type === 'packaged' && beer.capColor && beer.keg && (
-            <BottleAndKeg capColor={beer.capColor} srm={beer.srm} keg={beer.keg} />
+            <BottleAndKeg capColor={beer.capColor} srm={beer.srm} keg={beer.keg} percentFull={scale?.percentFull} />
           )}
         </div>
         <div className='w-full grid grid-cols-4 grid-flow-row-dense gap-x-4 gap-y-2'>

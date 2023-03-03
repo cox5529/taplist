@@ -1,4 +1,5 @@
 export type Scale = {
+  ip: string;
   lastPour: number;
   isPouring: boolean;
   ouncesRemaining: number;

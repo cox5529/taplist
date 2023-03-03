@@ -8,11 +8,13 @@ import AddCard from '../../components/card/AddCard';
 import PackagedBeerCard from '../../components/card/PackagedBeerCard';
 import Spinner from '../../components/shapes/Spinner';
 import { firestore } from '../../firebase';
+import { useScales } from '../../hooks/useScales';
 import { Beer } from '../../models/beer';
 
 const BeerListView: React.FC = () => {
   const q = query(collection(firestore, 'beer'), orderBy('brewDate', 'desc'));
   const [response] = useCollection<Beer>(q as Query<Beer>);
+  const scales = useScales();
 
   const navigate = useNavigate();
 
@@ -23,7 +25,11 @@ const BeerListView: React.FC = () => {
   return (
     <div className='grid lg:grid-cols-2 xl:grid-cols-3 gap-8'>
       <AddCard onClick={onAdd} />
-      {data ? data.map((x, i) => <PackagedBeerCard beer={x} key={i} />) : <Spinner className='w-20 h-20' />}
+      {data ? (
+        data.map((x, i) => <PackagedBeerCard beer={x} key={i} scale={scales.find((s) => s.ip === x.scale)} />)
+      ) : (
+        <Spinner className='w-20 h-20' />
+      )}
     </div>
   );
 };

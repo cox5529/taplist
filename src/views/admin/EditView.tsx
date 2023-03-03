@@ -7,14 +7,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import GenericFormCard from '../../components/form-controls/GenericFormCard';
 import Spinner from '../../components/shapes/Spinner';
 import { firestore } from '../../firebase';
-import { Beer, beerFields, beerValidators } from '../../models/beer';
+import { Beer, beerValidators } from '../../models/beer';
 import { toISODateString } from '../../utils/date-utils';
+import { useBeerFields } from '../../hooks/useBeerFields';
 
 const EditView: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
   const [data] = useDocumentDataOnce<Beer>(doc(firestore, 'beer', id ?? '') as DocumentReference<Beer>);
+  const fields = useBeerFields();
 
   const onSubmit = async (values: Beer): Promise<void> => {
     await setDoc(doc(firestore, 'beer', id ?? ''), values);
@@ -35,7 +37,7 @@ const EditView: React.FC = () => {
       initialValues={beer}
       validators={beerValidators}
       onSubmit={onSubmit}
-      fields={beerFields}
+      fields={fields}
     />
   ) : (
     <Spinner className='w-32 h-32' />

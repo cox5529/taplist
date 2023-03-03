@@ -1,6 +1,7 @@
 import { date, number, object, string } from 'yup';
 
 import { FieldProps } from '../components/form-controls/GenericForm';
+import { Scale } from './scale';
 
 export type Beer = {
   id?: string;
@@ -16,6 +17,7 @@ export type Beer = {
   capColor?: string;
   keg?: number;
   calories?: number;
+  scale?: string;
   type: 'fermenting' | 'packaged';
 };
 
@@ -32,9 +34,10 @@ export const beerValidators = object({
   capColor: string().matches(/#[0-9A-Fa-f]{6}/g, 'Must be a hex color'),
   keg: number().min(0),
   calories: number().min(0),
+  scale: string(),
 });
 
-export const beerFields: FieldProps<Beer>[] = [
+export const beerFields = (scales: Scale[]): FieldProps<Beer>[] => [
   {
     name: 'name',
     label: 'Name',
@@ -118,5 +121,14 @@ export const beerFields: FieldProps<Beer>[] = [
     label: 'Calories',
     type: 'textfield',
     fieldType: 'number',
+  },
+  {
+    name: 'scale',
+    label: 'Scale',
+    type: 'dropdown',
+    keys: [
+      { text: 'None', value: '' },
+      ...scales.map((x) => ({ text: `${x.ip} at ${x.percentFull.toFixed(2)}% capacity`, value: x.ip })),
+    ],
   },
 ];
