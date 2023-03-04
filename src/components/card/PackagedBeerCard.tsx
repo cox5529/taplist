@@ -8,7 +8,6 @@ import { toDateString } from '../../utils/date-utils';
 import BottleAndKeg from '../beer/BottleAndKeg';
 import BottledNoKeg from '../beer/BottledNoKeg';
 import Fermenter from '../beer/Fermenter';
-import PouringModal from '../modals/PouringModal';
 import Paragraph from '../typography/Paragraph';
 import SubsectionHeader from '../typography/SubsectionHeader';
 import Card from './Card';
@@ -25,7 +24,8 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
 
   const click = (): void => navigate(`/admin/${beer.id}`);
 
-  const packageDate = toDateString(beer.packageDate);
+  const aging = beer.aging === 'true';
+  const packageDate = toDateString(beer.packageDate, !aging);
   const hasBeenPackaged = !packageDate.startsWith('-');
 
   return (
@@ -48,7 +48,7 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
               </PackagedBeerCardRow>
               <PackagedBeerCardRow>
                 <PackagedBeerCardField title='Brewed'>{toDateString(beer.brewDate)}</PackagedBeerCardField>
-                {hasBeenPackaged && <PackagedBeerCardField title='Packaged'>{packageDate}</PackagedBeerCardField>}
+                {hasBeenPackaged && <PackagedBeerCardField title={beer.aging === 'true' ? 'Aging' : 'Packaged'}>{packageDate}</PackagedBeerCardField>}
               </PackagedBeerCardRow>
               <PackagedBeerCardRow>
                 <PackagedBeerCardField title='OG'>{beer.originalGravity}</PackagedBeerCardField>
@@ -62,12 +62,12 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
               <BottledNoKeg capColor={beer.capColor} srm={beer.srm} />
             )}
             {beer.type === 'packaged' && beer.capColor && beer.keg && (
-              <BottleAndKeg capColor={beer.capColor} srm={beer.srm} keg={beer.keg} scale={scale} />
+              <BottleAndKeg capColor={beer.capColor} beer={beer} scale={scale} />
             )}
           </div>
         </div>
       </Card>
-      {scale && <PouringModal beer={beer} scale={scale} />}
+      {/* {scale && <PouringModal beer={beer} scale={scale} />} */}
     </>
   );
 };

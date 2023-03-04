@@ -4,18 +4,25 @@ import cx from 'classnames';
 
 import { Scale } from '../../models/scale';
 import { SrmTable } from '../../utils/srm-table';
+import { Beer } from '../../models/beer';
+import Clock from '../../assets/clock.svg';
 
 type Props = {
   className?: string;
-  srm: number;
-  keg: number;
+  beer: Beer;
   scale?: Scale;
 };
 
 const Keg: React.FC<Props> = (props: Props) => {
-  const color = SrmTable[Math.floor(props.srm)];
-  const full = props.scale?.percentFull === undefined ? 100 : props.scale?.percentFull;
+  const color = SrmTable[Math.floor(props.beer.srm)];
+  let full = 100;
   const glasses = props.scale?.ouncesRemaining ? Math.floor(props.scale.ouncesRemaining / 12) : 0;
+
+  if (props.beer.empty === 'true') {
+    full = 0;
+  } else if (props.scale?.percentFull !== undefined) {
+    full = props.scale?.percentFull;
+  }
 
   return (
     <div className={cx('flex flex-col aspect-[1/3] h-60 items-center')}>
@@ -26,6 +33,7 @@ const Keg: React.FC<Props> = (props: Props) => {
         <div className='flex-grow flex flex-col justify-end bg-stone-100'>
           <div style={{ backgroundColor: color, height: `${full}%` }}></div>
         </div>
+        {props.beer.aging === 'true' && <img className='absolute w-10 left-5 bottom-28' src={Clock} />}
         <div className='w-full bg-stone-700 h-6 rounded-b-lg flex items-center justify-center'></div>
         <div className='rounded-r-lg bg-stone-900 opacity-10 right-0 w-4 h-full absolute'></div>
       </div>

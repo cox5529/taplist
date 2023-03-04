@@ -19,6 +19,8 @@ export type Beer = {
   keg?: number;
   calories?: number;
   scale?: string;
+  empty?: string;
+  aging?: string;
   type: 'fermenting' | 'packaged';
 };
 
@@ -36,7 +38,9 @@ export const beerValidators = object({
   keg: number().min(0),
   calories: number().min(0),
   scale: string(),
-  style: string().required()
+  style: string().required(),
+  aging: string().required(),
+  empty: string().required(),
 });
 
 export const beerFields = (scales: Scale[]): FieldProps<Beer>[] => [
@@ -49,6 +53,24 @@ export const beerFields = (scales: Scale[]): FieldProps<Beer>[] => [
     name: 'style',
     label: 'Style',
     type: 'textfield',
+  },
+  {
+    name: 'empty',
+    label: 'Empty?',
+    type: 'dropdown',
+    keys: [
+      { text: 'No', value: 'false' },
+      { text: 'Yes', value: 'true' },
+    ],
+  },
+  {
+    name: 'aging',
+    label: 'Aging?',
+    type: 'dropdown',
+    keys: [
+      { text: 'No', value: 'false' },
+      { text: 'Yes', value: 'true' },
+    ],
   },
   {
     name: 'abv',

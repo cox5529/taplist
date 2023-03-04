@@ -48,6 +48,11 @@ const router = createBrowserRouter([
   },
 ]);
 
+// Refresh every hour to pickup any site updates
+setInterval(() => {
+  window.location.reload();
+}, 60 * 60 * 1000);
+
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />

@@ -17,7 +17,22 @@ const PackagedBeerKeyCard: React.FC = () => {
         <Paragraph>Packaged in bottle and keg #</Paragraph>
         <Fermenter color={6} />
         <BottledNoKeg capColor={'#333333'} srm={5} />
-        <BottleAndKeg capColor={'#333333'} srm={5} keg={1} />
+        <BottleAndKeg
+          capColor={'#333333'}
+          beer={{
+            abv: 0,
+            srm: 5,
+            originalGravity: 1,
+            finalGravity: 1,
+            ibu: 0,
+            name: '',
+            brewDate: '',
+            style: '',
+            description: '',
+            packageDate: '',
+            type: 'packaged',
+          }}
+        />
       </div>
     </Card>
   );
