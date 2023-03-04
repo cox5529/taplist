@@ -2,36 +2,39 @@ import React from 'react';
 
 import cx from 'classnames';
 
+import { Scale } from '../../models/scale';
 import { SrmTable } from '../../utils/srm-table';
 
 type Props = {
   className?: string;
   srm: number;
   keg: number;
-  percentFull?: number;
+  scale?: Scale;
 };
 
 const Keg: React.FC<Props> = (props: Props) => {
   const color = SrmTable[Math.floor(props.srm)];
+  const full = props.scale?.percentFull === undefined ? 100 : props.scale?.percentFull;
+  const glasses = props.scale?.ouncesRemaining ? Math.floor(props.scale.ouncesRemaining / 12) : 0;
 
   return (
-    <div
-      className={cx(props.className, 'px-6', {
-        'text-white': props.srm > 20,
-      })}
-    >
-      <div className='w-16 h-full border-4 rounded-lg border-black p-1 flex items-end'>
-        <div
-          className='w-full h-2/3 flex items-center justify-center text-3xl'
-          style={{
-            backgroundColor: color,
-            mask: 'radial-gradient(5px at 50% calc(5px + 2px), #000 99%, #0000 101%) calc(50% - 2*5px) 0/calc(4 * 5px) 100%, radial-gradient(5px at 50% calc(-1*2px), #0000 99%, #000 101%) 50% 5px / calc(4 * 5px) 100% repeat-x',
-          }}
-        >
-          {props.keg}
+    <div className={cx('flex flex-col aspect-[1/3] h-60 items-center')}>
+      <div className='w-full flex-grow flex flex-col relative'>
+        <div className='w-full bg-stone-700 h-6 rounded-t-lg flex items-center justify-center'>
+          <div className='rounded bg-white w-1/2 h-3'></div>
         </div>
+        <div className='flex-grow flex flex-col justify-end bg-stone-100'>
+          <div style={{ backgroundColor: color, height: `${full}%` }}></div>
+        </div>
+        <div className='w-full bg-stone-700 h-6 rounded-b-lg flex items-center justify-center'></div>
+        <div className='rounded-r-lg bg-stone-900 opacity-10 right-0 w-4 h-full absolute'></div>
       </div>
-      {props.percentFull !== undefined && <span>{props.percentFull?.toFixed(1)}% remaining</span>}
+      {props.scale && (
+        <div className='text-sm text-center'>
+          <div>{full.toFixed(1)}%</div>
+          {glasses ? <div>{glasses} glasses</div> : <div>Empty</div>}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,16 +1,17 @@
 import { Timestamp } from 'firebase/firestore';
+import moment from 'moment';
 
 export function toDateString(date: string | Date | Timestamp): string {
-  const format = new Intl.DateTimeFormat('en-US');
+  let other;
   if (date instanceof Date) {
-    return format.format(date);
+    other = moment(date);
+  } else if (date instanceof Timestamp) {
+    other = moment(date.toDate());
+  } else {
+    other = moment(date);
   }
 
-  if (date instanceof Timestamp) {
-    return format.format(date.toDate());
-  }
-
-  return format.format(new Date(date));
+  return moment().diff(other, 'd') + ' days ago';
 }
 
 export function toISODateString(input: string | Date | Timestamp): string {

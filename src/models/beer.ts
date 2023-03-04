@@ -11,6 +11,7 @@ export type Beer = {
   originalGravity: number;
   finalGravity: number;
   name: string;
+  style: string;
   description: string;
   brewDate: string | Date;
   packageDate: string | Date;
@@ -35,12 +36,18 @@ export const beerValidators = object({
   keg: number().min(0),
   calories: number().min(0),
   scale: string(),
+  style: string().required()
 });
 
 export const beerFields = (scales: Scale[]): FieldProps<Beer>[] => [
   {
     name: 'name',
     label: 'Name',
+    type: 'textfield',
+  },
+  {
+    name: 'style',
+    label: 'Style',
     type: 'textfield',
   },
   {

@@ -23,7 +23,7 @@ const BeerListView: React.FC = () => {
   const data = response?.docs.map((x) => ({ id: x.id, ...x.data() }));
 
   return (
-    <div className='grid lg:grid-cols-2 xl:grid-cols-3 gap-8'>
+    <div className='grid xl:grid-cols-2 gap-8'>
       <AddCard onClick={onAdd} />
       {data ? (
         data.map((x, i) => <PackagedBeerCard beer={x} key={i} scale={scales.find((s) => s.ip === x.scale)} />)

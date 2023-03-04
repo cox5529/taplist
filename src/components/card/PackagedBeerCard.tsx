@@ -8,9 +8,11 @@ import { toDateString } from '../../utils/date-utils';
 import BottleAndKeg from '../beer/BottleAndKeg';
 import BottledNoKeg from '../beer/BottledNoKeg';
 import Fermenter from '../beer/Fermenter';
+import Paragraph from '../typography/Paragraph';
 import SubsectionHeader from '../typography/SubsectionHeader';
 import Card from './Card';
 import PackagedBeerCardField from './PackagedBeerCardField';
+import PackagedBeerCardRow from './PackagedBeerCardRow';
 
 type Props = {
   beer: Beer;
@@ -22,31 +24,44 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
 
   const click = (): void => navigate(`/admin/${beer.id}`);
 
+  const packageDate = toDateString(beer.packageDate);
+  const hasBeenPackaged = !packageDate.startsWith('-');
+
   return (
-    <Card onClick={click} className='cursor-pointer hover:bg-slate-200'>
-      <SubsectionHeader>{beer.name}</SubsectionHeader>
-      <div className='flex'>
-        <div className='w-32'>
+    <Card onClick={click} className='cursor-pointer hover:bg-slate-200 md:h-96 grow-0 shrink-0 flex flex-col'>
+      <SubsectionHeader>
+        {beer.keg && <span>{beer.keg}. </span>}
+        {beer.name}
+      </SubsectionHeader>
+      <div className='flex flex-grow'>
+        <div className='flex-grow flex flex-col gap-4 text-lg'>
+          <PackagedBeerCardField>{beer.style}</PackagedBeerCardField>
+          <Paragraph className='flex-grow italic'>{beer.description}</Paragraph>
+          <div className='italic'>
+            <PackagedBeerCardRow>
+              <PackagedBeerCardField title='ABV'>{beer.abv}%</PackagedBeerCardField>
+              <PackagedBeerCardField title='IBU'>{beer.ibu}</PackagedBeerCardField>
+              <PackagedBeerCardField title='SRM'>{beer.srm}</PackagedBeerCardField>
+              <PackagedBeerCardField title='Calories'>{beer.calories}</PackagedBeerCardField>
+            </PackagedBeerCardRow>
+            <PackagedBeerCardRow>
+              <PackagedBeerCardField title='Brewed'>{toDateString(beer.brewDate)}</PackagedBeerCardField>
+              {hasBeenPackaged && <PackagedBeerCardField title='Packaged'>{packageDate}</PackagedBeerCardField>}
+            </PackagedBeerCardRow>
+            <PackagedBeerCardRow>
+              <PackagedBeerCardField title='OG'>{beer.originalGravity}</PackagedBeerCardField>
+              <PackagedBeerCardField title='FG'>{beer.finalGravity}</PackagedBeerCardField>
+            </PackagedBeerCardRow>
+          </div>
+        </div>
+        <div className='w-32 flex-shrink-0 flex-grow-0'>
           {beer.type === 'fermenting' && <Fermenter color={beer.srm} />}
           {beer.type === 'packaged' && beer.capColor && !beer.keg && (
             <BottledNoKeg capColor={beer.capColor} srm={beer.srm} />
           )}
           {beer.type === 'packaged' && beer.capColor && beer.keg && (
-            <BottleAndKeg capColor={beer.capColor} srm={beer.srm} keg={beer.keg} percentFull={scale?.percentFull} />
+            <BottleAndKeg capColor={beer.capColor} srm={beer.srm} keg={beer.keg} scale={scale} />
           )}
-        </div>
-        <div className='w-full grid grid-cols-4 grid-flow-row-dense gap-x-4 gap-y-2'>
-          <PackagedBeerCardField title='ABV'>{beer.abv}%</PackagedBeerCardField>
-          <PackagedBeerCardField title='IBU'>{beer.ibu}</PackagedBeerCardField>
-          <PackagedBeerCardField title='Color'>{beer.srm}</PackagedBeerCardField>
-          <PackagedBeerCardField title='Calories'>{beer.calories}</PackagedBeerCardField>
-          <PackagedBeerCardField title='Brew Date'>{toDateString(beer.brewDate)}</PackagedBeerCardField>
-          <PackagedBeerCardField title='Package Date'>{toDateString(beer.packageDate)}</PackagedBeerCardField>
-          <PackagedBeerCardField title='OG'>{beer.originalGravity}</PackagedBeerCardField>
-          <PackagedBeerCardField title='FG'>{beer.finalGravity}</PackagedBeerCardField>
-          <PackagedBeerCardField title='Description' className='col-span-4'>
-            {beer.description}
-          </PackagedBeerCardField>
         </div>
       </div>
     </Card>

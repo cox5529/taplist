@@ -14,6 +14,7 @@ const AddView: React.FC = () => {
 
   const initialValues: Beer = {
     name: '',
+    style: '',
     abv: 5,
     srm: 5,
     ibu: 20,
