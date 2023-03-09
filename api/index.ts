@@ -56,11 +56,7 @@ const handleHardwareData = async (ip: string, pin: string, value: string): Promi
     };
   }
 
-  if (pin === '47') {
-    keg.lastPour = parseFloat(value.substring(0, value.length - 1)) * 33.814;
-  } else if (pin === '49') {
-    keg.isPouring = value === '255';
-  } else if (pin === '51') {
+  if (pin === '51') {
     keg.ouncesRemaining = parseFloat(value) * 33.814;
     keg.percentFull = (keg.ouncesRemaining / keg.totalVolume) * 100;
   }
