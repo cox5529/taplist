@@ -8,6 +8,7 @@ import { toDateString } from '../../utils/date-utils';
 import BottleAndKeg from '../beer/BottleAndKeg';
 import BottledNoKeg from '../beer/BottledNoKeg';
 import Fermenter from '../beer/Fermenter';
+import KegNoBottle from '../beer/KegNoBottle';
 import Paragraph from '../typography/Paragraph';
 import SubsectionHeader from '../typography/SubsectionHeader';
 import Card from './Card';
@@ -48,7 +49,11 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
               </PackagedBeerCardRow>
               <PackagedBeerCardRow>
                 <PackagedBeerCardField title='Brewed'>{toDateString(beer.brewDate)}</PackagedBeerCardField>
-                {hasBeenPackaged && <PackagedBeerCardField title={beer.aging === 'true' ? 'Aging' : 'Packaged'}>{packageDate}</PackagedBeerCardField>}
+                {hasBeenPackaged && (
+                  <PackagedBeerCardField title={beer.aging === 'true' ? 'Aging' : 'Packaged'}>
+                    {packageDate}
+                  </PackagedBeerCardField>
+                )}
               </PackagedBeerCardRow>
               <PackagedBeerCardRow>
                 <PackagedBeerCardField title='OG'>{beer.originalGravity}</PackagedBeerCardField>
@@ -64,6 +69,7 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
             {beer.type === 'packaged' && beer.capColor && beer.keg && (
               <BottleAndKeg capColor={beer.capColor} beer={beer} scale={scale} />
             )}
+            {beer.type === 'packaged' && !beer.capColor && beer.keg && <KegNoBottle beer={beer} scale={scale} />}
           </div>
         </div>
       </Card>

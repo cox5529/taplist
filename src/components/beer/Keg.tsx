@@ -7,13 +7,13 @@ import { SrmTable } from '../../utils/srm-table';
 import { Beer } from '../../models/beer';
 import Clock from '../../assets/clock.svg';
 
-type Props = {
+export type KegProps = {
   className?: string;
   beer: Beer;
   scale?: Scale;
 };
 
-const Keg: React.FC<Props> = (props: Props) => {
+const Keg: React.FC<KegProps> = (props: KegProps) => {
   const color = SrmTable[Math.floor(props.beer.srm)];
   let full = 100;
   const glasses = props.scale?.ouncesRemaining ? Math.floor(props.scale.ouncesRemaining / 12) : 0;
@@ -25,7 +25,7 @@ const Keg: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <div className={cx('flex flex-col aspect-[1/3] h-60 items-center')}>
+    <div className={cx('flex flex-col w-20 h-full items-center')}>
       <div className='w-full flex-grow flex flex-col relative'>
         <div className='w-full bg-stone-700 h-6 rounded-t-lg flex items-center justify-center'>
           <div className='rounded bg-white w-1/2 h-3'></div>
