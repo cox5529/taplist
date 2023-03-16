@@ -1,6 +1,9 @@
-import { applicationDefault, initializeApp } from 'firebase-admin/app';
+import { ServiceAccount } from 'firebase-admin';
+import { applicationDefault, cert, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import net from 'net';
+
+import credential from './credential.json';
 
 type Scale = {
   ip: string;
@@ -27,7 +30,7 @@ type Message = {
 const kegs: { [key: string]: Scale } = {};
 
 const app = initializeApp({
-  credential: applicationDefault(),
+  credential: cert(credential as ServiceAccount),
 });
 
 const db = getFirestore(app);
