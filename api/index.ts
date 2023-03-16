@@ -32,7 +32,9 @@ const app = initializeApp({
 
 const db = getFirestore(app);
 
-db.getAll().then((x) => x.forEach((item) => (kegs[item.id] = item.data() as Scale)));
+db.collection('scales')
+  .get()
+  .then((x) => x.forEach((item) => (kegs[item.id] = item.data() as Scale)));
 
 const parseToStringArray = (body: Buffer): string[] => {
   let s = '';
