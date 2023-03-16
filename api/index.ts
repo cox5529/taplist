@@ -79,9 +79,11 @@ const handleHardwareData = async (ip: string, pin: string, value: string): Promi
     keg.percentFull = (newOunces / keg.totalVolume) * 100;
     keg.ouncesRemaining = newOunces;
 
+    console.info(`Updating scale ${ip} to ${keg}`);
+
     kegs[ip] = keg;
 
-    db.doc(`scales/${ip}`).set(keg);
+    db.doc(`scales/${ip}`).set(keg).catch(console.error);
   }
 };
 
