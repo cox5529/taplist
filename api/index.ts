@@ -62,6 +62,7 @@ const handleHardwareData = async (ip: string, pin: string, value: string): Promi
 
   if (pin === '51') {
     const newOunces = parseFloat(value) * 33.814;
+    console.info(`Volume received from ${ip}: ${newOunces}`);
     keg.percentFull = (keg.ouncesRemaining / keg.totalVolume) * 100;
 
     if (Math.abs(newOunces - keg.ouncesRemaining) < 0.5) {
@@ -93,10 +94,19 @@ const parse = (data: Buffer): Message => {
 };
 
 const server = net.createServer((socket) => {
+  socket.on('connect', () => {
+    console.info(`Connection received from ${socket.remoteAddress}`);
+  });
+
+  socket.on('end', () => {
+    console.info(`Connection dropped from ${socket.remoteAddress}`);
+  });
+
   socket.on('data', (data) => {
     const message = parse(data);
 
     if (message.type === MessageTypes.Authentication) {
+      console.info(`Authenticated with ${socket.remoteAddress}`);
       socket.write(Buffer.from([0, 0, 1, 0, 200]));
     } else if (message.type === MessageTypes.Ping) {
       socket.write(Buffer.from([0, Math.floor(message.id / 256), message.id % 256, 0, 200]));
