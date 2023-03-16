@@ -2,7 +2,14 @@ import { applicationDefault, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import net from 'net';
 
-import { Scale } from './../src/models/scale';
+type Scale = {
+  ip: string;
+  lastPour: number;
+  isPouring: boolean;
+  ouncesRemaining: number;
+  percentFull: number;
+  totalVolume: number;
+};
 
 enum MessageTypes {
   Ping = 6,
