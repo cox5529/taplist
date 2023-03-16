@@ -7,8 +7,6 @@ import credential from './credential.json';
 
 type Scale = {
   ip: string;
-  lastPour: number;
-  isPouring: boolean;
   ouncesRemaining: number;
   percentFull: number;
   totalVolume: number;
@@ -64,8 +62,6 @@ const handleHardwareData = async (ip: string, pin: string, value: string): Promi
   if (!keg) {
     keg = {
       ip,
-      isPouring: false,
-      lastPour: 0,
       ouncesRemaining: 0,
       percentFull: 0,
       totalVolume: 640,
@@ -75,13 +71,15 @@ const handleHardwareData = async (ip: string, pin: string, value: string): Promi
   if (pin === '51') {
     const newOunces = parseFloat(value) * 33.814;
     console.info(`Volume received from ${ip}: ${newOunces}`);
-    keg.percentFull = (keg.ouncesRemaining / keg.totalVolume) * 100;
 
     if (Math.abs(newOunces - keg.ouncesRemaining) < 0.5) {
       return;
     }
 
+    keg.percentFull = (newOunces / keg.totalVolume) * 100;
     keg.ouncesRemaining = newOunces;
+
+    kegs[ip] = keg;
 
     db.doc(`scales/${ip}`).set(keg);
   }
