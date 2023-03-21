@@ -1,5 +1,5 @@
 import { ServiceAccount } from 'firebase-admin';
-import { applicationDefault, cert, initializeApp } from 'firebase-admin/app';
+import { cert, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import net from 'net';
 
