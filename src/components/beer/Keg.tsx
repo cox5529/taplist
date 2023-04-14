@@ -33,7 +33,7 @@ const Keg: React.FC<KegProps> = (props: KegProps) => {
         <div className='flex-grow flex flex-col justify-end bg-stone-100'>
           <div style={{ backgroundColor: color, height: `${full}%` }}></div>
         </div>
-        {props.beer.aging === 'true' && <img className='absolute w-10 left-5 bottom-28' src={Clock} />}
+        {props.beer.aging === 'true' && <img className='absolute w-10 left-5 bottom-28' src={Clock} alt='Clock' />}
         <div className='w-full bg-stone-700 h-6 rounded-b-lg flex items-center justify-center'></div>
         <div className='rounded-r-lg bg-stone-900 opacity-10 right-0 w-4 h-full absolute'></div>
       </div>
