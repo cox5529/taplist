@@ -15,7 +15,7 @@ const db = getFirestore(initializeApp());
 
 export const syncFromBrewfather = functions
   .runWith({ secrets: [brewfatherApiKey, brewfatherUserId] })
-  .pubsub.schedule('every 6 hours')
+  .pubsub.schedule('every 5 minutes')
   .onRun(async () => {
     const recipes = await getBrewfatherBatches();
     const beers: Beer[] = recipes.map((x) => ({
