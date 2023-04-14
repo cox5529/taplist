@@ -26,7 +26,7 @@ const KioskView: React.FC = () => {
         return -1;
       }
 
-      return a.brewDate.toString().localeCompare(b.brewDate.toString());
+      return b.brewDate.toString().localeCompare(a.brewDate.toString());
     });
 
   return (

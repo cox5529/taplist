@@ -30,7 +30,7 @@ export const syncFromBrewfather = functions
       description: x.tasteNotes ?? '',
       brewDate: getDateString(x.brewDate),
       packageDate: getDateString(x.bottlingDate),
-      calories: x.recipe.nutrition.calories.total,
+      calories: Math.floor(x.recipe.nutrition.calories.total * 3.5),
       type: x.status === 'Fermenting' || x.status === 'Brewing' || x.status === 'Planning' ? 'fermenting' : 'packaged',
     }));
 
