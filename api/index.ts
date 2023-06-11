@@ -106,6 +106,7 @@ const parse = (data: Buffer): Message => {
 };
 
 const server = net.createServer((socket) => {
+  let token: string = '';
   socket.on('connect', () => {
     console.info(`Connection received from ${socket.remoteAddress}`);
   });
@@ -116,7 +117,6 @@ const server = net.createServer((socket) => {
 
   socket.on('data', (data) => {
     const message = parse(data);
-    let token: string = '';
 
     if (message.type === MessageTypes.Authentication) {
       token = parseToStringArray(message.body)[0].substring(0, 8);
