@@ -57,11 +57,11 @@ const parseToStringArray = (body: Buffer): string[] => {
   return output;
 };
 
-const handleHardwareData = async (ip: string, pin: string, value: string): Promise<void> => {
-  let keg = kegs[ip];
+const handleHardwareData = async (identifier: string, pin: string, value: string): Promise<void> => {
+  let keg = kegs[identifier];
   if (!keg) {
     keg = {
-      ip,
+      ip: identifier,
       ouncesRemaining: 0,
       percentFull: 0,
       totalVolume: 640,
@@ -70,7 +70,7 @@ const handleHardwareData = async (ip: string, pin: string, value: string): Promi
 
   if (pin === '51') {
     const newOunces = parseFloat(value) * 33.814;
-    console.info(`Volume received from ${ip}: ${newOunces}`);
+    console.info(`Volume received from ${identifier}: ${newOunces}`);
 
     if (Math.abs(newOunces - keg.ouncesRemaining) < 0.5) {
       return;
@@ -79,11 +79,11 @@ const handleHardwareData = async (ip: string, pin: string, value: string): Promi
     keg.percentFull = (newOunces / keg.totalVolume) * 100;
     keg.ouncesRemaining = newOunces;
 
-    console.info(`Updating scale ${ip} to`, keg);
+    console.info(`Updating scale ${identifier} to`, keg);
 
-    kegs[ip] = keg;
+    kegs[identifier] = keg;
 
-    db.doc(`scales/${ip}`).set(keg).catch(console.error);
+    db.doc(`scales/${identifier}`).set(keg).catch(console.error);
   }
 };
 
@@ -116,14 +116,16 @@ const server = net.createServer((socket) => {
 
   socket.on('data', (data) => {
     const message = parse(data);
+    let token: string = '';
 
     if (message.type === MessageTypes.Authentication) {
-      console.info(`Authenticated with ${socket.remoteAddress}`);
+      token = parseToStringArray(message.body)[0].substring(0, 8);
+      console.info(`Authenticated with ${token}`);
       socket.write(Buffer.from([0, 0, 1, 0, 200]));
     } else if (message.type === MessageTypes.Ping) {
       socket.write(Buffer.from([0, Math.floor(message.id / 256), message.id % 256, 0, 200]));
     } else if (message.type === MessageTypes.Hardware && message.bodyText?.length === 3) {
-      handleHardwareData(socket.remoteAddress ?? '', message.bodyText[1], message.bodyText[2]);
+      handleHardwareData(token ?? '', message.bodyText[1], message.bodyText[2]);
     }
   });
 });
