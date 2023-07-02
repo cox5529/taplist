@@ -6,7 +6,10 @@ type Props = React.PropsWithChildren & { className?: string; onClick?: () => voi
 
 const Card: React.FC<Props> = (props: Props) => {
   return (
-    <div className={cx('bg-white text-black p-4 rounded shadow', props.className)} onClick={props.onClick}>
+    <div
+      className={cx('bg-white text-black p-4 rounded shadow print:border print:shadow-none', props.className)}
+      onClick={props.onClick}
+    >
       {props.children}
     </div>
   );

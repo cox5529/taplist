@@ -61,7 +61,7 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
               </PackagedBeerCardRow>
             </div>
           </div>
-          <div className='w-32 flex-shrink-0 flex-grow-0'>
+          <div className='w-32 flex-shrink-0 flex-grow-0 print:hidden'>
             {beer.type === 'fermenting' && <Fermenter color={beer.srm} />}
             {beer.type === 'packaged' && beer.capColor && !beer.keg && (
               <BottledNoKeg capColor={beer.capColor} srm={beer.srm} />
