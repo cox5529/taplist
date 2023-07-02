@@ -1,7 +1,7 @@
 import { Timestamp } from 'firebase/firestore';
 import moment from 'moment';
 
-export function toDateString(date: string | Date | Timestamp, inPast = true): string {
+export function toRelativeDateString(date: string | Date | Timestamp, inPast = true): string {
   let other;
   if (date instanceof Date) {
     other = moment(date);
@@ -12,6 +12,19 @@ export function toDateString(date: string | Date | Timestamp, inPast = true): st
   }
 
   return moment().diff(other, 'd') + ' days' + (inPast ? ' ago' : '');
+}
+
+export function toDateString(date: string | Date | Timestamp): string {
+  let other;
+  if (date instanceof Date) {
+    other = moment(date);
+  } else if (date instanceof Timestamp) {
+    other = moment(date.toDate());
+  } else {
+    other = moment(date);
+  }
+
+  return other.format('MMM D, YYYY');
 }
 
 export function toISODateString(input: string | Date | Timestamp): string {

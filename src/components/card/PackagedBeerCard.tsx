@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Beer } from '../../models/beer';
 import { Scale } from '../../models/scale';
-import { toDateString } from '../../utils/date-utils';
+import {toDateString, toRelativeDateString} from '../../utils/date-utils';
 import BottleAndKeg from '../beer/BottleAndKeg';
 import BottledNoKeg from '../beer/BottledNoKeg';
 import Fermenter from '../beer/Fermenter';
@@ -26,8 +26,10 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
   const click = (): void => navigate(`/admin/${beer.id}`);
 
   const aging = beer.aging === 'true';
-  const packageDate = toDateString(beer.packageDate, !aging);
-  const hasBeenPackaged = !packageDate.startsWith('-');
+  const packageRelativeDate = toRelativeDateString(beer.packageDate, !aging);
+  const packageDate = toDateString(beer.packageDate);
+  const brewDate = toDateString(beer.brewDate);
+  const hasBeenPackaged = !packageRelativeDate.startsWith('-');
 
   return (
     <>
@@ -48,11 +50,28 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
                 <PackagedBeerCardField title='Calories'>{beer.calories}</PackagedBeerCardField>
               </PackagedBeerCardRow>
               <PackagedBeerCardRow>
-                <PackagedBeerCardField title='Brewed'>{toDateString(beer.brewDate)}</PackagedBeerCardField>
+                <PackagedBeerCardField className={'print:hidden'} title='Brewed'>{toRelativeDateString(beer.brewDate)}</PackagedBeerCardField>
+                <PackagedBeerCardField
+                  className={'hidden print:block'}
+                  title={'Brewed'}
+                >
+                  {brewDate}
+                </PackagedBeerCardField>
                 {hasBeenPackaged && (
-                  <PackagedBeerCardField title={beer.aging === 'true' ? 'Aging' : 'Packaged'}>
-                    {packageDate}
-                  </PackagedBeerCardField>
+                  <>
+                    <PackagedBeerCardField
+                      className={'print:hidden'}
+                      title={beer.aging === 'true' ? 'Aging' : 'Packaged'}
+                    >
+                      {packageRelativeDate}
+                    </PackagedBeerCardField>
+                    <PackagedBeerCardField
+                      className={'hidden print:block'}
+                      title={beer.aging === 'true' ? 'Aging since' : 'Packaged'}
+                    >
+                      {packageDate}
+                    </PackagedBeerCardField>
+                  </>
                 )}
               </PackagedBeerCardRow>
               <PackagedBeerCardRow>
