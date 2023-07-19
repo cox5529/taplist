@@ -33,7 +33,7 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
 
   return (
     <>
-      <Card onClick={click} className='cursor-pointer hover:bg-slate-200 md:h-96 grow-0 shrink-0 flex flex-col'>
+      <Card onClick={click} className='cursor-pointer hover:bg-slate-200 md:h-96 grow-0 shrink-0 flex flex-col break-inside-avoid'>
         <SubsectionHeader>
           {beer.keg && <span>{beer.keg}. </span>}
           {beer.name}
