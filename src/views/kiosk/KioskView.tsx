@@ -1,37 +1,30 @@
 import React from 'react';
 
-import { Query, collection, orderBy, query } from 'firebase/firestore';
-import { useCollection } from 'react-firebase-hooks/firestore';
-
 import PackagedBeerCard from '../../components/card/PackagedBeerCard';
 import PackagedBeerKeyCard from '../../components/card/PackagedBeerKeyCard';
 import Spinner from '../../components/shapes/Spinner';
-import { firestore } from '../../firebase';
+import { useBeers } from '../../hooks/useBeers';
 import { useScales } from '../../hooks/useScales';
-import { Beer } from '../../models/beer';
 
 const KioskView: React.FC = () => {
-  const q = query(collection(firestore, 'beer'), orderBy('brewDate', 'desc'));
   const scales = useScales();
-  const [response] = useCollection<Beer>(q as Query<Beer>);
+  const [beerResponse, areBeersLoaded] = useBeers();
 
-  const data = response?.docs
-    .map((x) => ({ id: x.id, ...x.data() }))
-    .sort((a, b) => {
-      if (b.keg && a.keg) {
-        return a.keg - b.keg;
-      } else if (b.keg) {
-        return 1;
-      } else if (a.keg) {
-        return -1;
-      }
+  const data = beerResponse.sort((a, b) => {
+    if (b.keg && a.keg) {
+      return a.keg - b.keg;
+    } else if (b.keg) {
+      return 1;
+    } else if (a.keg) {
+      return -1;
+    }
 
-      return b.brewDate.toString().localeCompare(a.brewDate.toString());
-    });
+    return b.brewDate.toString().localeCompare(a.brewDate.toString());
+  });
 
   return (
     <div className='grid xl:grid-cols-2 text-xl gap-8 p-8'>
-      {data ? (
+      {areBeersLoaded ? (
         data.map((x, i) => <PackagedBeerCard beer={x} key={i} scale={scales.find((s) => s.ip === x.scale)} />)
       ) : (
         <Spinner className='w-20 h-20' />

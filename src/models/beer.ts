@@ -16,7 +16,7 @@ export type Beer = {
   brewDate: string | Date;
   packageDate: string | Date;
   capColor?: string;
-  keg?: number;
+  keg?: number | null;
   calories?: number;
   scale?: string;
   empty?: string;

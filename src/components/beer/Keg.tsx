@@ -25,7 +25,7 @@ const Keg: React.FC<KegProps> = (props: KegProps) => {
   }
 
   return (
-    <div className={cx('flex flex-col w-20 h-full items-center')}>
+    <div className={cx('flex flex-col w-20 h-full items-center', props.className)}>
       <div className='w-full flex-grow flex flex-col relative'>
         <div className='w-full bg-stone-700 h-6 rounded-t-lg flex items-center justify-center'>
           <div className='rounded bg-white w-1/2 h-3'></div>
