@@ -1,0 +1,36 @@
+<!-- For more info on central package management go to https://devblogs.microsoft.com/nuget/introducing-central-package-management/ -->
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Amazon.CDK.Lib" Version="2.93.0" />
+    <PackageVersion Include="Bogus" Version="34.0.2" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.0" />
+    <PackageVersion Include="FastEndpoints" Version="5.16.0" />
+    <PackageVersion Include="FastEndpoints.Security" Version="5.16.0" />
+    <PackageVersion Include="FastEndpoints.Swagger" Version="5.16.0" />
+    <PackageVersion Include="FirebaseAdmin" Version="3.0.0" />
+    <PackageVersion Include="FluentAssertions" Version="6.12.0" />
+    <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2" />
+    <PackageVersion Include="HtmlAgilityPack" Version="1.11.61" />
+    <PackageVersion Include="json-ld.net" Version="1.0.7" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.10" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.10" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="7.0.10" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.10" />
+    <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="7.0.10" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+    <PackageVersion Include="Moq" Version="4.18.4" />
+    <PackageVersion Include="NSubstitute" Version="5.0.0" />
+    <PackageVersion Include="nunit" Version="3.13.3" />
+    <PackageVersion Include="NUnit.Analyzers" Version="3.6.1" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
+    <PackageVersion Include="Schema.NET" Version="13.0.0" />
+    <PackageVersion Include="xunit" Version="2.5.0" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.1-pre.10" />
+  </ItemGroup>
+</Project>

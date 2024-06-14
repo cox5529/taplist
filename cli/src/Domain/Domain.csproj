@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Taplist.Domain</RootNamespace>
+        <AssemblyName>Taplist.Domain</AssemblyName>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <Folder Include="Constants\"/>
+        <Folder Include="Events\"/>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Taplist.Application</RootNamespace>
+        <AssemblyName>Taplist.Application</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FastEndpoints"/>
+        <PackageReference Include="FastEndpoints.Security"/>
+        <PackageReference Include="FastEndpoints.Swagger"/>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions"/>
+        <PackageReference Include="Schema.NET" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Domain\Domain.csproj"/>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="Common\Exceptions\" />
+      <Folder Include="Common\Security\" />
+      <Folder Include="Common\Services\" />
+    </ItemGroup>
+</Project>
