@@ -32,10 +32,7 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
 
   return (
     <>
-      <Card
-        onClick={click}
-        className='grow-0 shrink-0 flex flex-col break-inside-avoid'
-      >
+      <Card onClick={click} className='grow-0 shrink-0 flex flex-col break-inside-avoid'>
         <SubsectionHeader>
           {beer.keg && <span>{beer.keg}. </span>}
           {beer.name}

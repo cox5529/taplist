@@ -15,10 +15,7 @@ const FeatureSwitchCard = (props: Props) => {
   const click = (): void => navigate(props.otherLink);
 
   return (
-    <Card
-      onClick={click}
-      className='grow-0 shrink-0 lg:hidden flex flex-col break-inside-avoid'
-    >
+    <Card onClick={click} className='grow-0 shrink-0 lg:hidden flex flex-col break-inside-avoid'>
       <div className='flex gap-4 items-center justify-center'>
         <Paragraph>{props.text}</Paragraph>
       </div>

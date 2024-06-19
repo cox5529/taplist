@@ -33,7 +33,6 @@ export const PluralMap: Record<Unit, string> = {
   [Unit.Unit]: '',
 };
 
-
 export const SingularMap: Record<Unit, string> = {
   [Unit.Tablespoon]: 'tablespoon',
   [Unit.Dash]: 'dash',

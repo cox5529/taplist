@@ -20,7 +20,7 @@ const CocktailDetailsView: React.FC = () => {
   );
 
   const ingredientIds = cocktail?.ingredients.map((x) => x.ingredientId);
-  const [ingredients] = useIngredients(ingredientIds);
+  const [ingredients] = useIngredients(ingredientIds ?? []);
 
   const cocktailIngredients = useMemo(
     () => cocktail?.ingredients.map((x) => ({ ...x, ingredient: ingredients.find((y) => y.id === x.ingredientId) })),
