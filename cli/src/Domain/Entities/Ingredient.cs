@@ -1,18 +1,21 @@
+using Google.Cloud.Firestore;
 using Taplist.Domain.Common;
 
 namespace Taplist.Domain.Entities;
 
-public class Ingredient : BaseEntity<Guid>
+[FirestoreData]
+public class Ingredient : BaseEntity<string>
 {
+    [FirestoreProperty("name")]
     public string Name { get; private set; } = "";
 
-    private Ingredient()
+    public Ingredient()
     {
     }
 
     public Ingredient(string name)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.NewGuid().ToString();
         Name = name;
     }
 }

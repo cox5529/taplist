@@ -11,4 +11,11 @@
         <Folder Include="Events\"/>
     </ItemGroup>
 
+
+    <ItemGroup>
+      <Reference Include="Google.Cloud.Firestore">
+        <HintPath>..\..\..\..\..\.nuget\packages\google.cloud.firestore\3.7.0\lib\netstandard2.0\Google.Cloud.Firestore.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

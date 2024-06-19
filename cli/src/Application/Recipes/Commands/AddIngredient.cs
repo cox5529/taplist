@@ -1,20 +1,19 @@
-using FastEndpoints;
 using FluentValidation;
-using Microsoft.AspNetCore.Http;
+using MediatR;
 using Taplist.Application.Common.Interfaces.Repositories;
 using Taplist.Application.Common.Models;
 using Taplist.Domain.Exceptions;
 
 namespace Taplist.Application.Recipes.Commands;
 
-public class AddIngredientRequest
+public class AddIngredientRequest : IRequest
 {
-    public Guid RecipeId { get; set; }
+    public string RecipeId { get; set; } = "";
 
     public IngredientDto Ingredient { get; set; } = new();
 }
 
-public class AddIngredientCommand : Endpoint<AddIngredientRequest>
+public class AddIngredientCommand : IRequestHandler<AddIngredientRequest>
 {
     private readonly IIngredientRepository _ingredientRepository;
     private readonly IRecipeRepository _recipeRepository;
@@ -25,13 +24,8 @@ public class AddIngredientCommand : Endpoint<AddIngredientRequest>
         _ingredientRepository = ingredientRepository;
     }
 
-    public override void Configure()
-    {
-        Post("recipes/{RecipeId}/ingredient");
-        Description(b => b.Produces(204));
-    }
-
-    public override async Task HandleAsync(AddIngredientRequest request, CancellationToken cancel)
+    /// <inheritdoc />
+    public async Task Handle(AddIngredientRequest request, CancellationToken cancel)
     {
         var recipe = await _recipeRepository.GetByIdAsync(request.RecipeId, cancel);
         if (recipe == null)
@@ -54,7 +48,7 @@ public class AddIngredientCommand : Endpoint<AddIngredientRequest>
     }
 }
 
-public class AddIngredientRequestValidator : Validator<AddIngredientRequest>
+public class AddIngredientRequestValidator : AbstractValidator<AddIngredientRequest>
 {
     public AddIngredientRequestValidator()
     {

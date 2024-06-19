@@ -2,5 +2,5 @@ namespace Taplist.Infrastructure.Settings;
 
 public class IngredientParserSettings
 {
-    public string Url { get; set; } = "";
+    public string Path { get; set; } = "";
 }

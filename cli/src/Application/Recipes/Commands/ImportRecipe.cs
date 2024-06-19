@@ -1,17 +1,16 @@
-using FastEndpoints;
 using FluentValidation;
-using Microsoft.AspNetCore.Http;
+using MediatR;
 using Taplist.Application.Common.Interfaces.Repositories;
 using Taplist.Application.Common.Interfaces.Services;
 
 namespace Taplist.Application.Recipes.Commands;
 
-public class ImportRecipeRequest
+public class ImportRecipeRequest : IRequest
 {
     public string Url { get; set; } = "";
 }
 
-public class ImportRecipeCommand : Endpoint<ImportRecipeRequest>
+public class ImportRecipeCommand : IRequestHandler<ImportRecipeRequest>
 {
     private readonly IRecipeImportService _recipeImportService;
     private readonly IRecipeRepository _recipeRepository;
@@ -24,20 +23,15 @@ public class ImportRecipeCommand : Endpoint<ImportRecipeRequest>
         _recipeRepository = recipeRepository;
     }
 
-    public override void Configure()
-    {
-        Post("recipes/import");
-        Description(b => b.Produces(204));
-    }
-
-    public override async Task HandleAsync(ImportRecipeRequest request, CancellationToken cancel)
+    /// <inheritdoc />
+    public async Task Handle(ImportRecipeRequest request, CancellationToken cancel)
     {
         var recipe = await _recipeImportService.ImportRecipeAsync(request.Url, cancel);
         await _recipeRepository.CreateAsync(recipe, cancel);
     }
 }
 
-public class ImportRecipeRequestValidator : Validator<ImportRecipeRequest>
+public class ImportRecipeRequestValidator : AbstractValidator<ImportRecipeRequest>
 {
     public ImportRecipeRequestValidator()
     {

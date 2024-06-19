@@ -1,5 +1,5 @@
-using FastEndpoints;
 using HtmlAgilityPack;
+using MediatR;
 using Newtonsoft.Json.Linq;
 using Schema.NET;
 using Taplist.Application.Common.Interfaces.Services;
@@ -14,12 +14,14 @@ public class RecipeImportService : IRecipeImportService
     private readonly HttpClient _client;
     private readonly IJsonLdService _jsonLdService;
     private readonly IIngredientParserService _ingredientParser;
+    private readonly IMediator _mediator;
 
-    public RecipeImportService(HttpClient client, IJsonLdService jsonLdService, IIngredientParserService ingredientParser)
+    public RecipeImportService(HttpClient client, IJsonLdService jsonLdService, IIngredientParserService ingredientParser, IMediator mediator)
     {
         _client = client;
         _jsonLdService = jsonLdService;
         _ingredientParser = ingredientParser;
+        _mediator = mediator;
     }
 
     /// <inheritdoc />
@@ -46,7 +48,7 @@ public class RecipeImportService : IRecipeImportService
 
         var tasks = document.DocumentNode.Descendants("script")
                             .Where(x => x.Attributes["type"]?.Value == "application/ld+json")
-                            .Select(x => ParseRecipes(x.InnerText, url))
+                            .Select(x => ParseRecipes(x.InnerText))
                             .ToList();
 
         var jsonEntries = await Task.WhenAll(tasks);
@@ -60,14 +62,14 @@ public class RecipeImportService : IRecipeImportService
         return recipes.First();
     }
 
-    private async Task<IEnumerable<Recipe>> ParseRecipes(string script, string url)
+    private async Task<IEnumerable<Recipe>> ParseRecipes(string script)
     {
         var json = JToken.Parse(script);
-        var recipe = await ParseRecipe(json, url);
+        var recipe = await ParseRecipe(json);
         return recipe == null ? new List<Recipe>() : new List<Recipe> { recipe };
     }
 
-    private async Task<Recipe?> ParseRecipe(JToken json, string url)
+    private async Task<Recipe?> ParseRecipe(JToken json)
     {
         var schemaRecipe = _jsonLdService.Frame(json);
         if (schemaRecipe == null)
@@ -86,7 +88,7 @@ public class RecipeImportService : IRecipeImportService
                 continue;
             }
 
-            var dbIngredient = await new CreateIngredient { Ingredient = parsedIngredient }.ExecuteAsync();
+            var dbIngredient = await _mediator.Send(new CreateIngredient { Ingredient = parsedIngredient });
             recipe.AppendIngredient(
                 dbIngredient,
                 parsedIngredient.QuantityAsDouble ?? 1,

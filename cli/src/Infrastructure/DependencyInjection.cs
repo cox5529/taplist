@@ -1,5 +1,5 @@
-﻿using FirebaseAdmin;
-using Google.Apis.Auth.OAuth2;
+﻿using Google.Cloud.Firestore;
+using Google.Cloud.Firestore.V1;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Taplist.Application.Common.Interfaces.Repositories;
@@ -37,23 +37,16 @@ public static class DependencyInjection
 
     private static void AddIngredientParser(this IServiceCollection services, IConfiguration configuration)
     {
-        var settings = configuration.GetSection("IngredientParser").Get<IngredientParserSettings>()!;
-        services.AddHttpClient<IngredientParserService>(client => { client.BaseAddress = new Uri(settings.Url); });
-        services.AddScoped<IIngredientParserService>(p => p.GetRequiredService<IngredientParserService>());
+        services.Configure<IngredientParserSettings>(o => configuration.GetSection("IngredientParser").Bind(o));
+        services.AddScoped<IIngredientParserService, IngredientParserService>();
     }
 
     private static void AddFirebase(this IServiceCollection services, IConfiguration configuration)
     {
-        var credential = configuration.GetSection("Firebase").Get<FirebaseSettings>()!;
-        services.Configure<FirebaseSettings>(o => configuration.GetSection("Firebase").Bind(o));
-        services.AddAuthorization();
+        var credential = configuration.GetSection("FirebaseSettings").Get<FirebaseSettings>()!;
+        services.Configure<FirebaseSettings>(o => configuration.GetSection("FirebaseSettings").Bind(o));
 
-        services.Configure<JwtSettings>(o => configuration.GetSection("Jwt").Bind(o));
-        services.Configure<DefaultUserSettings>(o => configuration.GetSection("DefaultUserSettings").Bind(o));
-
-        if (FirebaseApp.DefaultInstance == null)
-        {
-            FirebaseApp.Create(new AppOptions { Credential = GoogleCredential.FromJson(credential.CredentialDecoded) });
-        }
+        var client = new FirestoreClientBuilder() { JsonCredentials = credential.CredentialDecoded }.Build();
+        services.AddScoped<FirestoreDb>((_) => FirestoreDb.Create(credential.ProjectId, client));
     }
 }

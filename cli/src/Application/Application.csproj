@@ -6,10 +6,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FastEndpoints"/>
-        <PackageReference Include="FastEndpoints.Security"/>
-        <PackageReference Include="FastEndpoints.Swagger"/>
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions"/>
+        <PackageReference Include="MediatR" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
         <PackageReference Include="Schema.NET" />
     </ItemGroup>
 
@@ -20,7 +19,13 @@
 
     <ItemGroup>
       <Folder Include="Common\Exceptions\" />
-      <Folder Include="Common\Security\" />
       <Folder Include="Common\Services\" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Reference Include="Newtonsoft.Json">
+        <HintPath>..\..\..\..\..\.nuget\packages\newtonsoft.json\13.0.3\lib\net6.0\Newtonsoft.Json.dll</HintPath>
+      </Reference>
     </ItemGroup>
 </Project>

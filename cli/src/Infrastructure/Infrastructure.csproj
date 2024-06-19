@@ -6,9 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FirebaseAdmin" />
+    <PackageReference Include="Google.Cloud.Firestore" />
     <PackageReference Include="HtmlAgilityPack" />
     <PackageReference Include="json-ld.net" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Schema.NET" />
   </ItemGroup>
 
