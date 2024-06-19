@@ -7,7 +7,7 @@ type Props = React.PropsWithChildren & {
 };
 
 const SubsectionHeader: React.FC<Props> = (props: Props) => {
-  return <h4 className={cx('text-xl mb-2', props.className)}>{props.children}</h4>;
+  return <h4 className={cx('text-xl font-semibold mb-2', props.className)}>{props.children}</h4>;
 };
 
 export default SubsectionHeader;

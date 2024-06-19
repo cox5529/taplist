@@ -6,11 +6,12 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import BeerList from './features/beer/views/BeerList';
 import EditBeerView from './features/beer/views/admin/EditView';
 import CocktailList from './features/cocktails/components/CocktailList';
+import CocktailDetailsView from './features/cocktails/views/CocktailDetailsView';
 import BaseLayout from './shared/views/BaseLayout';
+import HomeView from './shared/views/HomeView';
 import AdminLayout from './shared/views/admin/AdminLayout';
 import AuthenticationLayout from './shared/views/auth/AuthenticationLayout';
 import LoginView from './shared/views/auth/LoginView';
-import HomeView from './shared/views/HomeView';
 
 import './index.css';
 
@@ -42,7 +43,10 @@ const router = createBrowserRouter([
       },
       {
         path: 'cocktails',
-        children: [{ index: true, element: <CocktailList /> }],
+        children: [
+          { path: ':id', element: <CocktailDetailsView /> },
+          { index: true, element: <CocktailList /> },
+        ],
       },
       {
         index: true,

@@ -15,7 +15,11 @@ const AdminLayout: React.FC = () => {
     }
   }, [loading, navigate, user]);
 
-  return <Outlet />;
+  return (
+    <div className='py-8'>
+      <Outlet />
+    </div>
+  );
 };
 
 export default AdminLayout;

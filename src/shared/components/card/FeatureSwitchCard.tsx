@@ -17,7 +17,7 @@ const FeatureSwitchCard = (props: Props) => {
   return (
     <Card
       onClick={click}
-      className='cursor-pointer hover:bg-slate-200 grow-0 shrink-0 lg:hidden flex flex-col break-inside-avoid'
+      className='grow-0 shrink-0 lg:hidden flex flex-col break-inside-avoid'
     >
       <div className='flex gap-4 items-center justify-center'>
         <Paragraph>{props.text}</Paragraph>

@@ -6,7 +6,7 @@ import HomeSection from '../components/HomeSection';
 
 const HomeView: React.FC = () => {
   return (
-    <div className='px-8'>
+    <div>
       <HomeSection header='House Cocktails'>
         <CocktailList />
       </HomeSection>
