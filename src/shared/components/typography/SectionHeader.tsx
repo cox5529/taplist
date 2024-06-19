@@ -7,7 +7,7 @@ type Props = React.PropsWithChildren & {
 };
 
 const SectionHeader: React.FC<Props> = (props: Props) => {
-  return <h3 className={cx('text-2xl mb-2', props.className)}>{props.children}</h3>;
+  return <h3 className={cx('text-3xl font-semibold mb-2', props.className)}>{props.children}</h3>;
 };
 
 export default SectionHeader;

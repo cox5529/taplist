@@ -22,7 +22,7 @@ const BeerList: React.FC = () => {
   });
 
   return (
-    <div className='grid xl:grid-cols-2 text-xl gap-8 p-8'>
+    <div className='grid xl:grid-cols-2 text-xl gap-8'>
       {areBeersLoaded ? (
         data.map((x, i) => <PackagedBeerCard beer={x} key={i} scale={scales.find((s) => s.ip === x.scale)} />)
       ) : (

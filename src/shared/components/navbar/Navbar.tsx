@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
   const [logout] = useSignOut(auth);
 
   return (
-    <div className='h-12 border-b flex'>
+    <div className='h-12 border-b lg:flex hidden'>
       <NavbarButton to='/beer'>Beer</NavbarButton>
       <NavbarButton to='/cocktails'>Cocktails</NavbarButton>
       <span className='flex-grow'></span>
