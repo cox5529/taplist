@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 
+import { Form, Formik } from 'formik';
 import { useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { object, string } from 'yup';
 
 import { auth } from '../../../firebase';
-import GenericForm, { FieldProps } from '../../components/form-controls/GenericForm';
+import Button from '../../components/buttons/Button';
+import TextField from '../../components/form-controls/TextField';
+import ErrorMessage from '../../components/typography/ErrorMessage';
 import SectionHeader from '../../components/typography/SectionHeader';
 
 type LoginFormValues = {
@@ -23,47 +26,44 @@ const LoginView: React.FC = () => {
   };
 
   const schema = object({
-    email: string().required().email(),
-    password: string().required(),
+    email: string().required('This field is required').email('This is not a valid email address'),
+    password: string().required('This field is required'),
   });
-
-  const fields: FieldProps<LoginFormValues>[] = [
-    {
-      name: 'email',
-      label: 'Email',
-      type: 'textfield',
-      fieldType: 'email',
-    },
-    {
-      name: 'password',
-      label: 'Password',
-      type: 'textfield',
-      fieldType: 'password',
-    },
-  ];
 
   const initialValues: LoginFormValues = { email: '', password: '' };
 
   useEffect(() => {
     if (user) {
-      navigate('/admin');
+      navigate('/');
     }
   }, [navigate, user]);
 
   const errorMessage = {
     'auth/wrong-password': 'Incorrect email or password',
+    'auth/user-not-found': 'Incorrect email or password',
   }[error?.code ?? ''];
 
   return (
     <div>
       <SectionHeader>Login</SectionHeader>
-      <GenericForm
-        initialValues={initialValues}
-        validators={schema}
-        onSubmit={login}
-        fields={fields}
-        error={errorMessage}
-      />
+      <Formik initialValues={initialValues} onSubmit={login} validationSchema={schema}>
+        {({ isSubmitting }): React.ReactElement => (
+          <Form className='flex flex-col gap-8'>
+            <div className='grid grid-flow-row-dense grid-cols-fit-250 gap-x-8 gap-y-4'>
+              <TextField name={'email'} fieldType={'email'} label={'Email Address'} />
+              <TextField name={'password'} fieldType={'password'} label={'Password'} />
+            </div>
+            <div className='flex justify-end gap-4'>
+              <span>
+                <ErrorMessage>{errorMessage}</ErrorMessage>
+              </span>
+              <Button type='submit' disabled={isSubmitting} loading={isSubmitting}>
+                Submit
+              </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

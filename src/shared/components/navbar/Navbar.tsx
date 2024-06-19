@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
 
   return (
     <div className='h-12 border-b flex'>
-      <NavbarButton to='/admin'>Beer List</NavbarButton>
+      <NavbarButton to='/'>Beer List</NavbarButton>
       <span className='flex-grow'></span>
       <NavbarButton click={logout}>Logout</NavbarButton>
     </div>

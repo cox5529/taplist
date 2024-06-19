@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import EditBeerView from './features/beer/views/admin/EditView';
-import BeerListView from './features/beer/views/admin/ListView';
 import BaseLayout from './shared/views/BaseLayout';
 import AdminLayout from './shared/views/admin/AdminLayout';
 import AuthenticationLayout from './shared/views/auth/AuthenticationLayout';
@@ -34,7 +33,6 @@ const router = createBrowserRouter([
         path: 'admin',
         element: <AdminLayout />,
         children: [
-          { index: true, element: <BeerListView /> },
           { path: ':id', element: <EditBeerView /> },
         ],
       },
