@@ -13,4 +13,5 @@ export type Recipe = {
   ingredients: RecipeIngredient[];
   instructions: string[];
   name: string;
+  curated?: boolean;
 };

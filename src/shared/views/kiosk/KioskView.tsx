@@ -1,9 +1,9 @@
 import React from 'react';
 
-import BeerList from '../../../features/beer/components/BeerList';
+import { Navigate } from 'react-router-dom';
 
 const KioskView: React.FC = () => {
-  return <BeerList />;
+  return <Navigate to='/beer' />;
 };
 
 export default KioskView;
