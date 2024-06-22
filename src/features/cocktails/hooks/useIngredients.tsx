@@ -9,7 +9,7 @@ import { Ingredient } from '../models/ingredient';
 export function useIngredients(ids?: string[]): [Ingredient[], boolean] {
   
   const ingredientCollection = collection(firestore, 'ingredients') as CollectionReference<Ingredient>;
-  const ingredientQuery = ids ? query(ingredientCollection, where('id', 'in', ids)) : ingredientCollection;
+  const ingredientQuery = ids?.length ? query(ingredientCollection, where('id', 'in', ids)) : ingredientCollection;
 
   const [ingredients, isLoading] = useCollection<Ingredient>(ingredientQuery);
 
