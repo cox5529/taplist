@@ -8,7 +8,7 @@ type Props = {
 
 const Spinner: React.FC<Props> = (props: Props) => {
   return (
-    <div className={cx(props.className, 'border-white border-4 border-b-transparent rounded-full animate-spin')}></div>
+    <div className={cx(props.className, 'border-current border-4 border-b-transparent rounded-full animate-spin')}></div>
   );
 };
 

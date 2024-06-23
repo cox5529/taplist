@@ -1,16 +1,15 @@
 import { Ingredient } from './ingredient';
 
 export enum Unit {
-  Tablespoon = 'Tablespoon',
   Dash = 'Dash',
-  Unit = 'Unit',
-  Ounce = 'Ounce',
   Teaspoon = 'Teaspoon',
+  Tablespoon = 'Tablespoon',
+  Ounce = 'Ounce',
+  Unit = 'Unit',
 }
 
 export type CocktailIngredient = {
   ingredientId: string;
-  instruction: string;
   quantity: number;
   unit: Unit;
   ingredient?: Ingredient;

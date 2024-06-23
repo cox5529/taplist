@@ -4,7 +4,7 @@ import { Beer } from '../../models/beer';
 import { Scale } from '../../models/scale';
 import Keg from './Keg';
 
-import { ReactComponent as Cap } from '../../../../assets/cap.svg';
+import Cap from '../../../../assets/cap.svg?react';
 
 type Props = {
   capColor: string;

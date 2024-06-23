@@ -29,7 +29,13 @@ const Button: React.FC<Props> = (props: Props) => {
     </Link>
   ) : (
     <button className={className} type={props.type ?? 'button'} onClick={props.click} disabled={props.disabled}>
-      {props.loading ? <Spinner className='w-4 h-4' /> : props.children}
+      {props.loading ? (
+        <div className='flex items-center justify-center'>
+          <Spinner className='w-6 h-6' />
+        </div>
+      ) : (
+        props.children
+      )}
     </button>
   );
 };

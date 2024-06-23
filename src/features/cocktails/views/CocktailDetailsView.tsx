@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
 
 import { doc, DocumentReference } from '@firebase/firestore';
-import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useParams } from 'react-router-dom';
 
-import { firestore } from '../../../firebase';
+import { auth, firestore } from '../../../firebase';
+import LoadingBox from '../../../shared/components/LoadingBox';
 import Button from '../../../shared/components/buttons/Button';
 import Paragraph from '../../../shared/components/typography/Paragraph';
 import SectionHeader from '../../../shared/components/typography/SectionHeader';
@@ -14,10 +16,9 @@ import { Cocktail, CocktailIngredient, PluralMap, SingularMap, Unit } from '../m
 
 const CocktailDetailsView: React.FC = () => {
   const { id } = useParams();
+  const [user] = useAuthState(auth);
 
-  const [cocktail] = useDocumentDataOnce<Cocktail>(
-    doc(firestore, 'cocktails', id ?? '') as DocumentReference<Cocktail>,
-  );
+  const [cocktail] = useDocumentData<Cocktail>(doc(firestore, 'cocktails', id ?? '') as DocumentReference<Cocktail>);
 
   const ingredientIds = cocktail?.ingredients.map((x) => x.ingredientId);
   const [ingredients] = useIngredients(ingredientIds ?? []);
@@ -68,11 +69,13 @@ const CocktailDetailsView: React.FC = () => {
     return `${quantity} ${unit} ${ingredient.ingredient?.name}`;
   };
 
-  return (
-    <article className='py-8 max-w-[500px] mx-auto flex gap-12 flex-col'>
+  return cocktail && cocktailIngredients ? (
+    <div className='flex gap-12 flex-col'>
       <section>
-        <div className='flex justify-between items-center pb-2'>
+        <div className='flex justify-between items-center pb-2 gap-2'>
           <SectionHeader>{cocktail?.name}</SectionHeader>
+          <span className='flex-grow'></span>
+          {user && <Button to='edit'>Edit</Button>}
           <Button to='/'>Back</Button>
         </div>
         <Paragraph>{cocktail?.description}</Paragraph>
@@ -93,7 +96,9 @@ const CocktailDetailsView: React.FC = () => {
           ))}
         </ol>
       </section>
-    </article>
+    </div>
+  ) : (
+    <LoadingBox />
   );
 };
 

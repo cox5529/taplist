@@ -7,6 +7,8 @@ import BeerList from './features/beer/views/BeerList';
 import EditBeerView from './features/beer/views/admin/EditView';
 import CocktailList from './features/cocktails/components/CocktailList';
 import CocktailDetailsView from './features/cocktails/views/CocktailDetailsView';
+import CocktailEditView from './features/cocktails/views/CocktailEditView';
+import CocktailLayout from './features/cocktails/views/CocktailLayout';
 import BaseLayout from './shared/views/BaseLayout';
 import HomeView from './shared/views/HomeView';
 import AdminLayout from './shared/views/admin/AdminLayout';
@@ -43,8 +45,10 @@ const router = createBrowserRouter([
       },
       {
         path: 'cocktails',
+        element: <CocktailLayout />,
         children: [
           { path: ':id', element: <CocktailDetailsView /> },
+          { path: ':id/edit', element: <CocktailEditView /> },
           { index: true, element: <CocktailList /> },
         ],
       },
