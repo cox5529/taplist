@@ -1,21 +1,25 @@
 import React, { useMemo } from 'react';
 
+import { doc, setDoc } from 'firebase/firestore';
 import { FieldArray, Form, Formik } from 'formik';
+import { v4 as uuid } from 'uuid';
 import { array, number, object, string } from 'yup';
 
+import { firestore } from '../../../../firebase';
 import LoadingBox from '../../../../shared/components/LoadingBox';
 import Button from '../../../../shared/components/buttons/Button';
 import TextField from '../../../../shared/components/form-controls/TextField';
+import Paragraph from '../../../../shared/components/typography/Paragraph';
 import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
 import { useIngredients } from '../../hooks/useIngredients';
 import { Cocktail, CocktailIngredient, Unit } from '../../models/cocktail';
+import { Ingredient } from '../../models/ingredient';
 import IngredientField from './IngredientField';
 import InstructionField from './InstructionField';
-import Paragraph from '../../../../shared/components/typography/Paragraph';
 
 type Props = {
   cocktail?: Cocktail;
-  onSubmit: (cocktail: CocktailFormValues) => void;
+  onSubmit: (cocktail: Cocktail) => void;
 };
 
 export type CocktailFormValues = Omit<Cocktail, 'id'>;
@@ -65,8 +69,39 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
     },
   });
 
+  const onSubmit = async (formValue: CocktailFormValues) => {
+    const cocktail: Cocktail = {
+      id: '',
+      name: formValue.name,
+      description: formValue.description,
+      instructions: formValue.instructions,
+      ingredients: [],
+    };
+
+    for (const formIngredient of cocktail.ingredients) {
+      let ingredient: Ingredient | undefined = ingredients.find((x) => x.name === formIngredient.ingredient?.name);
+
+      if (!ingredient?.id) {
+        ingredient = {
+          id: uuid(),
+          name: formIngredient.ingredient?.name ?? '',
+        };
+
+        await setDoc(doc(firestore, 'ingredients', ingredient.id), ingredient);
+      }
+
+      cocktail.ingredients.push({
+        ingredientId: ingredient.id,
+        quantity: formIngredient.quantity,
+        unit: formIngredient.unit
+      });
+    }
+
+    props.onSubmit(cocktail);
+  };
+
   return ingredients.length ? (
-    <Formik initialValues={initialValues} onSubmit={props.onSubmit} validationSchema={schema} enableReinitialize>
+    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={schema} enableReinitialize>
       {({ isSubmitting, values, errors }) => (
         <Form className='flex flex-col gap-8'>
           <section>

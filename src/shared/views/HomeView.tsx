@@ -7,7 +7,7 @@ import HomeSection from '../components/HomeSection';
 const HomeView: React.FC = () => {
   return (
     <div>
-      <HomeSection header='House Cocktails'>
+      <HomeSection header='House Cocktails' addRoute='/cocktails/create'>
         <CocktailList />
       </HomeSection>
       <HomeSection header='Beer'>

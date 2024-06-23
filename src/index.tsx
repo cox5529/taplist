@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import BeerList from './features/beer/views/BeerList';
 import EditBeerView from './features/beer/views/admin/EditView';
 import CocktailList from './features/cocktails/components/CocktailList';
+import CocktailAddView from './features/cocktails/views/CocktailAddView';
 import CocktailDetailsView from './features/cocktails/views/CocktailDetailsView';
 import CocktailEditView from './features/cocktails/views/CocktailEditView';
 import CocktailLayout from './features/cocktails/views/CocktailLayout';
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
         path: 'cocktails',
         element: <CocktailLayout />,
         children: [
+          { path: 'create', element: <CocktailAddView /> },
           { path: ':id', element: <CocktailDetailsView /> },
           { path: ':id/edit', element: <CocktailEditView /> },
           { index: true, element: <CocktailList /> },
