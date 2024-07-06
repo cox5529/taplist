@@ -96,6 +96,9 @@ public class RecipeImportService : IRecipeImportService
                 parsedIngredient.Comment);
         }
 
+        var description = string.Join(", ", recipe.Ingredients.Select(x => x.Ingredient?.Name));
+        recipe.SetDescription(description);
+
         if (schemaRecipe.RecipeInstructions.HasValue2)
         {
             foreach (var schemaSection in schemaRecipe.RecipeInstructions.Value2)
