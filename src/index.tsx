@@ -17,6 +17,7 @@ import AuthenticationLayout from './shared/views/auth/AuthenticationLayout';
 import LoginView from './shared/views/auth/LoginView';
 
 import './index.css';
+import CocktailSearchResultsView from './features/cocktails/views/CocktailSearchResultsView';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -48,6 +49,7 @@ const router = createBrowserRouter([
         path: 'cocktails',
         element: <CocktailLayout />,
         children: [
+          { path: 'search', element: <CocktailSearchResultsView /> },
           { path: 'create', element: <CocktailAddView /> },
           { path: ':id', element: <CocktailDetailsView /> },
           { path: ':id/edit', element: <CocktailEditView /> },

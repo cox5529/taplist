@@ -1,14 +1,22 @@
 import { useMemo } from 'react';
 
-import { collection, CollectionReference, query, where } from 'firebase/firestore';
+import { collection, CollectionReference, DocumentData, Query, query, where } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { firestore } from '../../../firebase';
 import { Cocktail } from '../models/cocktail';
 
-export function useCocktails(curated: boolean): [Cocktail[], boolean] {
+export type CocktailSearchConfig = {
+  curated?: boolean;
+  search?: string;
+};
+
+export function useCocktails(config: CocktailSearchConfig): [Cocktail[], boolean] {
   const cocktailCollection = collection(firestore, 'cocktails') as CollectionReference<Cocktail>;
-  const cocktailQuery = curated ? query(cocktailCollection, where('curated', '==', true)) : cocktailCollection;
+  let cocktailQuery: Query<Cocktail, DocumentData> = cocktailCollection;
+  if (config.curated) {
+    cocktailQuery = query(cocktailQuery, where('curated', '==', true));
+  }
 
   const [cocktails, isLoading] = useCollection<Cocktail>(cocktailQuery);
 

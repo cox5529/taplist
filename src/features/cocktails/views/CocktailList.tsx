@@ -5,7 +5,9 @@ import { useCocktails } from '../hooks/useCocktails';
 import MenuItem from '../components/menu/MenuItem';
 
 const CocktailList: React.FC = () => {
-  const [data, areCocktailsLoaded] = useCocktails(true);
+  const [data, areCocktailsLoaded] = useCocktails({
+    curated: true
+  });
 
   return (
     <div className='grid md:grid-cols-2 xl:grid-cols-3 text-xl gap-8'>

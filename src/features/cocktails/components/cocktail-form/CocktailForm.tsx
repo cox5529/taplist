@@ -77,7 +77,7 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
       description: formValue.description,
       instructions: formValue.instructions,
       ingredients: [],
-      curated: formValue.curated
+      curated: formValue.curated ?? false
     };
 
     for (const formIngredient of formValue.ingredients) {

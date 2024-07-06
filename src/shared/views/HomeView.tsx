@@ -3,6 +3,7 @@ import React from 'react';
 import BeerList from '../../features/beer/views/BeerList';
 import CocktailList from '../../features/cocktails/views/CocktailList';
 import HomeSection from '../components/HomeSection';
+import CocktailSearchView from '../../features/cocktails/views/CocktailSearchView';
 
 const HomeView: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const HomeView: React.FC = () => {
         <BeerList />
       </HomeSection>
       <HomeSection header='Looking for something else?'>
-        
+        <CocktailSearchView />
       </HomeSection>
     </div>
   );
