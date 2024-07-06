@@ -3,35 +3,43 @@ import React, { useEffect } from 'react';
 import { doc, DocumentReference, setDoc } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import { auth, firestore } from '../../../firebase';
 import Button from '../../../shared/components/buttons/Button';
 import SectionHeader from '../../../shared/components/typography/SectionHeader';
 import CocktailForm from '../components/cocktail-form/CocktailForm';
 import { Cocktail } from '../models/cocktail';
+import { useCocktail } from '../hooks/useCocktail';
+import LoadingBox from '../../../shared/components/LoadingBox';
 
 const CocktailEditView: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [user, isLoading] = useAuthState(auth);
+  const [user, isAuthLoading] = useAuthState(auth);
   const parentRoute = `/cocktails/${id}`;
 
-  const [cocktail] = useDocumentDataOnce<Cocktail>(
-    doc(firestore, 'cocktails', id ?? '') as DocumentReference<Cocktail>,
-  );
+  const [cocktail, isCocktailLoading] = useCocktail(id ?? '');
 
   useEffect(() => {
-    if (!isLoading && !user) {
+    if (!isAuthLoading && !user) {
       navigate(parentRoute);
     }
-  }, [isLoading, navigate, parentRoute, user]);
+  }, [isAuthLoading, navigate, parentRoute, user]);
 
   const onEdit = async (cocktail: Cocktail) => {
     cocktail.id = id ?? '';
     await setDoc(doc(firestore, 'cocktails', cocktail.id), cocktail);
     navigate(parentRoute);
   };
+
+  if (isCocktailLoading) {
+    return <LoadingBox />;
+  }
+
+  if (!cocktail) {
+    return <Navigate to='/' />;
+  }
 
   return (
     <>

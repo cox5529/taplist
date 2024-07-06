@@ -78,7 +78,7 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
       ingredients: [],
     };
 
-    for (const formIngredient of cocktail.ingredients) {
+    for (const formIngredient of formValue.ingredients) {
       let ingredient: Ingredient | undefined = ingredients.find((x) => x.name === formIngredient.ingredient?.name);
 
       if (!ingredient?.id) {
