@@ -2,7 +2,7 @@ import React from 'react';
 
 import Spinner from '../../../shared/components/shapes/Spinner';
 import { useCocktails } from '../hooks/useCocktails';
-import MenuItem from './menu/MenuItem';
+import MenuItem from '../components/menu/MenuItem';
 
 const CocktailList: React.FC = () => {
   const [data, areCocktailsLoaded] = useCocktails(true);

@@ -37,7 +37,7 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
           {beer.keg && <span>{beer.keg}. </span>}
           {beer.name}
         </SubsectionHeader>
-        <div className='flex flex-grow'>
+        <div className='flex flex-grow gap-4'>
           <div className='flex-grow flex flex-col gap-4 text-lg'>
             <PackagedBeerCardField>{beer.style}</PackagedBeerCardField>
             <Paragraph className='flex-grow italic'>{beer.description}</Paragraph>

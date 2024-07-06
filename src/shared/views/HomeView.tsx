@@ -1,7 +1,7 @@
 import React from 'react';
 
 import BeerList from '../../features/beer/views/BeerList';
-import CocktailList from '../../features/cocktails/components/CocktailList';
+import CocktailList from '../../features/cocktails/views/CocktailList';
 import HomeSection from '../components/HomeSection';
 
 const HomeView: React.FC = () => {
