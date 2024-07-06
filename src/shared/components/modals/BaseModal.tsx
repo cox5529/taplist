@@ -2,14 +2,19 @@ import React from 'react';
 
 import Card from '../../../shared/components/card/Card';
 
-type Props = {
-  className?: string;
+export type BaseModalProps = {
   open?: boolean;
+};
+
+type Props = BaseModalProps & {
+  className?: string;
 } & React.PropsWithChildren;
 
 const BaseModal: React.FC<Props> = (props: Props) => {
+  console.log(props.open);
+
   return props.open ? (
-    <div className='inset-0 fixed bg-black bg-opacity-20 z-50 xl:flex items-center justify-center p-16 hidden'>
+    <div className='inset-0 fixed bg-black bg-opacity-20 z-50 xl:flex items-center justify-center p-16'>
       <Card className={props.className}>{props.children}</Card>
     </div>
   ) : (

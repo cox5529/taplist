@@ -9,6 +9,7 @@ type Props = React.PropsWithChildren & {
   className?: string;
   disabled?: boolean;
   loading?: boolean;
+  color?: 'blue' | 'red';
   click?: () => void;
 } & (
     | {
@@ -19,8 +20,9 @@ type Props = React.PropsWithChildren & {
   );
 
 const Button: React.FC<Props> = (props: Props) => {
-  const className = cx(props.className, 'bg-sky-800 text-white px-4 py-2 rounded hover:bg-sky-600', {
-    'pointer-events-none cursor-not-allowed': props.disabled,
+  const className = cx(props.className, 'bg-sky-800 text-white px-4 py-2 rounded hover:bg-sky-600 transition-colors', {
+    'bg-gray-300 pointer-events-none cursor-not-allowed': props.disabled,
+    'bg-red-500 hover:bg-red-600': props.color === 'red' && !props.disabled,
   });
 
   return props.to ? (

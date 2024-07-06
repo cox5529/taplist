@@ -5,10 +5,10 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import BeerList from './features/beer/views/BeerList';
 import EditBeerView from './features/beer/views/admin/EditView';
-import CocktailList from './features/cocktails/views/CocktailList';
-import CocktailAddView from './features/cocktails/views/CocktailAddView';
-import CocktailDetailsView from './features/cocktails/views/CocktailDetailsView';
-import CocktailEditView from './features/cocktails/views/CocktailEditView';
+import CocktailList from './features/cocktails/views/cocktails/CocktailListView';
+import CocktailAddView from './features/cocktails/views/cocktails/CocktailAddView';
+import CocktailDetailsView from './features/cocktails/views/cocktails/CocktailDetailsView';
+import CocktailEditView from './features/cocktails/views/cocktails/CocktailEditView';
 import CocktailLayout from './features/cocktails/views/CocktailLayout';
 import BaseLayout from './shared/views/BaseLayout';
 import HomeView from './shared/views/HomeView';
@@ -17,7 +17,8 @@ import AuthenticationLayout from './shared/views/auth/AuthenticationLayout';
 import LoginView from './shared/views/auth/LoginView';
 
 import './index.css';
-import CocktailSearchResultsView from './features/cocktails/views/CocktailSearchResultsView';
+import CocktailSearchResultsView from './features/cocktails/views/cocktails/CocktailSearchResultsView';
+import IngredientListView from './features/cocktails/views/ingredients/IngredientListView';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
         children: [
           { path: 'search', element: <CocktailSearchResultsView /> },
           { path: 'create', element: <CocktailAddView /> },
+          {
+            path: 'ingredients',
+            element: <IngredientListView />,
+          },
           { path: ':id', element: <CocktailDetailsView /> },
           { path: ':id/edit', element: <CocktailEditView /> },
           { index: true, element: <CocktailList /> },
@@ -65,9 +70,12 @@ const router = createBrowserRouter([
 ]);
 
 // Refresh every hour to pickup any site updates
-setInterval(() => {
-  window.location.reload();
-}, 60 * 60 * 1000);
+setInterval(
+  () => {
+    window.location.reload();
+  },
+  60 * 60 * 1000,
+);
 
 root.render(
   <React.StrictMode>

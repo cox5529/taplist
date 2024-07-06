@@ -8,7 +8,6 @@ import { Cocktail } from '../models/cocktail';
 
 export type CocktailSearchConfig = {
   curated?: boolean;
-  search?: string;
 };
 
 export function useCocktails(config: CocktailSearchConfig): [Cocktail[], boolean] {
@@ -21,7 +20,7 @@ export function useCocktails(config: CocktailSearchConfig): [Cocktail[], boolean
   const [cocktails, isLoading] = useCollection<Cocktail>(cocktailQuery);
 
   return useMemo(
-    () => [cocktails?.docs.map((x) => ({ ...x.data(), id: x.id })) ?? [], !isLoading],
+    () => [cocktails?.docs.map((x) => ({ ...x.data(), id: x.id })) ?? [], isLoading],
     [cocktails?.docs, isLoading],
   );
 }

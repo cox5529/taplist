@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo } from 'react';
-import SectionHeader from '../../../shared/components/typography/SectionHeader';
+import SectionHeader from '../../../../shared/components/typography/SectionHeader';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import Button from '../../../shared/components/buttons/Button';
-import CocktailSearchForm from '../components/search/CocktailSearchForm';
+import Button from '../../../../shared/components/buttons/Button';
+import CocktailSearchForm from '../../components/search/CocktailSearchForm';
 import { InfiniteHits, useInfiniteHits, useSearchBox } from 'react-instantsearch';
-import MenuItem from '../components/menu/MenuItem';
+import MenuItem from '../../components/menu/MenuItem';
 import type { Hit, BaseHit } from 'instantsearch.js';
-import { Cocktail } from '../models/cocktail';
+import { Cocktail } from '../../models/cocktail';
+import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
 
 type HitType = {
   name: string;
@@ -48,12 +49,7 @@ const CocktailSearchResultsView: React.FC = () => {
 
   return (
     <div className='flex gap-4 flex-col'>
-      <div className='flex justify-between gap-2'>
-        <SectionHeader>Search results for '{query}'</SectionHeader>
-        <Button to='/' className='w-16 flex items-center justify-center'>
-          Back
-        </Button>
-      </div>
+      <SectionHeaderWithButton header={`Search results for '${query}'`} backButton />
       <CocktailSearchForm initialSearch={query ?? ''} />
       {results?.hits && (
         <div className='flex flex-col gap-4'>

@@ -9,6 +9,7 @@ import SectionHeader from './typography/SectionHeader';
 type Props = React.PropsWithChildren & {
   header: string;
   addRoute?: string;
+  addButtonText?: string;
 };
 
 const HomeSection: React.FC<Props> = (props: Props) => {
@@ -16,9 +17,9 @@ const HomeSection: React.FC<Props> = (props: Props) => {
   return (
     <>
       <section className='py-8'>
-        <div className='flex gap-2 items-start'>
+        <div className='flex gap-2 items-start justify-between'>
           <SectionHeader>{props.header}</SectionHeader>
-          {props.addRoute && user && <Button to={props.addRoute}>New</Button>}
+          {props.addRoute && user && <Button to={props.addRoute}>{props.addButtonText ?? 'New'}</Button>}
         </div>
         {props.children}
       </section>

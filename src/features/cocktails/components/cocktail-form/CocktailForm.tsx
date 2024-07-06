@@ -17,6 +17,8 @@ import { Ingredient } from '../../models/ingredient';
 import IngredientField from './IngredientField';
 import InstructionField from './InstructionField';
 import Checkbox from '../../../../shared/components/form-controls/Checkbox';
+import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
+import SubsectionHeaderWithButton from '../../../../shared/components/typography/SubsectionHeaderWithButton';
 
 type Props = {
   cocktail?: Cocktail;
@@ -108,10 +110,9 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
       {({ isSubmitting, values, errors }) => (
         <Form className='flex flex-col gap-8'>
           <section>
-            <div className='flex justify-between items-center'>
-              <SubsectionHeader>Metadata</SubsectionHeader>
+            <SubsectionHeaderWithButton header='Metadata'>
               <Checkbox name='curated' label='Curated' />
-            </div>
+            </SubsectionHeaderWithButton>
             <TextField name='name' label='Name' />
             <TextField name='description' label='Description' as='textarea' />
           </section>

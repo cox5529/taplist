@@ -5,13 +5,14 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
-import { auth, firestore } from '../../../firebase';
-import Button from '../../../shared/components/buttons/Button';
-import SectionHeader from '../../../shared/components/typography/SectionHeader';
-import CocktailForm from '../components/cocktail-form/CocktailForm';
-import { Cocktail } from '../models/cocktail';
-import { useCocktail } from '../hooks/useCocktail';
-import LoadingBox from '../../../shared/components/LoadingBox';
+import { auth, firestore } from '../../../../firebase';
+import Button from '../../../../shared/components/buttons/Button';
+import SectionHeader from '../../../../shared/components/typography/SectionHeader';
+import CocktailForm from '../../components/cocktail-form/CocktailForm';
+import { Cocktail } from '../../models/cocktail';
+import { useCocktail } from '../../hooks/useCocktail';
+import LoadingBox from '../../../../shared/components/LoadingBox';
+import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
 
 const CocktailEditView: React.FC = () => {
   const { id } = useParams();
@@ -44,10 +45,9 @@ const CocktailEditView: React.FC = () => {
   return (
     <>
       <section>
-        <div className='flex justify-between items-center pb-2 gap-2'>
-          <SectionHeader>Edit {cocktail?.name}</SectionHeader>
+        <SectionHeaderWithButton header={`Edit ${cocktail.name}`}>
           <Button to={parentRoute}>Back</Button>
-        </div>
+        </SectionHeaderWithButton>
       </section>
       <CocktailForm cocktail={cocktail} onSubmit={onEdit} />
     </>

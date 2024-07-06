@@ -27,20 +27,20 @@ export type Cocktail = {
 };
 
 export const PluralMap: Record<Unit, string> = {
-  [Unit.Tablespoon]: 'tablespoons',
+  [Unit.Tablespoon]: 'Tbsp',
   [Unit.Dash]: 'dashes',
-  [Unit.Ounce]: 'ounces',
-  [Unit.Teaspoon]: 'teaspoons',
+  [Unit.Ounce]: 'oz',
+  [Unit.Teaspoon]: 'tsp',
   [Unit.Unit]: '',
   [Unit.Handful]: 'handfuls',
   [Unit.Leaf]: 'leaves',
 };
 
 export const SingularMap: Record<Unit, string> = {
-  [Unit.Tablespoon]: 'tablespoon',
+  [Unit.Tablespoon]: 'Tbsp',
   [Unit.Dash]: 'dash',
-  [Unit.Ounce]: 'ounce',
-  [Unit.Teaspoon]: 'teaspoon',
+  [Unit.Ounce]: 'oz',
+  [Unit.Teaspoon]: 'tsp',
   [Unit.Unit]: '',
   [Unit.Handful]: 'Handful',
   [Unit.Leaf]: 'leaf',
