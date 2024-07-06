@@ -40,8 +40,8 @@ function Typeahead<T>(props: TypeaheadProps<T>): ReactElement {
       <Field type='hidden' name={props.valueName} />
 
       <datalist id={listId}>
-        {props.keys.map(({ value, text }) => (
-          <option key={value} value={value}>
+        {props.keys.map(({ value, text }, i) => (
+          <option key={i} value={value}>
             {text}
           </option>
         ))}

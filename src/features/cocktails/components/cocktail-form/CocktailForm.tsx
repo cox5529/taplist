@@ -16,6 +16,7 @@ import { Cocktail, CocktailIngredient, Unit } from '../../models/cocktail';
 import { Ingredient } from '../../models/ingredient';
 import IngredientField from './IngredientField';
 import InstructionField from './InstructionField';
+import Checkbox from '../../../../shared/components/form-controls/Checkbox';
 
 type Props = {
   cocktail?: Cocktail;
@@ -76,6 +77,7 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
       description: formValue.description,
       instructions: formValue.instructions,
       ingredients: [],
+      curated: formValue.curated
     };
 
     for (const formIngredient of formValue.ingredients) {
@@ -88,12 +90,13 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
         };
 
         await setDoc(doc(firestore, 'ingredients', ingredient.id), ingredient);
+        ingredients.push(ingredient);
       }
 
       cocktail.ingredients.push({
         ingredientId: ingredient.id,
         quantity: formIngredient.quantity,
-        unit: formIngredient.unit
+        unit: formIngredient.unit,
       });
     }
 
@@ -105,7 +108,10 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
       {({ isSubmitting, values, errors }) => (
         <Form className='flex flex-col gap-8'>
           <section>
-            <SubsectionHeader>Metadata</SubsectionHeader>
+            <div className='flex justify-between items-center'>
+              <SubsectionHeader>Metadata</SubsectionHeader>
+              <Checkbox name='curated' label='Curated' />
+            </div>
             <TextField name='name' label='Name' />
             <TextField name='description' label='Description' as='textarea' />
           </section>

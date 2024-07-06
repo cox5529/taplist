@@ -22,7 +22,5 @@ export const useCocktail = (id: string): [Cocktail | undefined, boolean] => {
     cocktail.ingredients = cocktailIngredients;
   }
 
-  console.log(cocktail, isCocktailLoading, areIngredientsLoading);
-
   return [cocktail, isCocktailLoading || areIngredientsLoading];
 };

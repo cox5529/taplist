@@ -5,7 +5,7 @@ import { useCocktails } from '../hooks/useCocktails';
 import MenuItem from './menu/MenuItem';
 
 const CocktailList: React.FC = () => {
-  const [data, areCocktailsLoaded] = useCocktails();
+  const [data, areCocktailsLoaded] = useCocktails(true);
 
   return (
     <div className='grid md:grid-cols-2 xl:grid-cols-3 text-xl gap-8'>

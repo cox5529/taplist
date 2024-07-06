@@ -13,6 +13,9 @@ const HomeView: React.FC = () => {
       <HomeSection header='Beer'>
         <BeerList />
       </HomeSection>
+      <HomeSection header='Looking for something else?'>
+        
+      </HomeSection>
     </div>
   );
 };

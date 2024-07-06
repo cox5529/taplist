@@ -23,8 +23,8 @@ function Dropdown<T>(props: DropdownProps<T>): React.ReactElement {
     <div className={props.className}>
       {props.label && <Label for={id}>{props.label}</Label>}
       <Field id={id} name={props.name} as={'select'} className='block border-2 h-[34px] rounded px-2 py-1 outline-none w-full'>
-        {props.keys.map((x) => (
-          <option key={x.value} value={x.value}>
+        {props.keys.map((x, i) => (
+          <option key={i} value={x.value}>
             {x.text}
           </option>
         ))}
