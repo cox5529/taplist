@@ -40,9 +40,9 @@ public class IngredientRepository : IIngredientRepository
     }
 
     /// <inheritdoc />
-    public Task SaveAsync(Ingredient entity, CancellationToken cancel = default)
+    public async Task SaveAsync(Ingredient entity, CancellationToken cancel = default)
     {
-        throw new NotImplementedException();
+        await _collection.Document(entity.Id).SetAsync(entity, cancellationToken: cancel);
     }
 
     /// <inheritdoc />
@@ -51,5 +51,13 @@ public class IngredientRepository : IIngredientRepository
         var queryResult = await _collection.WhereEqualTo("name", name).Limit(1).GetSnapshotAsync(cancel);
         var result = queryResult.Count > 0 ? queryResult[0] : null;
         return result?.ConvertTo<Ingredient>();
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<Ingredient>> GetAllIngredientsAsync(CancellationToken cancel = default)
+    {
+        var queryResult = await _collection.GetSnapshotAsync(cancel);
+        var result = queryResult.Documents.Select(x => x.ConvertTo<Ingredient>());
+        return result;
     }
 }

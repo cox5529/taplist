@@ -21,6 +21,11 @@ public class Recipe : BaseEntity<string>
     [FirestoreProperty("instructions")]
     public virtual IList<string> Instructions { get; private set; } = new List<string>();
 
+    [FirestoreProperty("relatedRecipes")]
+    public virtual IList<string> SimilarRecipes { get; private set; } = new List<string>();
+    
+    public virtual Dictionary<string, float> SimilarRecipesMap { get; private set; } = new();
+
     private Recipe()
     {
     }
@@ -45,5 +50,22 @@ public class Recipe : BaseEntity<string>
     public void AppendInstruction(string content)
     {
         Instructions.Add(content);
+    }
+
+    public void UpdateSimilarRecipes()
+    {
+        var list = SimilarRecipesMap.ToList();
+        list.Sort(
+            (a, b) =>
+            {
+                if (a.Value > b.Value)
+                {
+                    return -1;
+                }
+
+                return 1;
+            });
+
+        SimilarRecipes = list.Select(x => x.Key).Take(3).ToList();
     }
 }

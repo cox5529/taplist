@@ -18,6 +18,7 @@ public static class DependencyInjection
         services.AddSingleton(TimeProvider.System);
         services.AddIngredientParser(configuration);
         services.AddRecipeImports();
+        services.AddWordVectors(configuration);
 
         services.AddRepositories();
     }
@@ -39,6 +40,12 @@ public static class DependencyInjection
     {
         services.Configure<IngredientParserSettings>(o => configuration.GetSection("IngredientParser").Bind(o));
         services.AddScoped<IIngredientParserService, IngredientParserService>();
+    }
+
+    private static void AddWordVectors(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<VectorSettings>(o => configuration.GetSection("Vector").Bind(o));
+        services.AddScoped<IVectorService, VectorService>();
     }
 
     private static void AddFirebase(this IServiceCollection services, IConfiguration configuration)

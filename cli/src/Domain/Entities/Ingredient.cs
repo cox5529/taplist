@@ -8,6 +8,13 @@ public class Ingredient : BaseEntity<string>
 {
     [FirestoreProperty("name")]
     public string Name { get; private set; } = "";
+    
+    [FirestoreProperty("alternateName")]
+    public string? AlternateName { get; set; }
+
+    public Dictionary<string, float> Similarities { get; set; } = new();
+
+    public string VectorLookup => AlternateName ?? Name;
 
     public Ingredient()
     {

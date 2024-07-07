@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Taplist.Application;
+using Taplist.Application.Common.Interfaces.Services;
+using Taplist.Application.Ingredients.Commands;
+using Taplist.Application.Ingredients.Queries;
 using Taplist.Application.Recipes.Commands;
 using Taplist.Infrastructure;
 
@@ -57,15 +60,59 @@ public static class Program
         return mediator;
     }
 
+    private static IVectorService GetVectorService()
+    {
+        var services = new ServiceCollection();
+        ConfigureServices(services);
+
+        var serviceProvider = services.BuildServiceProvider();
+        var vectorService = serviceProvider.GetRequiredService<IVectorService>();
+
+        return vectorService;
+    }
+
     public static async Task Main(string[] args)
     {
         var mediator = GetMediator();
+        var vectorService = GetVectorService();
 
         var rootCommand = new RootCommand("Imports a recipe from a given URL to the barlist") { Name = "barlist-import" };
         var urlArgument = new Argument<string>("URL", "URL to import the recipe from");
         rootCommand.AddArgument(urlArgument);
         rootCommand.SetHandler((url) => mediator.Send(new ImportRecipeRequest { Url = url }), urlArgument);
 
+        var alternateCommand = new Command("sub", "Determine what ingredients need alternate word vector lookup keys");
+        alternateCommand.SetHandler(
+            async () =>
+            {
+                var response = await mediator.Send(new DetermineNecessaryAlternates());
+                foreach (var word in response.Alternates)
+                {
+                    Console.WriteLine(word);
+                }
+            });
+
+        var setAlternateCommand = new Command("set-alternate", "Sets the alternate for a given ingredient");
+        var ingredientArgument = new Argument<string>("ingredient", "The ingredient to add the alternate for");
+        var alternateArgument = new Argument<string>("alternate", "The alternate to use when computing similarity");
+        setAlternateCommand.AddArgument(ingredientArgument);
+        setAlternateCommand.AddArgument(alternateArgument);
+        setAlternateCommand.SetHandler(
+            (ingredient, alternate) => mediator.Send(
+                new AddSimilarityAlternate
+                {
+                    Alternate = alternate,
+                    Ingredient = ingredient
+                }),
+            ingredientArgument,
+            alternateArgument);
+
+        var similarityCommand = new Command("sim", "Computes and saves the most similar recipes to each other");
+        similarityCommand.SetHandler(() => mediator.Send(new ComputeSimilarRecipes()));
+
+        rootCommand.AddCommand(alternateCommand);
+        rootCommand.AddCommand(setAlternateCommand);
+        rootCommand.AddCommand(similarityCommand);
         await rootCommand.InvokeAsync(args);
     }
 }

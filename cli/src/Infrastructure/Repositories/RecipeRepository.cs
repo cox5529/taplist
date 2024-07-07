@@ -12,7 +12,7 @@ public class RecipeRepository : IRecipeRepository
     {
         _collection = db.Collection("cocktails");
     }
-    
+
     /// <inheritdoc />
     public Task<Recipe> GetByIdRequiredAsync(string id, CancellationToken cancel = default)
     {
@@ -39,8 +39,16 @@ public class RecipeRepository : IRecipeRepository
     }
 
     /// <inheritdoc />
-    public Task SaveAsync(Recipe entity, CancellationToken cancel = default)
+    public async Task SaveAsync(Recipe entity, CancellationToken cancel = default)
     {
-        throw new NotImplementedException();
+        await _collection.Document(entity.Id).SetAsync(entity, cancellationToken: cancel);
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<Recipe>> GetAllAsync(CancellationToken cancel = default)
+    {
+        var queryResult = await _collection.GetSnapshotAsync(cancel);
+        var result = queryResult.Documents.Select(x => x.ConvertTo<Recipe>());
+        return result;
     }
 }
