@@ -25,6 +25,7 @@ const HitComponent: React.FC<HitComponentProps> = ({ hit }: HitComponentProps) =
     id: hit.objectID,
     ingredients: [],
     instructions: [],
+    relatedRecipes: []
   };
 
   return <MenuItem cocktail={cocktail} />;
