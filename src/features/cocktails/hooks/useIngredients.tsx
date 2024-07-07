@@ -18,6 +18,8 @@ export function useIngredients(ids?: string[]): [Ingredient[], boolean] {
     const data = ingredients?.docs.map((x) => ({ ...x.data(), id: x.id })) ?? [];
     const result = ids ? ids.map((x) => data.find((y) => y.id === x) as Ingredient).filter((x) => !!x) : data;
 
+    result.sort((a, b) => a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase()));
+
     return [result, isLoading];
   }, [ingredients?.docs, isLoading, ids]);
 }

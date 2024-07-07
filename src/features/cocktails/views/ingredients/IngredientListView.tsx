@@ -48,7 +48,7 @@ const IngredientListView: React.FC = () => {
   return (
     <div>
       <SectionHeaderWithButton header='Ingredients' backButton />
-      <div className='flex gap-2 pb-4'>
+      <div className='flex gap-2 pb-4 bg-white rounded sticky top-4 border p-4 mb-4 shadow'>
         <Button disabled={checked.length < 2} click={mergeIngredients}>
           Merge
         </Button>
