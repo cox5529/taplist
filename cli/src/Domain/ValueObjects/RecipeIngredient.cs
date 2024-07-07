@@ -14,10 +14,10 @@ public class RecipeIngredient
 
     [FirestoreProperty("quantity")]
     public double Quantity { get; private set; }
-    public Units Unit { get; private set; }
 
     [FirestoreProperty("unit")]
-    public string UnitName => Unit.ToString();
+    public string Unit { get; private set; } = "unit";
+
 
     [FirestoreProperty("instruction")]
     public string? Instruction { get; private set; }
@@ -32,7 +32,7 @@ public class RecipeIngredient
         IngredientId = ingredient.Id;
 
         Quantity = quantity;
-        Unit = unit;
+        Unit = unit.ToString();
         Instruction = instruction;
     }
 }

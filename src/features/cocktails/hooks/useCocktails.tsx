@@ -8,6 +8,7 @@ import { Cocktail } from '../models/cocktail';
 
 export type CocktailSearchConfig = {
   curated?: boolean;
+  ids?: string[];
 };
 
 export function useCocktails(config: CocktailSearchConfig): [Cocktail[], boolean] {
@@ -15,6 +16,10 @@ export function useCocktails(config: CocktailSearchConfig): [Cocktail[], boolean
   let cocktailQuery: Query<Cocktail, DocumentData> = cocktailCollection;
   if (config.curated) {
     cocktailQuery = query(cocktailQuery, where('curated', '==', true));
+  }
+
+  if (config.ids && config.ids.length > 0) {
+    cocktailQuery = query(cocktailQuery, where('id', 'in', config.ids));
   }
 
   const [cocktails, isLoading] = useCollection<Cocktail>(cocktailQuery);

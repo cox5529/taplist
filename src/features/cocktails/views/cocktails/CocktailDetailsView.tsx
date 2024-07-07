@@ -12,12 +12,17 @@ import SubsectionHeader from '../../../../shared/components/typography/Subsectio
 import { useCocktail } from '../../hooks/useCocktail';
 import { getIngredientString } from '../../util/getIngredientString';
 import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
+import { useCocktails } from '../../hooks/useCocktails';
+import MenuItem from '../../components/menu/MenuItem';
 
 const CocktailDetailsView: React.FC = () => {
   const { id } = useParams();
   const [user] = useAuthState(auth);
 
   const [cocktail, isLoading] = useCocktail(id ?? '');
+  const [relatedCocktails, areRelatedCocktailsLoading] = useCocktails({
+    ids: cocktail?.relatedRecipes ?? [],
+  });
 
   if (isLoading) {
     return <LoadingBox />;
@@ -42,6 +47,14 @@ const CocktailDetailsView: React.FC = () => {
       <section>
         <SubsectionHeader>Steps</SubsectionHeader>
         <ol className='list-decimal ml-4'>{cocktail?.instructions.map((x, i) => <li key={i}>{x}</li>)}</ol>
+      </section>
+      <section>
+        <SubsectionHeader>Related Recipes</SubsectionHeader>
+        <div className='flex flex-col gap-2'>
+          {relatedCocktails.map((x, i) => (
+            <MenuItem key={i} cocktail={x} />
+          ))}
+        </div>
       </section>
     </div>
   );

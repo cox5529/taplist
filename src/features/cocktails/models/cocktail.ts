@@ -24,6 +24,7 @@ export type Cocktail = {
   instructions: string[];
   name: string;
   curated?: boolean;
+  relatedRecipes: string[];
 };
 
 export const PluralMap: Record<Unit, string> = {

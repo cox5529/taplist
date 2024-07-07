@@ -37,6 +37,7 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
       curated: false,
       ingredients: [],
       instructions: [],
+      relatedRecipes: []
     };
 
     cocktail.ingredients = cocktail.ingredients.map((x) => ({
@@ -54,7 +55,7 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
       .min(1)
       .of(
         object({
-          instruction: string(),
+          instruction: string().nullable(),
           quantity: number().min(0),
           unit: string().oneOf(Object.keys(Unit)).required(),
         }),
@@ -79,7 +80,8 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
       description: formValue.description,
       instructions: formValue.instructions,
       ingredients: [],
-      curated: formValue.curated ?? false
+      curated: formValue.curated ?? false,
+      relatedRecipes: formValue.relatedRecipes
     };
 
     for (const formIngredient of formValue.ingredients) {

@@ -14,6 +14,9 @@ public class Recipe : BaseEntity<string>
 
     [FirestoreProperty("description")]
     public string? Description { get; private set; }
+
+    [FirestoreProperty("curated")]
+    public bool Curated { get; private set; }
     
     [FirestoreProperty("ingredients")]
     public virtual IList<RecipeIngredient> Ingredients { get; private set; } = new List<RecipeIngredient>();
@@ -34,6 +37,7 @@ public class Recipe : BaseEntity<string>
     {
         Id = Guid.NewGuid().ToString();
         Name = name;
+        Curated = false;
     }
 
     public void SetDescription(string? description)
