@@ -1,4 +1,4 @@
-import { CocktailIngredient, PluralMap, SingularMap, Unit } from "../models/cocktail";
+import { CocktailIngredient, PluralMap, SingularMap, Unit } from '../models/cocktail';
 
 const gcd = (a: number, b: number): number => {
   if (!b) return a;
@@ -6,7 +6,7 @@ const gcd = (a: number, b: number): number => {
   return gcd(b, a % b);
 };
 
- const getQuantityString = (quantity: number): string => {
+const getQuantityString = (quantity: number): string => {
   let str = `${quantity}`;
   if (!str.includes('.')) {
     return str;
@@ -25,7 +25,6 @@ const gcd = (a: number, b: number): number => {
 
   return `${whole} ${str}`;
 };
-
 
 export const getIngredientString = (ingredient: CocktailIngredient): string => {
   const unit = ingredient.quantity === 1 ? SingularMap[ingredient.unit] : PluralMap[ingredient.unit];

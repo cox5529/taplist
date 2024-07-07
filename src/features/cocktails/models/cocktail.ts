@@ -7,7 +7,7 @@ export enum Unit {
   Ounce = 'Ounce',
   Unit = 'Unit',
   Handful = 'Handful',
-  Leaf = 'Leaf'
+  Leaf = 'Leaf',
 }
 
 export type CocktailIngredient = {

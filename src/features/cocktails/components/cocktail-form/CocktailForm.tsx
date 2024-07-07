@@ -37,7 +37,7 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
       curated: false,
       ingredients: [],
       instructions: [],
-      relatedRecipes: []
+      relatedRecipes: [],
     };
 
     cocktail.ingredients = cocktail.ingredients.map((x) => ({
@@ -81,7 +81,7 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
       instructions: formValue.instructions,
       ingredients: [],
       curated: formValue.curated ?? false,
-      relatedRecipes: formValue.relatedRecipes
+      relatedRecipes: formValue.relatedRecipes,
     };
 
     for (const formIngredient of formValue.ingredients) {

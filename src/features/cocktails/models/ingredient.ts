@@ -2,7 +2,7 @@ export enum Allergen {
   EggWhite = 'egg white',
   EggYolk = 'egg yolk',
   Nuts = 'nuts',
-  Dairy = 'dairy'
+  Dairy = 'dairy',
 }
 
 export type Ingredient = {

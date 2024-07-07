@@ -1,9 +1,9 @@
-import { useDocumentData } from "react-firebase-hooks/firestore";
-import { Cocktail } from "../models/cocktail";
-import { doc, DocumentReference } from "firebase/firestore";
-import { firestore } from "../../../firebase";
-import { useIngredients } from "./useIngredients";
-import { useMemo } from "react";
+import { useDocumentData } from 'react-firebase-hooks/firestore';
+import { Cocktail } from '../models/cocktail';
+import { doc, DocumentReference } from 'firebase/firestore';
+import { firestore } from '../../../firebase';
+import { useIngredients } from './useIngredients';
+import { useMemo } from 'react';
 
 export const useCocktail = (id: string): [Cocktail | undefined, boolean] => {
   const [cocktail, isCocktailLoading] = useDocumentData<Cocktail>(

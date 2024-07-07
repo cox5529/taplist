@@ -23,12 +23,7 @@ function Checkbox<T>(props: CheckboxProps<T>): ReactElement {
 
   return (
     <div className={cx(props.className, 'flex gap-2')}>
-      <Field
-        id={id}
-        name={props.name}
-        className=''
-        type={'checkbox'}
-      />
+      <Field id={id} name={props.name} className='' type={'checkbox'} />
       {props.label && <Label for={id}>{props.label}</Label>}
       {hasError && <ErrorMessage>{error.toString()}</ErrorMessage>}
     </div>

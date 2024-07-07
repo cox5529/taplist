@@ -6,7 +6,7 @@ import MenuItem from '../../components/menu/MenuItem';
 
 const CocktailList: React.FC = () => {
   const [data, areCocktailsLoading] = useCocktails({
-    curated: true
+    curated: true,
   });
 
   return (
