@@ -37,6 +37,13 @@ public class ParseIngredientQuery : IRequestHandler<ParseIngredientRequest, Pars
             throw new BadRequestException();
         }
 
+        if (result.Name.StartsWith("Garnish: "))
+        {
+            result.Name = result.Name[9..];
+        }
+
+        result.Name = char.ToUpper(result.Name[0]) + result.Name[1..];
+
         var ingredient = await _mediator.Send(new CreateIngredient { Ingredient = result }, cancel);
         result.Id = ingredient.Id;
         return new ParseIngredientResponse { Result = result };
