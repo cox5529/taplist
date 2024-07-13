@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik';
 import React from 'react';
 import TextField from '../../../../shared/components/form-controls/TextField';
 import SearchButton from '../../../../shared/components/buttons/SearchButton';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 type Props = {
   initialSearch?: string;
@@ -13,7 +13,7 @@ type FormValues = {
 };
 
 const CocktailSearchForm: React.FC<Props> = (props: Props) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const initialValues: FormValues = {
     search: props.initialSearch ?? '',
@@ -24,7 +24,7 @@ const CocktailSearchForm: React.FC<Props> = (props: Props) => {
       return;
     }
 
-    navigate(`/cocktails/search?query=${encodeURIComponent(values.search)}`);
+    router.push(`/cocktails/search?query=${encodeURIComponent(values.search)}`);
   };
 
   return (

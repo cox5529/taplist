@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useNavigate } from 'react-router-dom';
-
 import Card from '../../../../shared/components/card/Card';
 import Paragraph from '../../../../shared/components/typography/Paragraph';
 import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
@@ -13,6 +11,7 @@ import BottledNoKeg from '../beer/BottledNoKeg';
 import KegNoBottle from '../beer/KegNoBottle';
 import PackagedBeerCardField from './PackagedBeerCardField';
 import PackagedBeerCardRow from './PackagedBeerCardRow';
+import { useRouter } from 'next/router';
 
 type Props = {
   beer: Beer;
@@ -20,9 +19,11 @@ type Props = {
 };
 
 const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
-  const click = (): void => navigate(`/admin/${beer.id}`);
+  const click = (): void => {
+    router.push(`/admin/${beer.id}`);
+  };
 
   const aging = beer.aging === 'true';
   const packageRelativeDate = toRelativeDateString(beer.packageDate, !aging);

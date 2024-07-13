@@ -1,7 +1,6 @@
 import React from 'react';
 
 import cx from 'classnames';
-import { Link } from 'react-router-dom';
 
 import Spinner from '../../../shared/components/shapes/Spinner';
 
@@ -26,9 +25,9 @@ const Button: React.FC<Props> = (props: Props) => {
   });
 
   return props.to ? (
-    <Link to={props.to} className={className} onClick={props.click}>
+    <a href={props.to} className={className} onClick={props.click}>
       {props.children}
-    </Link>
+    </a>
   ) : (
     <button className={className} type={props.type ?? 'button'} onClick={props.click} disabled={props.disabled}>
       {props.loading ? (
