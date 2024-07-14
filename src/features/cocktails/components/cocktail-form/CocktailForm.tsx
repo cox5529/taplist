@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useMemo } from 'react';
 
 import { doc, setDoc } from 'firebase/firestore';
@@ -19,16 +21,18 @@ import InstructionField from './InstructionField';
 import Checkbox from '../../../../shared/components/form-controls/Checkbox';
 import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
 import SubsectionHeaderWithButton from '../../../../shared/components/typography/SubsectionHeaderWithButton';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   cocktail?: Cocktail;
-  onSubmit: (cocktail: Cocktail) => void;
+  ingredients: Ingredient[];
 };
 
 export type CocktailFormValues = Omit<Cocktail, 'id'>;
 
 const CocktailForm: React.FC<Props> = (props: Props) => {
-  const [ingredients] = useIngredients();
+  const ingredients = props.ingredients;
+  const router = useRouter();
 
   const initialValues: CocktailFormValues = useMemo(() => {
     const cocktail = props.cocktail ?? {
@@ -75,7 +79,7 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
 
   const onSubmit = async (formValue: CocktailFormValues) => {
     const cocktail: Cocktail = {
-      id: '',
+      id: props.cocktail?.id ?? uuid(),
       name: formValue.name,
       description: formValue.description,
       instructions: formValue.instructions,
@@ -104,7 +108,8 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
       });
     }
 
-    props.onSubmit(cocktail);
+    await setDoc(doc(firestore, 'cocktails', cocktail.id), cocktail);
+    router.push(`/cocktails/${cocktail.id}`);
   };
 
   return ingredients.length ? (

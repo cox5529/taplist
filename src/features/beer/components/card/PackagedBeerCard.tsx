@@ -11,7 +11,6 @@ import BottledNoKeg from '../beer/BottledNoKeg';
 import KegNoBottle from '../beer/KegNoBottle';
 import PackagedBeerCardField from './PackagedBeerCardField';
 import PackagedBeerCardRow from './PackagedBeerCardRow';
-import { useRouter } from 'next/router';
 
 type Props = {
   beer: Beer;
@@ -19,12 +18,6 @@ type Props = {
 };
 
 const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
-  const router = useRouter();
-
-  const click = (): void => {
-    router.push(`/admin/${beer.id}`);
-  };
-
   const aging = beer.aging === 'true';
   const packageRelativeDate = toRelativeDateString(beer.packageDate, !aging);
   const packageDate = toDateString(beer.packageDate);
@@ -33,7 +26,7 @@ const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
 
   return (
     <>
-      <Card onClick={click} className='grow-0 shrink-0 flex flex-col break-inside-avoid'>
+      <Card href={`/admin/${beer.id}`} className='grow-0 shrink-0 flex flex-col break-inside-avoid'>
         <SubsectionHeader>
           {beer.keg && <span>{beer.keg}. </span>}
           {beer.name}

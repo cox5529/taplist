@@ -1,13 +1,16 @@
-import React, { useEffect, useMemo } from 'react';
-import SectionHeader from '../../../../shared/components/typography/SectionHeader';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import Button from '../../../../shared/components/buttons/Button';
-import CocktailSearchForm from '../../components/search/CocktailSearchForm';
-import { InfiniteHits, useInfiniteHits, useSearchBox } from 'react-instantsearch';
-import MenuItem from '../../components/menu/MenuItem';
+'use client';
+
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
+import { useInfiniteHits, useSearchBox } from 'react-instantsearch';
 import type { Hit, BaseHit } from 'instantsearch.js';
 import { Cocktail } from '../../models/cocktail';
-import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
+import MenuItem from '../menu/MenuItem';
+import Button from '../../../../shared/components/buttons/Button';
+
+type Props = {
+  query: string;
+};
 
 type HitType = {
   name: string;
@@ -31,27 +34,22 @@ const HitComponent: React.FC<HitComponentProps> = ({ hit }: HitComponentProps) =
   return <MenuItem cocktail={cocktail} />;
 };
 
-const CocktailSearchResultsView: React.FC = () => {
-  const [params] = useSearchParams();
-  const navigate = useNavigate();
-
-  const query = useMemo(() => params.get('query'), [params]);
+const CocktailSearchResultsList = ({ query }: Props) => {
+  const router = useRouter();
 
   const { refine } = useSearchBox();
   const { results, isFirstPage, isLastPage, showPrevious, showMore } = useInfiniteHits<HitType>();
 
   useEffect(() => {
     if (!query || typeof query !== 'string' || query.length === 0) {
-      navigate('/');
+      router.push('/');
     }
 
     refine(query ?? '');
-  }, [query, navigate]);
+  }, [query, router]);
 
   return (
-    <div className='flex gap-4 flex-col'>
-      <SectionHeaderWithButton header={`Search results for '${query}'`} backButton />
-      <CocktailSearchForm initialSearch={query ?? ''} />
+    <>
       {results?.hits && (
         <div className='flex flex-col gap-4'>
           {results.hits.map((x, i) => (
@@ -64,8 +62,8 @@ const CocktailSearchResultsView: React.FC = () => {
         <span className='flex-grow'></span>
         {!isLastPage && <Button click={showMore}>Next page</Button>}
       </div>
-    </div>
+    </>
   );
 };
 
-export default CocktailSearchResultsView;
+export default CocktailSearchResultsList;

@@ -1,18 +1,19 @@
+'use client';
+
 import React, { useState } from 'react';
-import { useIngredients } from '../../hooks/useIngredients';
-import SectionHeader from '../../../../shared/components/typography/SectionHeader';
-import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
-import LoadingBox from '../../../../shared/components/LoadingBox';
-import Card from '../../../../shared/components/card/Card';
 import Button from '../../../../shared/components/buttons/Button';
-import { useCocktails } from '../../hooks/useCocktails';
-import MergeIngredientModal from '../../components/ingredients/MergeIngredientModal';
-import RenameIngredientModal from '../../components/ingredients/RenameIngredientModal';
+import Card from '../../../../shared/components/card/Card';
+import MergeIngredientModal from './MergeIngredientModal';
+import RenameIngredientModal from './RenameIngredientModal';
+import { Cocktail } from '../../models/cocktail';
+import { Ingredient } from '../../models/ingredient';
 
-const IngredientListView: React.FC = () => {
-  const [ingredients, areIngredientsLoading] = useIngredients();
-  const [cocktails, areCocktailsLoading] = useCocktails({});
+type Props = {
+  cocktails: Cocktail[];
+  ingredients: Ingredient[];
+};
 
+const IngredientList: React.FC<Props> = ({ cocktails, ingredients }: Props) => {
   const [checked, setChecked] = useState<string[]>([]);
   const [isMergeModalOpen, setIsMergeModalOpen] = useState(false);
   const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
@@ -41,13 +42,8 @@ const IngredientListView: React.FC = () => {
 
   const selectedIngredients = checked.map((id) => ingredients.find((x) => x.id === id)).filter((x) => !!x);
 
-  if (areIngredientsLoading || areCocktailsLoading) {
-    return <LoadingBox />;
-  }
-
   return (
-    <div>
-      <SectionHeaderWithButton header='Ingredients' backButton />
+    <>
       <div className='flex gap-2 pb-4 bg-white rounded sticky top-4 border p-4 mb-4 shadow'>
         <Button disabled={checked.length < 2} click={mergeIngredients}>
           Merge
@@ -73,8 +69,8 @@ const IngredientListView: React.FC = () => {
         close={closeModals}
       />
       <RenameIngredientModal open={isRenameModalOpen} ingredient={selectedIngredients[0]} close={closeModals} />
-    </div>
+    </>
   );
 };
 
-export default IngredientListView;
+export default IngredientList;

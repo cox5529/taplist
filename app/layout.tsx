@@ -1,4 +1,6 @@
-import { Metadata } from 'next';
+import React from 'react';
+import type { Metadata } from 'next';
+import '../styles/globals.css';
 
 export const metadata: Metadata = {
   title: 'Taplist',
@@ -9,7 +11,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='en'>
       <head>
         <meta name='theme-color' content='#000000' />
-        <link href='./index.css' rel='stylesheet' />
         <title>Taplist</title>
       </head>
       <body>

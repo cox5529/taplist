@@ -2,8 +2,8 @@ import React from 'react';
 
 import { SrmTable } from '../../utils/srm-table';
 
-import Bottle from '../../../../assets/bottle.svg?react';
-import Cap from '../../../../assets/cap.svg?react';
+import Bottle from '../../../../assets/bottle.svg';
+import Cap from '../../../../assets/cap.svg';
 
 type Props = {
   capColor: string;

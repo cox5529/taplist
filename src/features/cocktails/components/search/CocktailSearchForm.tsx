@@ -1,8 +1,10 @@
+'use client';
+
 import { Form, Formik } from 'formik';
 import React from 'react';
 import TextField from '../../../../shared/components/form-controls/TextField';
 import SearchButton from '../../../../shared/components/buttons/SearchButton';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   initialSearch?: string;

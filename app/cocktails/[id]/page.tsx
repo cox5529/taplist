@@ -8,25 +8,31 @@ import Paragraph from '../../../src/shared/components/typography/Paragraph';
 import SubsectionHeader from '../../../src/shared/components/typography/SubsectionHeader';
 import { getIngredientString } from '../../../src/features/cocktails/util/getIngredientString';
 import MenuItem from '../../../src/features/cocktails/components/menu/MenuItem';
-import { useAuthState } from '../../../src/shared/hooks/useAuthState';
-import { GetStaticProps } from 'next';
-import { Cocktail } from '../../../src/features/cocktails/models/cocktail';
-import { NextPageWithLayout } from '../../_app';
-import CocktailLayout from '../layout';
+import { Page } from '../../../src/types';
+import AuthenticationGuard from '../../../src/shared/components/auth/AuthenticationGuard';
 
-type Props = {
-  cocktail: Cocktail;
-  relatedCocktails: Cocktail[];
+type Params = {
+  id: string;
 };
 
-const CocktailDetailsView: NextPageWithLayout<Props> = ({ cocktail, relatedCocktails }: Props) => {
-  const [user] = useAuthState();
+const CocktailDetailsView: Page<Params> = async ({ params }) => {
+  const id = params.id;
+  const cocktail = await useCocktail(id);
+  const relatedCocktails = await useCocktails({
+    ids: cocktail?.relatedRecipes ?? [],
+  });
+
+  if (!cocktail) {
+    return <></>;
+  }
 
   return (
     <div className='flex gap-12 flex-col'>
       <section>
         <SectionHeaderWithButton header={cocktail?.name} backButton>
-          {user && <Button to='edit'>Edit</Button>}
+          <AuthenticationGuard>
+            <Button to='edit'>Edit</Button>
+          </AuthenticationGuard>
         </SectionHeaderWithButton>
         <Paragraph>{cocktail?.description}</Paragraph>
       </section>
@@ -50,32 +56,13 @@ const CocktailDetailsView: NextPageWithLayout<Props> = ({ cocktail, relatedCockt
   );
 };
 
-CocktailDetailsView.getLayout = (page) => {
-  return <CocktailLayout>{page}</CocktailLayout>;
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const id = (params?.id ?? '') as string;
-  const cocktail = await useCocktail(id);
-  const relatedCocktails = await useCocktails({
-    ids: cocktail?.relatedRecipes ?? [],
-  });
-
-  return {
-    props: {
-      cocktail,
-      relatedCocktails,
-    },
-  };
-};
-
-export async function getStaticPaths() {
+export async function generateStaticParams() {
   const cocktails = await useCocktails({});
   const paths = cocktails.map((cocktail) => ({
-    params: { id: cocktail.id },
+    id: cocktail.id,
   }));
 
-  return { paths, fallback: false };
+  return paths;
 }
 
 export default CocktailDetailsView;

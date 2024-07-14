@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useMemo } from 'react';
 
 import SectionHeader from '../../../../shared/components/typography/SectionHeader';
@@ -5,17 +7,51 @@ import SubsectionHeader from '../../../../shared/components/typography/Subsectio
 import { Beer } from '../../models/beer';
 import { Scale } from '../../models/scale';
 import AssignmentButton from '../buttons/AssignmentButton';
+import { doc, setDoc } from 'firebase/firestore';
+import { firestore } from '../../../../firebase';
 
 type Props = {
-  assignTap: (tap: number) => void;
-  assignScale: (scale: string) => void;
   beer: Beer;
   beers: Beer[];
   scales: Scale[];
   className?: string;
 };
 
-const EditBeerForm = ({ beer, assignTap, assignScale, className, beers, scales }: Props) => {
+const EditBeerForm = ({ beer, className, beers, scales }: Props) => {
+  const updateBeer = async (beer: Beer): Promise<void> => {
+    await setDoc(doc(firestore, 'beer', beer.id ?? ''), beer);
+  };
+
+  const assignTap = async (tap: number): Promise<void> => {
+    if (!beer) {
+      return;
+    }
+
+    const currentAssignment = beers.find((x) => x.keg === tap);
+    if (currentAssignment) {
+      currentAssignment.keg = null;
+      updateBeer(currentAssignment);
+    }
+
+    beer.keg = tap;
+    updateBeer(beer);
+  };
+
+  const assignScale = async (ip: string): Promise<void> => {
+    if (!beer) {
+      return;
+    }
+
+    const currentAssignment = beers.find((x) => x.scale === ip);
+    if (currentAssignment) {
+      currentAssignment.scale = undefined;
+      updateBeer(currentAssignment);
+    }
+
+    beer.scale = ip;
+    updateBeer(beer);
+  };
+
   const taps = useMemo(() => {
     const taps = [1, 2, 3, 4];
     return taps.map((x) => ({

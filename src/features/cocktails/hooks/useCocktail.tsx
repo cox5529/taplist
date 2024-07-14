@@ -2,8 +2,9 @@ import { Cocktail } from '../models/cocktail';
 import { doc, DocumentReference, getDoc } from 'firebase/firestore';
 import { firestore } from '../../../firebase';
 import { useIngredients } from './useIngredients';
+import { PageNotFoundError } from 'next/dist/shared/lib/utils';
 
-export const useCocktail = async (id: string): Promise<Cocktail | undefined> => {
+export const useCocktail = async (id: string): Promise<Cocktail> => {
   const cocktail = await getDoc(doc(firestore, 'cocktails', id ?? '') as DocumentReference<Cocktail>).then((x) =>
     x.data(),
   );
@@ -18,6 +19,10 @@ export const useCocktail = async (id: string): Promise<Cocktail | undefined> => 
 
   if (cocktail && cocktailIngredients) {
     cocktail.ingredients = cocktailIngredients;
+  }
+
+  if (!cocktail) {
+    throw new PageNotFoundError(`/cocktails/${id}`);
   }
 
   return cocktail;
