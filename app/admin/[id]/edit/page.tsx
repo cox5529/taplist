@@ -1,8 +1,5 @@
 import React from 'react';
 
-import { doc, setDoc } from '@firebase/firestore';
-
-import { firestore } from '../../../../src/firebase';
 import Button from '../../../../src/shared/components/buttons/Button';
 import Card from '../../../../src/shared/components/card/Card';
 import { toISODateString } from '../../../../src/shared/utils/date-utils';
