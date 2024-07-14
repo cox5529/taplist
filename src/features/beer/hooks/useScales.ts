@@ -1,13 +1,12 @@
 import { useMemo } from 'react';
 
-import { collection, CollectionReference } from 'firebase/firestore';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import { collection, CollectionReference, getDocs } from 'firebase/firestore';
 
 import { firestore } from '../../../firebase';
 import { Scale } from '../models/scale';
 
-export function useScales(): Scale[] {
-  const [scales] = useCollection<Scale>(collection(firestore, 'scales') as CollectionReference<Scale>);
+export async function useScales(): Promise<Scale[]> {
+  const scales = await getDocs(collection(firestore, 'scales') as CollectionReference<Scale>);
 
-  return useMemo(() => scales?.docs.map((x) => ({ ...x.data(), ip: x.id })) ?? [], [scales?.docs]);
+  return scales?.docs.map((x) => ({ ...x.data(), ip: x.id })) ?? [];
 }

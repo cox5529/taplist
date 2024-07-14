@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { useAuthState } from 'react-firebase-hooks/auth';
-
 import { auth } from '../../firebase';
 import Button from './buttons/Button';
 import SectionHeader from './typography/SectionHeader';
+import { useAuthState } from '../hooks/useAuthState';
 
 type Props = React.PropsWithChildren & {
   header: string;
@@ -13,7 +12,7 @@ type Props = React.PropsWithChildren & {
 };
 
 const HomeSection: React.FC<Props> = (props: Props) => {
-  const [user] = useAuthState(auth);
+  const [user] = useAuthState();
   return (
     <>
       <section className='py-8'>

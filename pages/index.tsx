@@ -3,21 +3,52 @@ import CocktailList from '../src/features/cocktails/views/cocktails/CocktailList
 import HomeSection from '../src/shared/components/HomeSection';
 import BeerList from '../src/features/beer/views/BeerList';
 import CocktailSearchView from '../src/features/cocktails/views/cocktails/CocktailSearchView';
+import { GetStaticProps } from 'next';
+import { useCocktails } from '../src/features/cocktails/hooks/useCocktails';
+import { Cocktail } from '../src/features/cocktails/models/cocktail';
+import { useBeers } from '../src/features/beer/hooks/useBeers';
+import { useScales } from '../src/features/beer/hooks/useScales';
+import { Beer } from '../src/features/beer/models/beer';
+import { Scale } from '../src/features/beer/models/scale';
+import { NextPageWithLayout } from './_app';
 
-const Index: React.FC = () => {
+type Props = {
+  cocktails: Cocktail[];
+  beers: Beer[];
+  scales: Scale[];
+};
+
+const Index: NextPageWithLayout<Props> = (props) => {
   return (
-    <div className='bg-white text-black w-screen h-screen overflow-auto print:h-auto px-8'>
+    <>
       <HomeSection header='House Cocktails' addRoute='/cocktails/create'>
-        <CocktailList />
+        <CocktailList cocktails={props.cocktails} />
       </HomeSection>
       <HomeSection header='Beer'>
-        <BeerList />
+        <BeerList beerResponse={props.beers} scales={props.scales} />
       </HomeSection>
       <HomeSection header='Looking for something else?' addRoute='/cocktails/ingredients' addButtonText='Ingredients'>
         <CocktailSearchView />
       </HomeSection>
-    </div>
+    </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const cocktails = await useCocktails({
+    curated: true,
+  });
+
+  const beers = await useBeers();
+  const scales = await useScales();
+
+  return {
+    props: {
+      cocktails,
+      beers,
+      scales,
+    },
+  };
 };
 
 export default Index;

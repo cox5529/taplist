@@ -1,7 +1,7 @@
-import { Metadata } from "next";
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Taplist'
+  title: 'Taplist',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -14,7 +14,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
-        <div id='root'>{children}</div>
+        <div id='root' className='bg-white text-black w-screen h-screen overflow-auto print:h-auto px-8'>
+          {children}
+        </div>
       </body>
     </html>
   );

@@ -1,17 +1,18 @@
 import React from 'react';
 
-import Spinner from '../../../../shared/components/shapes/Spinner';
-import { useCocktails } from '../../hooks/useCocktails';
 import MenuItem from '../../components/menu/MenuItem';
+import { Cocktail } from '../../models/cocktail';
 
-const CocktailList: React.FC = () => {
-  const [data, areCocktailsLoading] = useCocktails({
-    curated: true,
-  });
+type Props = {
+  cocktails: Cocktail[];
+};
 
+const CocktailList: React.FC<Props> = ({ cocktails }) => {
   return (
     <div className='grid md:grid-cols-2 xl:grid-cols-3 text-xl gap-8'>
-      {areCocktailsLoading ? <Spinner className='w-20 h-20' /> : data.map((x, i) => <MenuItem cocktail={x} key={i} />)}
+      {cocktails.map((x, i) => (
+        <MenuItem cocktail={x} key={i} />
+      ))}
     </div>
   );
 };

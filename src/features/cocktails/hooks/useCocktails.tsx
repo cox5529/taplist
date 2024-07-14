@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 
-import { collection, CollectionReference, DocumentData, Query, query, where } from 'firebase/firestore';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import { collection, CollectionReference, DocumentData, getDocs, Query, query, where } from 'firebase/firestore';
 
 import { firestore } from '../../../firebase';
 import { Cocktail } from '../models/cocktail';
@@ -11,7 +10,7 @@ export type CocktailSearchConfig = {
   ids?: string[];
 };
 
-export function useCocktails(config: CocktailSearchConfig): [Cocktail[], boolean] {
+export async function useCocktails(config: CocktailSearchConfig): Promise<Cocktail[]> {
   const cocktailCollection = collection(firestore, 'cocktails') as CollectionReference<Cocktail>;
   let cocktailQuery: Query<Cocktail, DocumentData> = cocktailCollection;
   if (config.curated) {
@@ -22,10 +21,6 @@ export function useCocktails(config: CocktailSearchConfig): [Cocktail[], boolean
     cocktailQuery = query(cocktailQuery, where('id', 'in', config.ids));
   }
 
-  const [cocktails, isLoading] = useCollection<Cocktail>(cocktailQuery);
-
-  return useMemo(
-    () => [cocktails?.docs.map((x) => ({ ...x.data(), id: x.id })) ?? [], isLoading],
-    [cocktails?.docs, isLoading],
-  );
+  const cocktails = await getDocs(cocktailQuery);
+  return cocktails?.docs.map((x) => ({ ...x.data(), id: x.id })) ?? [];
 }

@@ -1,14 +1,15 @@
 import React from 'react';
 
-import Spinner from '../../../shared/components/shapes/Spinner';
 import PackagedBeerCard from '../components/card/PackagedBeerCard';
-import { useBeers } from '../hooks/useBeers';
-import { useScales } from '../hooks/useScales';
+import { Beer } from '../models/beer';
+import { Scale } from '../models/scale';
 
-const BeerList: React.FC = () => {
-  const scales = useScales();
-  const [beerResponse, areBeersLoaded] = useBeers();
+type Props = {
+  beerResponse: Beer[];
+  scales: Scale[];
+};
 
+const BeerList: React.FC<Props> = ({ beerResponse, scales }) => {
   const data = beerResponse.sort((a, b) => {
     if (b.keg && a.keg) {
       return a.keg - b.keg;
@@ -23,11 +24,9 @@ const BeerList: React.FC = () => {
 
   return (
     <div className='grid md:grid-cols-2 xl:grid-cols-3 text-xl gap-8'>
-      {areBeersLoaded ? (
-        data.map((x, i) => <PackagedBeerCard beer={x} key={i} scale={scales.find((s) => s.ip === x.scale)} />)
-      ) : (
-        <Spinner className='w-20 h-20' />
-      )}
+      {data.map((x, i) => (
+        <PackagedBeerCard beer={x} key={i} scale={scales.find((s) => s.ip === x.scale)} />
+      ))}
     </div>
   );
 };
