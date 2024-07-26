@@ -44,7 +44,7 @@ const RenameIngredientModal: React.FC<Props> = (props: Props) => {
       <SubsectionHeader>Rename '{name}'</SubsectionHeader>
       <Formik onSubmit={rename} initialValues={initialValues} validationSchema={validationSchema}>
         {({ isSubmitting }) => (
-          <Form>
+          <Form placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             <TextField name='name' label='Name' />
             <div className='flex gap-4 justify-start'>
               <Button color='red' click={props.close} type='button'>

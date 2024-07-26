@@ -29,7 +29,7 @@ const CocktailSearchForm: React.FC<Props> = (props: Props) => {
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      <Form className='flex gap-2 items-start'>
+      <Form className='flex gap-2 items-start' placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
         <TextField name='search' className='flex-grow' placeholder='Search' />
         <SearchButton />
       </Form>
