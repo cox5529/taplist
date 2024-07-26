@@ -19,6 +19,8 @@ import LoginView from './shared/views/auth/LoginView';
 import './index.css';
 import CocktailSearchResultsView from './features/cocktails/views/cocktails/CocktailSearchResultsView';
 import IngredientListView from './features/cocktails/views/ingredients/IngredientListView';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -79,6 +81,8 @@ setInterval(
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>,
 );

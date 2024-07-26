@@ -1,25 +1,23 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
-import { collection, CollectionReference, orderBy, query, where } from 'firebase/firestore';
-import { useCollection } from 'react-firebase-hooks/firestore';
-
-import { firestore } from '../../../firebase';
 import { Ingredient } from '../models/ingredient';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { cocktailSlice } from '../redux/reducer';
+import { fetchAllIngredients } from '../redux/fetchAllIngredients';
 
-export function useIngredients(ids?: string[]): [Ingredient[], boolean] {
-  const ingredientCollection = collection(firestore, 'ingredients') as CollectionReference<Ingredient>;
-  const ingredientQuery = ids?.length
-    ? query(ingredientCollection, where('id', 'in', ids))
-    : query(ingredientCollection, orderBy('name'));
+export function useIngredients(): [Ingredient[], boolean] {
+  const dispatch = useAppDispatch();
+  const { loadState, ingredients } = useAppSelector((state) => cocktailSlice.selectors.getAllIngredients(state));
 
-  const [ingredients, isLoading] = useCollection<Ingredient>(ingredientQuery);
+  useEffect(() => {
+    if (loadState !== 'idle') {
+      return;
+    }
 
-  return useMemo(() => {
-    const data = ingredients?.docs.map((x) => ({ ...x.data(), id: x.id })) ?? [];
-    const result = ids ? ids.map((x) => data.find((y) => y.id === x) as Ingredient).filter((x) => !!x) : data;
+    dispatch(fetchAllIngredients());
+  }, [loadState]);
 
-    result.sort((a, b) => a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase()));
-
-    return [result, isLoading];
-  }, [ingredients?.docs, isLoading, ids]);
+  const cocktails = ingredients.map((ingredient) => ingredient.ingredient).filter((x) => !!x) ?? [];
+  const isLoaded = loadState === 'loaded';
+  return [cocktails, !isLoaded];
 }

@@ -48,7 +48,7 @@ const LoginView: React.FC = () => {
       <SectionHeader>Login</SectionHeader>
       <Formik initialValues={initialValues} onSubmit={login} validationSchema={schema}>
         {({ isSubmitting }): React.ReactElement => (
-          <Form className='flex flex-col gap-8'>
+          <Form className='flex flex-col gap-8' placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             <div className='grid grid-flow-row-dense grid-cols-fit-250 gap-x-8 gap-y-4'>
               <TextField name={'email'} fieldType={'email'} label={'Email Address'} />
               <TextField name={'password'} fieldType={'password'} label={'Password'} />

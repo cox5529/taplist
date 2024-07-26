@@ -1,26 +1,25 @@
-import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { Cocktail } from '../models/cocktail';
-import { doc, DocumentReference } from 'firebase/firestore';
-import { firestore } from '../../../firebase';
-import { useIngredients } from './useIngredients';
-import { useMemo } from 'react';
+import { useEffect } from 'react';
+import { cocktailSlice } from '../redux/reducer';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { fetchCocktail } from '../redux/fetchCocktail';
+import { fetchIngredientsForCocktail } from '../redux/fetchIngredientsForCocktail';
 
-export const useCocktail = (id: string): [Cocktail | undefined, boolean] => {
-  const [cocktail, isCocktailLoading] = useDocumentData<Cocktail>(
-    doc(firestore, 'cocktails', id ?? '') as DocumentReference<Cocktail>,
-  );
+export const useCocktail = (id: string): [Cocktail | null, boolean] => {
+  const dispatch = useAppDispatch();
+  const response = useAppSelector((state) => cocktailSlice.selectors.getCocktailById(state, id));
 
-  const ingredientIds = cocktail?.ingredients.map((x) => x.ingredientId);
-  const [ingredients, areIngredientsLoading] = useIngredients(ingredientIds ?? []);
+  useEffect(() => {
+    if (response.cocktailLoadState === 'idle') {
+      dispatch(fetchCocktail(id));
+    } else if (
+      response.cocktail &&
+      response.cocktailLoadState === 'loaded' &&
+      response.ingredientLoadState === 'idle'
+    ) {
+      dispatch(fetchIngredientsForCocktail(response.cocktail));
+    }
+  }, [response]);
 
-  const cocktailIngredients = useMemo(
-    () => cocktail?.ingredients.map((x) => ({ ...x, ingredient: ingredients.find((y) => y.id === x.ingredientId) })),
-    [cocktail?.ingredients, ingredients],
-  );
-
-  if (cocktail && cocktailIngredients) {
-    cocktail.ingredients = cocktailIngredients;
-  }
-
-  return [cocktail, isCocktailLoading || areIngredientsLoading];
+  return [response?.cocktail ?? null, response?.cocktailLoadState !== 'loaded'];
 };
