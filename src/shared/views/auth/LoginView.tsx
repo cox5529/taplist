@@ -57,6 +57,9 @@ const LoginView: React.FC = () => {
               <span>
                 <ErrorMessage>{errorMessage}</ErrorMessage>
               </span>
+              <Button to='/' color='gray' disabled={isSubmitting} loading={isSubmitting}>
+                Back
+              </Button>
               <Button type='submit' disabled={isSubmitting} loading={isSubmitting}>
                 Submit
               </Button>
