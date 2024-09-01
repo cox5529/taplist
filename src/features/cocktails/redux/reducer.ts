@@ -60,7 +60,7 @@ export const cocktailSlice = createSlice({
       state.cocktails[action.payload] = {
         cocktail: null,
         cocktailLoadState: 'rejected',
-        ingredientLoadState: 'loaded'
+        ingredientLoadState: 'loaded',
       };
     },
   },

@@ -11,8 +11,6 @@ type Props = BaseModalProps & {
 } & React.PropsWithChildren;
 
 const BaseModal: React.FC<Props> = (props: Props) => {
-  console.log(props.open);
-
   return props.open ? (
     <div className='inset-0 fixed bg-black bg-opacity-20 z-50 xl:flex items-center justify-center p-16'>
       <Card className={props.className}>{props.children}</Card>
