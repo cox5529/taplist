@@ -1,6 +1,6 @@
 import { Ingredient } from '../models/ingredient';
 import { Cocktail } from '../models/cocktail';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addFetchCocktailReducers } from './fetchCocktail';
 import { getAllIngredients, getCocktailById, getCocktailsByIds, getCuratedCocktails, getIngredientById, getIngredientsByIds } from './selectors';
 import { addFetchIngredientsForCocktailReducers as addFetchIngredientsForCocktailReducers } from './fetchIngredientsForCocktail';
@@ -47,7 +47,15 @@ const initialState: CocktailFeatureState = {
 export const cocktailSlice = createSlice({
   name: 'cocktails',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    updateCocktail: (state, action: PayloadAction<Cocktail>) => {
+      const cocktail = action.payload;
+      state.cocktails[cocktail.id].cocktail = cocktail;
+    },
+    deleteCocktail: (state, action: PayloadAction<string>) => {
+      delete state.cocktails[action.payload];
+    }
+  },
   selectors: {
     getCocktailById,
     getCocktailsByIds,

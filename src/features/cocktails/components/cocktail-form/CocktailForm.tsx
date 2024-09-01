@@ -109,7 +109,7 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
 
   return ingredients.length ? (
     <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={schema} enableReinitialize>
-      {({ isSubmitting, values, errors }) => (
+      {({ isSubmitting, values }) => (
         <Form className='flex flex-col gap-8' placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
           <section>
             <SubsectionHeaderWithButton header='Metadata'>
