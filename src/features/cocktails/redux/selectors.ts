@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { CocktailFeatureState, CocktailState, IngredientState, LoadingState } from './reducer';
+
 import { Cocktail, CocktailIngredient } from '../models/cocktail';
+import { CocktailFeatureState, CocktailState, IngredientState, LoadingState } from './reducer';
 
 export const getCocktailById = createSelector(
   (state: CocktailFeatureState) => state,

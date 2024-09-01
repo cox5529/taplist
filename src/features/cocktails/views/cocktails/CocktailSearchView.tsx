@@ -1,4 +1,5 @@
 import React from 'react';
+
 import CocktailSearchForm from '../../components/search/CocktailSearchForm';
 
 const CocktailSearchView: React.FC = () => {

@@ -5,6 +5,7 @@ import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { firestore } from '../../../../firebase';
+import LoadingBox from '../../../../shared/components/LoadingBox';
 import Button from '../../../../shared/components/buttons/Button';
 import Card from '../../../../shared/components/card/Card';
 import { toISODateString } from '../../../../shared/utils/date-utils';
@@ -12,7 +13,6 @@ import EditBeerForm from '../../components/forms/EditBeerForm';
 import { useBeers } from '../../hooks/useBeers';
 import { useScales } from '../../hooks/useScales';
 import { Beer } from '../../models/beer';
-import LoadingBox from '../../../../shared/components/LoadingBox';
 
 const EditView: React.FC = () => {
   const { id } = useParams();

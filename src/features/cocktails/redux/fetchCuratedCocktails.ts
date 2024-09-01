@@ -1,11 +1,6 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  collection,
-  CollectionReference,
-  getDocs,
-  query,
-  where,
-} from 'firebase/firestore';
+import { collection, CollectionReference, getDocs, query, where } from 'firebase/firestore';
+
 import { firestore } from '../../../firebase';
 import { Cocktail } from '../models/cocktail';
 import { CocktailFeatureState } from './reducer';

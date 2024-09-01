@@ -1,10 +1,11 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import { collection, CollectionReference, getDocs, query, where } from 'firebase/firestore';
+
 import { firestore } from '../../../firebase';
-import { CocktailFeatureState } from './reducer';
-import { Ingredient } from '../models/ingredient';
-import { Cocktail } from '../models/cocktail';
 import { AppState } from '../../../redux/store';
+import { Cocktail } from '../models/cocktail';
+import { Ingredient } from '../models/ingredient';
+import { CocktailFeatureState } from './reducer';
 
 export const fetchIngredientsForCocktail = createAsyncThunk(
   'cocktails/fetchIngredientsForCocktail',
@@ -12,11 +13,11 @@ export const fetchIngredientsForCocktail = createAsyncThunk(
     const state = api.getState() as AppState;
 
     let ingredientIds = cocktail.ingredients.map((x) => x.ingredientId);
-    const existingIngredientIds = ingredientIds.filter(id => {
+    const existingIngredientIds = ingredientIds.filter((id) => {
       const loadState = state.cocktails.ingredients[id]?.loadState;
       return loadState === 'loaded';
     });
-    ingredientIds = ingredientIds.filter(id => !existingIngredientIds.includes(id));
+    ingredientIds = ingredientIds.filter((id) => !existingIngredientIds.includes(id));
 
     const ingredientCollection = collection(firestore, 'ingredients') as CollectionReference<Ingredient>;
     const ingredientQuery = query(ingredientCollection, where('id', 'in', ingredientIds));
@@ -50,7 +51,7 @@ export const addFetchIngredientsForCocktailReducers = (builder: ActionReducerMap
   builder.addCase(fetchIngredientsForCocktail.fulfilled, (state, action) => {
     const ingredients = action.payload;
     const cocktail = action.meta.arg.id;
-    
+
     ingredients?.map((ingredient) => {
       state.ingredients[ingredient.id] = {
         loadState: 'loaded',

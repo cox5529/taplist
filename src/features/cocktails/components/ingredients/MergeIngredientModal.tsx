@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import BaseModal, { BaseModalProps } from '../../../../shared/components/modals/BaseModal';
-import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
-import Paragraph from '../../../../shared/components/typography/Paragraph';
-import { Ingredient } from '../../models/ingredient';
-import Button from '../../../../shared/components/buttons/Button';
-import { Cocktail } from '../../models/cocktail';
+
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
+
 import { firestore } from '../../../../firebase';
+import Button from '../../../../shared/components/buttons/Button';
+import BaseModal, { BaseModalProps } from '../../../../shared/components/modals/BaseModal';
+import Paragraph from '../../../../shared/components/typography/Paragraph';
+import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
+import { Cocktail } from '../../models/cocktail';
+import { Ingredient } from '../../models/ingredient';
 
 type Props = BaseModalProps & {
   ingredients: Ingredient[];

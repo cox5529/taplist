@@ -1,9 +1,10 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import { doc, DocumentReference, getDoc } from 'firebase/firestore';
+
 import { firestore } from '../../../firebase';
+import { AppState } from '../../../redux/store';
 import { Cocktail } from '../models/cocktail';
 import { CocktailFeatureState } from './reducer';
-import { AppState } from '../../../redux/store';
 
 export const fetchCocktail = createAsyncThunk(
   'cocktails/fetchCocktail',

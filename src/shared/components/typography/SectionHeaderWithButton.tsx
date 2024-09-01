@@ -1,7 +1,9 @@
 import React from 'react';
+
 import cx from 'classnames';
-import SectionHeader from './SectionHeader';
+
 import Button from '../buttons/Button';
+import SectionHeader from './SectionHeader';
 
 type Props = React.PropsWithChildren & {
   header: string;

@@ -1,9 +1,10 @@
-import { Cocktail } from '../models/cocktail';
 import { useEffect } from 'react';
-import { cocktailSlice } from '../redux/reducer';
+
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { Cocktail } from '../models/cocktail';
 import { fetchCocktail } from '../redux/fetchCocktail';
 import { fetchIngredientsForCocktail } from '../redux/fetchIngredientsForCocktail';
+import { cocktailSlice } from '../redux/reducer';
 
 export const useCocktail = (id: string): [Cocktail | null, boolean] => {
   const dispatch = useAppDispatch();

@@ -1,8 +1,9 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import { collection, CollectionReference, getDocs } from 'firebase/firestore';
+
 import { firestore } from '../../../firebase';
-import { CocktailFeatureState } from './reducer';
 import { Ingredient } from '../models/ingredient';
+import { CocktailFeatureState } from './reducer';
 
 export const fetchAllIngredients = createAsyncThunk(
   'cocktails/fetchAllIngredients',
@@ -20,7 +21,7 @@ export const addFetchAllIngredientsReducers = (builder: ActionReducerMapBuilder<
 
   builder.addCase(fetchAllIngredients.fulfilled, (state, action) => {
     const ingredients = action.payload;
-    
+
     ingredients?.map((ingredient) => {
       state.ingredients[ingredient.id] = {
         loadState: 'loaded',

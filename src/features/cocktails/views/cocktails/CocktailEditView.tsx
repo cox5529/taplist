@@ -5,15 +5,15 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import { auth, firestore } from '../../../../firebase';
-import Button from '../../../../shared/components/buttons/Button';
-import CocktailForm from '../../components/cocktail-form/CocktailForm';
-import { Cocktail } from '../../models/cocktail';
-import { useCocktail } from '../../hooks/useCocktail';
-import LoadingBox from '../../../../shared/components/LoadingBox';
-import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
 import { useAppDispatch } from '../../../../redux/hooks';
-import { cocktailSlice } from '../../redux/reducer';
+import LoadingBox from '../../../../shared/components/LoadingBox';
+import Button from '../../../../shared/components/buttons/Button';
+import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
+import CocktailForm from '../../components/cocktail-form/CocktailForm';
 import DeleteCocktailModal from '../../components/cocktail-form/DeleteCocktailModal';
+import { useCocktail } from '../../hooks/useCocktail';
+import { Cocktail } from '../../models/cocktail';
+import { cocktailSlice } from '../../redux/reducer';
 
 const CocktailEditView: React.FC = () => {
   const { id } = useParams();
@@ -58,7 +58,9 @@ const CocktailEditView: React.FC = () => {
     <>
       <section>
         <SectionHeaderWithButton header={`Edit ${cocktail.name}`}>
-          <Button color='red' click={onDelete}>Delete</Button>
+          <Button color='red' click={onDelete}>
+            Delete
+          </Button>
           <Button to={parentRoute}>Back</Button>
         </SectionHeaderWithButton>
       </section>

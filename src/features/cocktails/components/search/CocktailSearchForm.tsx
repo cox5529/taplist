@@ -1,8 +1,10 @@
-import { Form, Formik } from 'formik';
 import React from 'react';
-import TextField from '../../../../shared/components/form-controls/TextField';
-import SearchButton from '../../../../shared/components/buttons/SearchButton';
+
+import { Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+
+import SearchButton from '../../../../shared/components/buttons/SearchButton';
+import TextField from '../../../../shared/components/form-controls/TextField';
 
 type Props = {
   initialSearch?: string;
@@ -29,7 +31,12 @@ const CocktailSearchForm: React.FC<Props> = (props: Props) => {
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      <Form className='flex gap-2 items-start' placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+      <Form
+        className='flex gap-2 items-start'
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+      >
         <TextField name='search' className='flex-grow' placeholder='Search' />
         <SearchButton />
       </Form>

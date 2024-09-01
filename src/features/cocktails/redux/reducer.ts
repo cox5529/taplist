@@ -1,11 +1,19 @@
-import { Ingredient } from '../models/ingredient';
-import { Cocktail } from '../models/cocktail';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { Cocktail } from '../models/cocktail';
+import { Ingredient } from '../models/ingredient';
+import { addFetchAllIngredientsReducers } from './fetchAllIngredients';
 import { addFetchCocktailReducers } from './fetchCocktail';
-import { getAllIngredients, getCocktailById, getCocktailsByIds, getCuratedCocktails, getIngredientById, getIngredientsByIds } from './selectors';
-import { addFetchIngredientsForCocktailReducers as addFetchIngredientsForCocktailReducers } from './fetchIngredientsForCocktail';
-import { addFetchAllIngredientsReducers as addFetchAllIngredientsReducers } from './fetchAllIngredients';
 import { addFetchCuratedCocktailsReducers } from './fetchCuratedCocktails';
+import { addFetchIngredientsForCocktailReducers } from './fetchIngredientsForCocktail';
+import {
+  getAllIngredients,
+  getCocktailById,
+  getCocktailsByIds,
+  getCuratedCocktails,
+  getIngredientById,
+  getIngredientsByIds,
+} from './selectors';
 
 export type LoadingState = 'idle' | 'pending' | 'loaded' | 'rejected';
 
@@ -31,7 +39,7 @@ export type CocktailFeatureState = {
   curatedCocktails: {
     loadState: LoadingState;
     ids: string[];
-  }
+  };
 };
 
 const initialState: CocktailFeatureState = {
@@ -40,8 +48,8 @@ const initialState: CocktailFeatureState = {
   allIngredientsLoadState: 'idle',
   curatedCocktails: {
     loadState: 'idle',
-    ids: []
-  }
+    ids: [],
+  },
 };
 
 export const cocktailSlice = createSlice({
@@ -54,7 +62,7 @@ export const cocktailSlice = createSlice({
     },
     deleteCocktail: (state, action: PayloadAction<string>) => {
       delete state.cocktails[action.payload];
-    }
+    },
   },
   selectors: {
     getCocktailById,
@@ -62,7 +70,7 @@ export const cocktailSlice = createSlice({
     getIngredientById,
     getIngredientsByIds,
     getAllIngredients,
-    getCuratedCocktails
+    getCuratedCocktails,
   },
   extraReducers: (builder) => {
     addFetchCocktailReducers(builder);

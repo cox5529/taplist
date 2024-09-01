@@ -1,8 +1,9 @@
-import { Cocktail } from '../models/cocktail';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { cocktailSlice } from '../redux/reducer';
 import { useEffect, useMemo } from 'react';
+
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { Cocktail } from '../models/cocktail';
 import { fetchCocktail } from '../redux/fetchCocktail';
+import { cocktailSlice } from '../redux/reducer';
 
 export type CocktailSearchConfig = {
   curated?: boolean;

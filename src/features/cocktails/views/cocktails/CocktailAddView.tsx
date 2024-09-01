@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
 import { auth, firestore } from '../../../../firebase';
+import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
 import CocktailForm from '../../components/cocktail-form/CocktailForm';
 import { Cocktail } from '../../models/cocktail';
-import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
 
 const CocktailAddView: React.FC = () => {
   const id = useMemo(() => uuid(), []);

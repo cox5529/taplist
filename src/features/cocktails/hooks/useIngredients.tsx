@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-import { Ingredient } from '../models/ingredient';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { cocktailSlice } from '../redux/reducer';
+import { Ingredient } from '../models/ingredient';
 import { fetchAllIngredients } from '../redux/fetchAllIngredients';
+import { cocktailSlice } from '../redux/reducer';
 
 export function useIngredients(): [Ingredient[], boolean] {
   const dispatch = useAppDispatch();

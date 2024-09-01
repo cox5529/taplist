@@ -1,13 +1,15 @@
 import React from 'react';
+
+import { doc, setDoc } from 'firebase/firestore';
+import { Form, Formik } from 'formik';
+import { object, string } from 'yup';
+
+import { firestore } from '../../../../firebase';
+import Button from '../../../../shared/components/buttons/Button';
+import TextField from '../../../../shared/components/form-controls/TextField';
 import BaseModal, { BaseModalProps } from '../../../../shared/components/modals/BaseModal';
 import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
 import { Ingredient } from '../../models/ingredient';
-import Button from '../../../../shared/components/buttons/Button';
-import { doc, setDoc } from 'firebase/firestore';
-import { firestore } from '../../../../firebase';
-import { Form, Formik } from 'formik';
-import TextField from '../../../../shared/components/form-controls/TextField';
-import { object, string } from 'yup';
 
 type Props = BaseModalProps & {
   ingredient: Ingredient;

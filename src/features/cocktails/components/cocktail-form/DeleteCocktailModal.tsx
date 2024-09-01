@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import BaseModal, { BaseModalProps } from '../../../../shared/components/modals/BaseModal';
-import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
-import Paragraph from '../../../../shared/components/typography/Paragraph';
-import Button from '../../../../shared/components/buttons/Button';
+
 import { deleteDoc, doc } from 'firebase/firestore';
-import { firestore } from '../../../../firebase';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import { firestore } from '../../../../firebase';
+import Button from '../../../../shared/components/buttons/Button';
+import BaseModal, { BaseModalProps } from '../../../../shared/components/modals/BaseModal';
+import Paragraph from '../../../../shared/components/typography/Paragraph';
+import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
 import { cocktailSlice } from '../../redux/reducer';
 
 type Props = BaseModalProps & {

@@ -1,12 +1,15 @@
 import React, { useEffect, useMemo } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import Button from '../../../../shared/components/buttons/Button';
-import CocktailSearchForm from '../../components/search/CocktailSearchForm';
+
 import { useInfiniteHits, useSearchBox } from 'react-instantsearch';
-import MenuItem from '../../components/menu/MenuItem';
-import type { Hit } from 'instantsearch.js';
-import { Cocktail } from '../../models/cocktail';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import Button from '../../../../shared/components/buttons/Button';
 import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
+import MenuItem from '../../components/menu/MenuItem';
+import CocktailSearchForm from '../../components/search/CocktailSearchForm';
+import { Cocktail } from '../../models/cocktail';
+
+import type { Hit } from 'instantsearch.js';
 
 type HitType = {
   name: string;

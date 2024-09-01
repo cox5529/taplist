@@ -8,15 +8,15 @@ import { array, number, object, string } from 'yup';
 import { firestore } from '../../../../firebase';
 import LoadingBox from '../../../../shared/components/LoadingBox';
 import Button from '../../../../shared/components/buttons/Button';
+import Checkbox from '../../../../shared/components/form-controls/Checkbox';
 import TextField from '../../../../shared/components/form-controls/TextField';
 import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
+import SubsectionHeaderWithButton from '../../../../shared/components/typography/SubsectionHeaderWithButton';
 import { useIngredients } from '../../hooks/useIngredients';
 import { Cocktail, CocktailIngredient, Unit } from '../../models/cocktail';
 import { Ingredient } from '../../models/ingredient';
 import IngredientField from './IngredientField';
 import InstructionField from './InstructionField';
-import Checkbox from '../../../../shared/components/form-controls/Checkbox';
-import SubsectionHeaderWithButton from '../../../../shared/components/typography/SubsectionHeaderWithButton';
 
 type Props = {
   cocktail?: Cocktail;
@@ -108,7 +108,12 @@ const CocktailForm: React.FC<Props> = (props: Props) => {
   return ingredients.length ? (
     <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={schema} enableReinitialize>
       {({ isSubmitting, values }) => (
-        <Form className='flex flex-col gap-8' placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+        <Form
+          className='flex flex-col gap-8'
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
           <section>
             <SubsectionHeaderWithButton header='Metadata'>
               <Checkbox name='curated' label='Curated' />

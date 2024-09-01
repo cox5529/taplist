@@ -7,19 +7,19 @@ import { auth } from '../../../../firebase';
 import LoadingBox from '../../../../shared/components/LoadingBox';
 import Button from '../../../../shared/components/buttons/Button';
 import Paragraph from '../../../../shared/components/typography/Paragraph';
-import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
-import { useCocktail } from '../../hooks/useCocktail';
-import { getIngredientString } from '../../util/getIngredientString';
 import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
-import { useCocktails } from '../../hooks/useCocktails';
+import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
 import MenuItem from '../../components/menu/MenuItem';
+import { useCocktail } from '../../hooks/useCocktail';
+import { useCocktails } from '../../hooks/useCocktails';
+import { getIngredientString } from '../../util/getIngredientString';
 
 const CocktailDetailsView: React.FC = () => {
   const { id } = useParams();
   const [user] = useAuthState(auth);
 
   const [cocktail, isLoading] = useCocktail(id ?? '');
-  const [relatedCocktails,] = useCocktails({
+  const [relatedCocktails] = useCocktails({
     ids: cocktail?.relatedRecipes ?? [],
   });
 

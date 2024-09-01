@@ -14,5 +14,6 @@
     "^\\..*.css$",
     "^(\\./)[^\\.]+.*$",
     "^.*$"
-  ]
+  ],
+  "plugins": ["@trivago/prettier-plugin-sort-imports"]
 }

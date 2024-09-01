@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { cocktailSlice, CocktailFeatureState } from '../features/cocktails/redux/reducer';
+
 import { beerSlice, BeerState, scaleSlice, ScaleState } from '../features/beer/redux/reducer';
+import { cocktailSlice, CocktailFeatureState } from '../features/cocktails/redux/reducer';
 
 export type AppState = {
   cocktails: CocktailFeatureState;

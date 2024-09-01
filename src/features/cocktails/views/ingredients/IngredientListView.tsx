@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { useIngredients } from '../../hooks/useIngredients';
-import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
+
 import LoadingBox from '../../../../shared/components/LoadingBox';
-import Card from '../../../../shared/components/card/Card';
 import Button from '../../../../shared/components/buttons/Button';
-import { useCocktails } from '../../hooks/useCocktails';
+import Card from '../../../../shared/components/card/Card';
+import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
 import MergeIngredientModal from '../../components/ingredients/MergeIngredientModal';
 import RenameIngredientModal from '../../components/ingredients/RenameIngredientModal';
+import { useCocktails } from '../../hooks/useCocktails';
+import { useIngredients } from '../../hooks/useIngredients';
 
 const IngredientListView: React.FC = () => {
   const [ingredients, areIngredientsLoading] = useIngredients();

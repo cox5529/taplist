@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { InstantSearch } from 'react-instantsearch';
 import { Outlet } from 'react-router-dom';
+
 import { searchClient } from '../util/algolia';
 
 const CocktailLayout = () => {
