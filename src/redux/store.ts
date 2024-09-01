@@ -3,11 +3,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { beerSlice, BeerState, scaleSlice, ScaleState } from '../features/beer/redux/reducer';
 import { cocktailSlice, CocktailFeatureState } from '../features/cocktails/redux/reducer';
 
-export type AppState = {
+export interface AppState {
   cocktails: CocktailFeatureState;
   beers: BeerState;
   scales: ScaleState;
-};
+}
 
 export const store = configureStore<AppState>({
   reducer: {

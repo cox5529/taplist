@@ -7,11 +7,11 @@ import { uniqueId } from 'lodash';
 import ErrorMessage from '../typography/ErrorMessage';
 import Label from '../typography/Label';
 
-export type CheckboxProps<T> = {
+export interface CheckboxProps<T> {
   className?: string;
   name: keyof T;
   label?: string;
-};
+}
 
 function Checkbox<T>(props: CheckboxProps<T>): ReactElement {
   const { touched, errors } = useFormikContext<T>();

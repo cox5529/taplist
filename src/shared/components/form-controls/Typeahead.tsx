@@ -7,14 +7,14 @@ import { uniqueId } from 'lodash';
 import ErrorMessage from '../typography/ErrorMessage';
 import Label from '../typography/Label';
 
-type TypeaheadProps<T> = {
+interface TypeaheadProps<T> {
   className?: string;
   labelName: keyof T;
   valueName: keyof T;
   label?: string;
   placeholder?: string;
   keys: { value: string; text: string }[];
-};
+}
 
 function Typeahead<T>(props: TypeaheadProps<T>): ReactElement {
   const { touched, errors } = useFormikContext<T>();

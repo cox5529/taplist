@@ -18,10 +18,10 @@ import { Ingredient } from '../../models/ingredient';
 import IngredientField from './IngredientField';
 import InstructionField from './InstructionField';
 
-type Props = {
+interface Props {
   cocktail?: Cocktail;
   onSubmit: (cocktail: Cocktail) => void;
-};
+}
 
 export type CocktailFormValues = Omit<Cocktail, 'id'>;
 

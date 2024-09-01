@@ -5,9 +5,9 @@ export enum Allergen {
   Dairy = 'dairy',
 }
 
-export type Ingredient = {
+export interface Ingredient {
   id: string;
   name: string;
   abv?: number;
   allergens?: Allergen[];
-};
+}

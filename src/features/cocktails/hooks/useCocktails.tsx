@@ -5,10 +5,10 @@ import { Cocktail } from '../models/cocktail';
 import { fetchCocktail } from '../redux/fetchCocktail';
 import { cocktailSlice } from '../redux/reducer';
 
-export type CocktailSearchConfig = {
+export interface CocktailSearchConfig {
   curated?: boolean;
   ids?: string[];
-};
+}
 
 export function useCocktails(config: CocktailSearchConfig): [Cocktail[], boolean] {
   const dispatch = useAppDispatch();

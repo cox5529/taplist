@@ -2,11 +2,11 @@ import React from 'react';
 
 import { SrmTable } from '../../utils/srm-table';
 
-type Props = {
+interface Props {
   fill: number;
   className?: string;
   srm: number;
-};
+}
 
 const Glass: React.FC<Props> = (props: Props) => {
   const color = SrmTable[Math.floor(props.srm)];

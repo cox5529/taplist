@@ -7,11 +7,11 @@ import Typeahead from '../../../../shared/components/form-controls/Typeahead';
 import { Unit } from '../../models/cocktail';
 import { Ingredient } from '../../models/ingredient';
 
-type Props = {
+interface Props {
   baseName: string;
   ingredients: Ingredient[];
   onRemove: () => void;
-};
+}
 
 const IngredientField: React.FC<Props> = (props: Props) => {
   const units = Object.keys(Unit).map((x) => ({ value: x, text: x }));

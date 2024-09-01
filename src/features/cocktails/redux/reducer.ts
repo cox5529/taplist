@@ -17,30 +17,26 @@ import {
 
 export type LoadingState = 'idle' | 'pending' | 'loaded' | 'rejected';
 
-export type IngredientState = {
+export interface IngredientState {
   loadState: LoadingState;
   ingredient: Ingredient | null;
-};
+}
 
-export type CocktailState = {
+export interface CocktailState {
   cocktailLoadState: LoadingState;
   ingredientLoadState: LoadingState;
   cocktail: Cocktail | null;
-};
+}
 
-export type CocktailFeatureState = {
-  cocktails: {
-    [id: string]: CocktailState;
-  };
-  ingredients: {
-    [id: string]: IngredientState;
-  };
+export interface CocktailFeatureState {
+  cocktails: Record<string, CocktailState>;
+  ingredients: Record<string, IngredientState>;
   allIngredientsLoadState: LoadingState;
   curatedCocktails: {
     loadState: LoadingState;
     ids: string[];
   };
-};
+}
 
 const initialState: CocktailFeatureState = {
   cocktails: {},
@@ -61,7 +57,11 @@ export const cocktailSlice = createSlice({
       state.cocktails[cocktail.id].cocktail = cocktail;
     },
     deleteCocktail: (state, action: PayloadAction<string>) => {
-      delete state.cocktails[action.payload];
+      state.cocktails[action.payload] = {
+        cocktail: null,
+        cocktailLoadState: 'rejected',
+        ingredientLoadState: 'loaded'
+      };
     },
   },
   selectors: {

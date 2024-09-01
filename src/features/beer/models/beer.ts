@@ -1,4 +1,4 @@
-export type Beer = {
+export interface Beer {
   id?: string;
   abv: number;
   srm: number;
@@ -17,4 +17,4 @@ export type Beer = {
   empty?: string;
   aging?: string;
   type: 'fermenting' | 'packaged';
-};
+}

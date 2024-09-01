@@ -2,11 +2,11 @@ import React from 'react';
 
 import Button from '../../../../shared/components/buttons/Button';
 
-type Props = {
+interface Props {
   targetName: string;
   current?: string;
   click?: () => void;
-};
+}
 
 const AssignmentButton = (props: Props) => {
   return (

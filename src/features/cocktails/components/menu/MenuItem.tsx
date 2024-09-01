@@ -7,9 +7,9 @@ import Paragraph from '../../../../shared/components/typography/Paragraph';
 import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
 import { Cocktail } from '../../models/cocktail';
 
-type Props = {
+interface Props {
   cocktail: Cocktail;
-};
+}
 
 const MenuItem: React.FC<Props> = ({ cocktail }: Props) => {
   const navigate = useNavigate();

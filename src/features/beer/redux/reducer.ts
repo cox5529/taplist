@@ -3,13 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Beer } from '../models/beer';
 import { Scale } from '../models/scale';
 
-export type BeerState = {
-  [id: string]: Beer;
-};
+export type BeerState = Record<string, Beer>;
 
-export type ScaleState = {
-  [id: string]: Scale;
-};
+export type ScaleState = Record<string, Scale>;
 
 const initialBeerState: BeerState = {};
 const initialScaleState: ScaleState = {};

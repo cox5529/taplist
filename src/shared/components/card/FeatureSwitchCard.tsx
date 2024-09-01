@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import Paragraph from '../typography/Paragraph';
 import Card from './Card';
 
-type Props = {
+interface Props {
   otherLink: string;
   text: string;
-};
+}
 
 const FeatureSwitchCard = (props: Props) => {
   const navigate = useNavigate();

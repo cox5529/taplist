@@ -10,14 +10,14 @@ export enum Unit {
   Leaf = 'Leaf',
 }
 
-export type CocktailIngredient = {
+export interface CocktailIngredient {
   ingredientId: string;
   quantity: number;
   unit: Unit;
   ingredient?: Ingredient;
-};
+}
 
-export type Cocktail = {
+export interface Cocktail {
   description: string;
   id: string;
   ingredients: CocktailIngredient[];
@@ -25,7 +25,7 @@ export type Cocktail = {
   name: string;
   curated?: boolean;
   relatedRecipes: string[];
-};
+}
 
 export const PluralMap: Record<Unit, string> = {
   [Unit.Tablespoon]: 'Tbsp',

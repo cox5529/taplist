@@ -2,9 +2,9 @@ import React from 'react';
 
 import Button from './Button';
 
-type Props = {
+interface Props {
   onRemove: () => void;
-};
+}
 
 const RemoveButton: React.FC<Props> = (props: Props) => {
   return (

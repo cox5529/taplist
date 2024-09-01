@@ -16,9 +16,9 @@ type Props = BaseModalProps & {
   close: () => void;
 };
 
-type FormValues = {
+interface FormValues {
   name: string;
-};
+}
 
 const RenameIngredientModal: React.FC<Props> = (props: Props) => {
   const rename = async (values: FormValues) => {

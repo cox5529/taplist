@@ -14,10 +14,10 @@ import KegNoBottle from '../beer/KegNoBottle';
 import PackagedBeerCardField from './PackagedBeerCardField';
 import PackagedBeerCardRow from './PackagedBeerCardRow';
 
-type Props = {
+interface Props {
   beer: Beer;
   scale?: Scale;
-};
+}
 
 const PackagedBeerCard: React.FC<Props> = ({ beer, scale }: Props) => {
   const navigate = useNavigate();

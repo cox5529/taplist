@@ -6,11 +6,11 @@ import Keg from './Keg';
 
 import Cap from '../../../../assets/cap.svg?react';
 
-type Props = {
+interface Props {
   capColor: string;
   beer: Beer;
   scale?: Scale;
-};
+}
 
 const BottleAndKeg: React.FC<Props> = (props: Props) => {
   return (

@@ -6,12 +6,12 @@ import { uniqueId } from 'lodash';
 import ErrorMessage from '../typography/ErrorMessage';
 import Label from '../typography/Label';
 
-export type DropdownProps<T> = {
+export interface DropdownProps<T> {
   className?: string;
   name: keyof T;
   label?: string;
   keys: { value: string; text: string }[];
-};
+}
 
 function Dropdown<T>(props: DropdownProps<T>): React.ReactElement {
   const { touched, errors } = useFormikContext<T>();

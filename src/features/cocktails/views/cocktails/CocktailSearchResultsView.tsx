@@ -11,14 +11,14 @@ import { Cocktail } from '../../models/cocktail';
 
 import type { Hit } from 'instantsearch.js';
 
-type HitType = {
+interface HitType {
   name: string;
   description: string;
-};
+}
 
-type HitComponentProps = {
+interface HitComponentProps {
   hit: Hit<HitType>;
-};
+}
 
 const HitComponent: React.FC<HitComponentProps> = ({ hit }: HitComponentProps) => {
   const cocktail: Cocktail = {

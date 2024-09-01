@@ -6,14 +6,14 @@ import { Beer } from '../../models/beer';
 import { Scale } from '../../models/scale';
 import AssignmentButton from '../buttons/AssignmentButton';
 
-type Props = {
+interface Props {
   assignTap: (tap: number) => void;
   assignScale: (scale: string) => void;
   beer: Beer;
   beers: Beer[];
   scales: Scale[];
   className?: string;
-};
+}
 
 const EditBeerForm = ({ beer, assignTap, assignScale, beers, scales }: Props) => {
   const taps = useMemo(() => {

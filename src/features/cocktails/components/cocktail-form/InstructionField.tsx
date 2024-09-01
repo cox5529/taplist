@@ -3,10 +3,10 @@ import React from 'react';
 import RemoveButton from '../../../../shared/components/buttons/RemoveButton';
 import TextField from '../../../../shared/components/form-controls/TextField';
 
-type Props = {
+interface Props {
   name: string;
   onRemove: () => void;
-};
+}
 
 const InstructionField: React.FC<Props> = (props: Props) => {
   return (

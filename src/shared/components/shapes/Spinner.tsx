@@ -2,9 +2,9 @@ import React from 'react';
 
 import cx from 'classnames';
 
-type Props = {
+interface Props {
   className?: string;
-};
+}
 
 const Spinner: React.FC<Props> = (props: Props) => {
   return (

@@ -11,10 +11,10 @@ import TextField from '../../components/form-controls/TextField';
 import ErrorMessage from '../../components/typography/ErrorMessage';
 import SectionHeader from '../../components/typography/SectionHeader';
 
-type LoginFormValues = {
+interface LoginFormValues {
   email: string;
   password: string;
-};
+}
 
 const LoginView: React.FC = () => {
   const [user] = useAuthState(auth);

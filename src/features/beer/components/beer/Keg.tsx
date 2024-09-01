@@ -8,11 +8,11 @@ import { SrmTable } from '../../utils/srm-table';
 
 import Clock from '../../../../assets/clock.svg';
 
-export type KegProps = {
+export interface KegProps {
   className?: string;
   beer: Beer;
   scale?: Scale;
-};
+}
 
 const Keg: React.FC<KegProps> = (props: KegProps) => {
   const color = SrmTable[Math.floor(props.beer.srm)];

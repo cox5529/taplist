@@ -5,10 +5,10 @@ import { SrmTable } from '../../utils/srm-table';
 import Bottle from '../../../../assets/bottle.svg?react';
 import Cap from '../../../../assets/cap.svg?react';
 
-type Props = {
+interface Props {
   capColor: string;
   srm: number;
-};
+}
 
 const BottledNoKeg: React.FC<Props> = (props: Props) => {
   const color = SrmTable[Math.floor(props.srm)];

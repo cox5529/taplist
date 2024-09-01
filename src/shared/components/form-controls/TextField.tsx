@@ -7,7 +7,7 @@ import { uniqueId } from 'lodash';
 import ErrorMessage from '../typography/ErrorMessage';
 import Label from '../typography/Label';
 
-export type TextFieldProps<T> = {
+export interface TextFieldProps<T> {
   className?: string;
   name: keyof T;
   label?: string;
@@ -15,7 +15,7 @@ export type TextFieldProps<T> = {
   as?: string;
   fieldType?: string;
   placeholder?: string;
-};
+}
 
 function TextField<T>(props: TextFieldProps<T>): ReactElement {
   const { touched, errors } = useFormikContext<T>();

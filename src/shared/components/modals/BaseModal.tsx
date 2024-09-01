@@ -2,9 +2,9 @@ import React from 'react';
 
 import Card from '../../../shared/components/card/Card';
 
-export type BaseModalProps = {
+export interface BaseModalProps {
   open?: boolean;
-};
+}
 
 type Props = BaseModalProps & {
   className?: string;

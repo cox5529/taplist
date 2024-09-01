@@ -6,13 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import SearchButton from '../../../../shared/components/buttons/SearchButton';
 import TextField from '../../../../shared/components/form-controls/TextField';
 
-type Props = {
+interface Props {
   initialSearch?: string;
-};
+}
 
-type FormValues = {
+interface FormValues {
   search: string;
-};
+}
 
 const CocktailSearchForm: React.FC<Props> = (props: Props) => {
   const navigate = useNavigate();
