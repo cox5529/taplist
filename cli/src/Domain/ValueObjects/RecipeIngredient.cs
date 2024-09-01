@@ -16,11 +16,28 @@ public class RecipeIngredient
     public double Quantity { get; private set; }
 
     [FirestoreProperty("unit")]
-    public string Unit { get; private set; } = "unit";
-
+    public string Unit { get; private set; } = "Unit";
 
     [FirestoreProperty("instruction")]
     public string? Instruction { get; private set; }
+
+    public float VolumeOunces
+    {
+        get
+        {
+            return Unit switch
+            {
+                "Dash" => 0.02f,
+                "Teaspoon" => 0.167f,
+                "Tablespoon" => 0.5f,
+                "Ounce" => 1,
+                "Handful" => 0.25f,
+                "Leaf" => 0.05f,
+                "Barspoon" => 0.035f,
+                _ => 0
+            };
+        }
+    }
 
     private RecipeIngredient()
     {

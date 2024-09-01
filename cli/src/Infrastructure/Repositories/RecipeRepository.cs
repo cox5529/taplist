@@ -41,6 +41,11 @@ public class RecipeRepository : IRecipeRepository
     /// <inheritdoc />
     public async Task SaveAsync(Recipe entity, CancellationToken cancel = default)
     {
+        if (entity.Ingredients.All(x => x.Unit == "Unit"))
+        {
+            throw new Exception($"Attempted to wipe units when saving {entity.Name}");
+        }
+
         await _collection.Document(entity.Id).SetAsync(entity, cancellationToken: cancel);
     }
 

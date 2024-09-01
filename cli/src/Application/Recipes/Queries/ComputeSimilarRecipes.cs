@@ -1,45 +1,53 @@
 using FluentValidation;
 using MediatR;
-using Taplist.Application.Common.Interfaces.Repositories;
 using Taplist.Application.Common.Interfaces.Services;
 using Taplist.Application.Ingredients.Queries;
 using Taplist.Domain.Entities;
 
-namespace Taplist.Application.Recipes.Commands;
+namespace Taplist.Application.Recipes.Queries;
 
 public record ComputeSimilarRecipes : IRequest
 {
+    public IEnumerable<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+
+    public IEnumerable<Recipe> Recipes { get; set; } = new List<Recipe>();
 }
 
 public class ComputeSimilarRecipesHandler : IRequestHandler<ComputeSimilarRecipes>
 {
-    private readonly IRecipeRepository _recipeRepository;
     private readonly IMediator _mediator;
     private readonly IVectorService _vectorService;
 
-    public ComputeSimilarRecipesHandler(IRecipeRepository recipeRepository, IMediator mediator, IVectorService vectorService)
+    public ComputeSimilarRecipesHandler(IMediator mediator, IVectorService vectorService)
     {
-        _recipeRepository = recipeRepository;
         _mediator = mediator;
         _vectorService = vectorService;
     }
 
     public async Task Handle(ComputeSimilarRecipes request, CancellationToken cancel)
     {
-        var ingredientMapResponse = await _mediator.Send(new ComputeIngredientVectors(), cancel);
-        var recipes = (await _recipeRepository.GetAllAsync(cancel)).ToList();
+        var recipes = request.Recipes.ToList();
+        var recipeMissingIngredients = recipes.Where(recipe => recipe.Ingredients.All(i => i.Unit == "Unit")).ToList();
+        if (recipeMissingIngredients.Count != 0)
+        {
+            throw new Exception($"Recipe {recipeMissingIngredients.First().Name} is missing ingredient labels");
+        }
+
+        var ingredientMapResponse = await _mediator.Send(
+                                        new ComputeIngredientVectors { Ingredients = request.Ingredients },
+                                        cancel);
 
         foreach (var recipeA in recipes)
         {
             var aVector = ComputeRecipeVector(ingredientMapResponse.IngredientMap, recipeA);
-                
+
             foreach (var recipeB in recipes)
             {
                 if (recipeA.Id == recipeB.Id)
                 {
                     continue;
                 }
-                
+
                 var bVector = ComputeRecipeVector(ingredientMapResponse.IngredientMap, recipeB);
                 var similarity = _vectorService.Similarity(aVector, bVector);
 
@@ -51,13 +59,13 @@ public class ComputeSimilarRecipesHandler : IRequestHandler<ComputeSimilarRecipe
         foreach (var recipe in recipes)
         {
             recipe.UpdateSimilarRecipes();
-            await _recipeRepository.SaveAsync(recipe, cancel);
         }
     }
 
     private float[] ComputeRecipeVector(Dictionary<string, float[]> ingredientMap, Recipe recipe)
     {
-        var ingredientVectors = recipe.Ingredients.Select(x => ingredientMap[x.IngredientId]);
+        var ingredientVectors = recipe.Ingredients.Select(
+            x => ingredientMap[x.IngredientId].Select(y => y * x.VolumeOunces).ToArray());
         return _vectorService.Combine(ingredientVectors);
     }
 }

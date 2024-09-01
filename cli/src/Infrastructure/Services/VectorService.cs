@@ -19,10 +19,38 @@ public class VectorService(IOptions<VectorSettings> settings, ILogger<VectorServ
         await foreach (var line in File.ReadLinesAsync(path, cancel))
         {
             var parts = line.Split(" ");
-            var word = parts[0];
-            var vector = parts[1..].Select(float.Parse).ToArray();
+            var word = parts[0].ToLower();
+            var vector = new float[300];
+            for (var i = 0; i < 300; i++)
+            {
+                vector[i] = float.Parse(parts[i + 1]);
+            }
+            
             _vectors[word] = vector;
         }
+    }
+
+    /// <inheritdoc />
+    public async Task FilterAndSaveVectors(string[] words, CancellationToken cancel = default)
+    {
+        if (_vectors == null)
+        {
+            await LoadVectors(cancel);
+        }
+
+        if (_vectors == null)
+        {
+            throw new NullReferenceException("Failed to initialize word vector array");
+        }
+
+        var usedVectors = words.ToDictionary(w => w, w => _vectors[w]);
+        var vectorFileText = "";
+        foreach (var (word, vector) in usedVectors)
+        {
+            vectorFileText += $"{word} {string.Join(" ", vector)}\n";
+        }
+
+        await File.WriteAllTextAsync($"{_settings.VectorFileLocation}.trim", vectorFileText, cancel);
     }
 
     /// <inheritdoc />

@@ -2,11 +2,13 @@ using FluentValidation;
 using MediatR;
 using Taplist.Application.Common.Interfaces.Repositories;
 using Taplist.Application.Common.Interfaces.Services;
+using Taplist.Domain.Entities;
 
 namespace Taplist.Application.Ingredients.Queries;
 
 public record ComputeIngredientVectors : IRequest<ComputeIngredientVectorsResponse>
 {
+    public IEnumerable<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
 }
 
 public record ComputeIngredientVectorsResponse
@@ -16,18 +18,16 @@ public record ComputeIngredientVectorsResponse
 
 public class ComputeIngredientVectorsHandler : IRequestHandler<ComputeIngredientVectors, ComputeIngredientVectorsResponse>
 {
-    private readonly IIngredientRepository _ingredientRepository;
     private readonly IVectorService _vectorService;
 
-    public ComputeIngredientVectorsHandler(IIngredientRepository ingredientRepository, IVectorService vectorService)
+    public ComputeIngredientVectorsHandler(IVectorService vectorService)
     {
-        _ingredientRepository = ingredientRepository;
         _vectorService = vectorService;
     }
 
     public async Task<ComputeIngredientVectorsResponse> Handle(ComputeIngredientVectors request, CancellationToken cancel)
     {
-        var ingredients = await _ingredientRepository.GetAllIngredientsAsync(cancel);
+        var ingredients = request.Ingredients;
 
         var output = new ComputeIngredientVectorsResponse();
         foreach (var ingredient in ingredients)

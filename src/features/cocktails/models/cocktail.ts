@@ -8,6 +8,7 @@ export enum Unit {
   Unit = 'Unit',
   Handful = 'Handful',
   Leaf = 'Leaf',
+  Barspoon = 'Barspoon',
 }
 
 export interface CocktailIngredient {
@@ -35,6 +36,7 @@ export const PluralMap: Record<Unit, string> = {
   [Unit.Unit]: '',
   [Unit.Handful]: 'handfuls',
   [Unit.Leaf]: 'leaves',
+  [Unit.Barspoon]: 'barspoons',
 };
 
 export const SingularMap: Record<Unit, string> = {
@@ -45,4 +47,5 @@ export const SingularMap: Record<Unit, string> = {
   [Unit.Unit]: '',
   [Unit.Handful]: 'Handful',
   [Unit.Leaf]: 'leaf',
+  [Unit.Barspoon]: 'barspoon',
 };

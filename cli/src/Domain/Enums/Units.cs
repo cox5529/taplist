@@ -7,5 +7,7 @@ public enum Units
     Dash,
     Barspoon,
     Tablespoon,
-    Teaspoon
+    Teaspoon,
+    Handful,
+    Leaf
 }

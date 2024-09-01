@@ -17,7 +17,7 @@ public class Recipe : BaseEntity<string>
 
     [FirestoreProperty("curated")]
     public bool Curated { get; private set; }
-    
+
     [FirestoreProperty("ingredients")]
     public virtual IList<RecipeIngredient> Ingredients { get; private set; } = new List<RecipeIngredient>();
 
@@ -26,7 +26,7 @@ public class Recipe : BaseEntity<string>
 
     [FirestoreProperty("relatedRecipes")]
     public virtual IList<string> SimilarRecipes { get; private set; } = new List<string>();
-    
+
     public virtual Dictionary<string, float> SimilarRecipesMap { get; private set; } = new();
 
     private Recipe()
@@ -70,6 +70,6 @@ public class Recipe : BaseEntity<string>
                 return 1;
             });
 
-        SimilarRecipes = list.Select(x => x.Key).Take(3).ToList();
+        SimilarRecipes = list.Select(x => x.Key).Take(9).ToList();
     }
 }

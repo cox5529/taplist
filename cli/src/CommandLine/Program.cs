@@ -107,12 +107,16 @@ public static class Program
             ingredientArgument,
             alternateArgument);
 
-        var similarityCommand = new Command("sim", "Computes and saves the most similar recipes to each other");
-        similarityCommand.SetHandler(() => mediator.Send(new ComputeSimilarRecipes()));
+        var similarityCommand = new Command("meta", "Computes and saves recipe metadata");
+        similarityCommand.SetHandler(() => mediator.Send(new ComputeMetadata()));
+
+        var trimCommand = new Command("trim", "Trims vector file to only contain used words");
+        trimCommand.SetHandler(() => mediator.Send(new TrimVectorFile()));
 
         rootCommand.AddCommand(alternateCommand);
         rootCommand.AddCommand(setAlternateCommand);
         rootCommand.AddCommand(similarityCommand);
+        rootCommand.AddCommand(trimCommand);
         await rootCommand.InvokeAsync(args);
     }
 }
