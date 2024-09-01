@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo } from 'react';
-import SectionHeader from '../../../../shared/components/typography/SectionHeader';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Button from '../../../../shared/components/buttons/Button';
 import CocktailSearchForm from '../../components/search/CocktailSearchForm';
-import { InfiniteHits, useInfiniteHits, useSearchBox } from 'react-instantsearch';
+import { useInfiniteHits, useSearchBox } from 'react-instantsearch';
 import MenuItem from '../../components/menu/MenuItem';
-import type { Hit, BaseHit } from 'instantsearch.js';
+import type { Hit } from 'instantsearch.js';
 import { Cocktail } from '../../models/cocktail';
 import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
 

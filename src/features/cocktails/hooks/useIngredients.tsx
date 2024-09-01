@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
 import { Ingredient } from '../models/ingredient';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';

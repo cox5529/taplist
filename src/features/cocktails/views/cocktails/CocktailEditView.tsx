@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import { doc, DocumentReference, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import { auth, firestore } from '../../../../firebase';
 import Button from '../../../../shared/components/buttons/Button';
-import SectionHeader from '../../../../shared/components/typography/SectionHeader';
 import CocktailForm from '../../components/cocktail-form/CocktailForm';
 import { Cocktail } from '../../models/cocktail';
 import { useCocktail } from '../../hooks/useCocktail';

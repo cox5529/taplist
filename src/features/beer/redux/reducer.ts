@@ -1,4 +1,3 @@
-import { Reducer } from 'redux';
 import { Beer } from '../models/beer';
 import { Scale } from '../models/scale';
 import { createSlice } from '@reduxjs/toolkit';

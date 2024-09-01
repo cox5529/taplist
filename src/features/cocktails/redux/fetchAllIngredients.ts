@@ -1,5 +1,5 @@
-import { ActionReducerMapBuilder, createAsyncThunk, GetThunkAPI } from '@reduxjs/toolkit';
-import { collection, CollectionReference, getDocs, query, where } from 'firebase/firestore';
+import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
+import { collection, CollectionReference, getDocs } from 'firebase/firestore';
 import { firestore } from '../../../firebase';
 import { CocktailFeatureState } from './reducer';
 import { Ingredient } from '../models/ingredient';
@@ -14,7 +14,7 @@ export const fetchAllIngredients = createAsyncThunk(
 );
 
 export const addFetchAllIngredientsReducers = (builder: ActionReducerMapBuilder<CocktailFeatureState>) => {
-  builder.addCase(fetchAllIngredients.pending, (state, action) => {
+  builder.addCase(fetchAllIngredients.pending, (state) => {
     state.allIngredientsLoadState = 'pending';
   });
 

@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import BaseModal, { BaseModalProps } from '../../../../shared/components/modals/BaseModal';
 import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
-import Paragraph from '../../../../shared/components/typography/Paragraph';
 import { Ingredient } from '../../models/ingredient';
 import Button from '../../../../shared/components/buttons/Button';
-import { Cocktail } from '../../models/cocktail';
-import { deleteDoc, doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { firestore } from '../../../../firebase';
 import { Form, Formik } from 'formik';
 import TextField from '../../../../shared/components/form-controls/TextField';
@@ -41,7 +39,7 @@ const RenameIngredientModal: React.FC<Props> = (props: Props) => {
 
   return (
     <BaseModal open={props.open}>
-      <SubsectionHeader>Rename '{name}'</SubsectionHeader>
+      <SubsectionHeader>Rename &apos;{name}&apos;</SubsectionHeader>
       <Formik onSubmit={rename} initialValues={initialValues} validationSchema={validationSchema}>
         {({ isSubmitting }) => (
           <Form placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>

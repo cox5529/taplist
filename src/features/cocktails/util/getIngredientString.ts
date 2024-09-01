@@ -12,7 +12,7 @@ const getQuantityString = (quantity: number): string => {
     return str;
   }
 
-  let [whole, fraction] = str.split('.');
+  const [whole, fraction] = str.split('.');
   const order = fraction.length;
   const denominator = Math.pow(10, order);
   const numerator = parseFloat(fraction);

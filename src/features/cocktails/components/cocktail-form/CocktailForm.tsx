@@ -9,7 +9,6 @@ import { firestore } from '../../../../firebase';
 import LoadingBox from '../../../../shared/components/LoadingBox';
 import Button from '../../../../shared/components/buttons/Button';
 import TextField from '../../../../shared/components/form-controls/TextField';
-import Paragraph from '../../../../shared/components/typography/Paragraph';
 import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
 import { useIngredients } from '../../hooks/useIngredients';
 import { Cocktail, CocktailIngredient, Unit } from '../../models/cocktail';
@@ -17,7 +16,6 @@ import { Ingredient } from '../../models/ingredient';
 import IngredientField from './IngredientField';
 import InstructionField from './InstructionField';
 import Checkbox from '../../../../shared/components/form-controls/Checkbox';
-import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
 import SubsectionHeaderWithButton from '../../../../shared/components/typography/SubsectionHeaderWithButton';
 
 type Props = {

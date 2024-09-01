@@ -7,7 +7,6 @@ import { auth } from '../../../../firebase';
 import LoadingBox from '../../../../shared/components/LoadingBox';
 import Button from '../../../../shared/components/buttons/Button';
 import Paragraph from '../../../../shared/components/typography/Paragraph';
-import SectionHeader from '../../../../shared/components/typography/SectionHeader';
 import SubsectionHeader from '../../../../shared/components/typography/SubsectionHeader';
 import { useCocktail } from '../../hooks/useCocktail';
 import { getIngredientString } from '../../util/getIngredientString';
@@ -20,7 +19,7 @@ const CocktailDetailsView: React.FC = () => {
   const [user] = useAuthState(auth);
 
   const [cocktail, isLoading] = useCocktail(id ?? '');
-  const [relatedCocktails, areRelatedCocktailsLoading] = useCocktails({
+  const [relatedCocktails,] = useCocktails({
     ids: cocktail?.relatedRecipes ?? [],
   });
 

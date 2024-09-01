@@ -6,17 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
 import { auth, firestore } from '../../../../firebase';
-import Button from '../../../../shared/components/buttons/Button';
-import SectionHeader from '../../../../shared/components/typography/SectionHeader';
 import CocktailForm from '../../components/cocktail-form/CocktailForm';
-import { useIngredients } from '../../hooks/useIngredients';
 import { Cocktail } from '../../models/cocktail';
 import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
 
 const CocktailAddView: React.FC = () => {
   const id = useMemo(() => uuid(), []);
   const navigate = useNavigate();
-  const [ingredients] = useIngredients();
   const [user, isLoading] = useAuthState(auth);
 
   useEffect(() => {

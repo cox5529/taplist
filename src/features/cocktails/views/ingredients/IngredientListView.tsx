@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useIngredients } from '../../hooks/useIngredients';
-import SectionHeader from '../../../../shared/components/typography/SectionHeader';
 import SectionHeaderWithButton from '../../../../shared/components/typography/SectionHeaderWithButton';
 import LoadingBox from '../../../../shared/components/LoadingBox';
 import Card from '../../../../shared/components/card/Card';

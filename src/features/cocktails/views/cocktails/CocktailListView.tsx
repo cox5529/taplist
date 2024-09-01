@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Spinner from '../../../../shared/components/shapes/Spinner';
-import { useCocktails } from '../../hooks/useCocktails';
 import MenuItem from '../../components/menu/MenuItem';
 import { useCuratedCocktails } from '../../hooks/useCuratedCocktails';
 

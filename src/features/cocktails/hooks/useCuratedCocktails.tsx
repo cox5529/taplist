@@ -1,7 +1,7 @@
 import { Cocktail } from '../models/cocktail';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { cocktailSlice } from '../redux/reducer';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { fetchCuratedCocktails } from '../redux/fetchCuratedCocktails';
 
 export function useCuratedCocktails(): [Cocktail[], boolean] {

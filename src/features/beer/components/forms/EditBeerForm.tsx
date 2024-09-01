@@ -15,7 +15,7 @@ type Props = {
   className?: string;
 };
 
-const EditBeerForm = ({ beer, assignTap, assignScale, className, beers, scales }: Props) => {
+const EditBeerForm = ({ beer, assignTap, assignScale, beers, scales }: Props) => {
   const taps = useMemo(() => {
     const taps = [1, 2, 3, 4];
     return taps.map((x) => ({
